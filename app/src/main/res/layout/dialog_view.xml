@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+   android:layout_margin="20dp"
+    android:layout_height="wrap_content"
+    android:elevation="1dp"
+    app:cardCornerRadius="20dp"
+    android:translationZ="1dp"
+    app:cardElevation="2dp"
+    >
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/dialog_title"
+            android:background="@color/textIndigoColor"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:textColor="#fff"
+            android:fontFamily="@font/sans_regular"
+            android:text="Error title">
+        </TextView>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#fff"
+            />
+        <TextView
+            android:id="@+id/dialog_ok"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="OK"
+            android:clickable="true"
+            android:focusable="true"
+            android:textSize="15sp"
+            android:background="@color/textGreyDarkColor"
+            android:gravity="center"
+            android:textColor="#fff"
+            android:fontFamily="@font/sans_regular"
+            />
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

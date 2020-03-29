@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/topic"
+        android:icon="@drawable/ic_bachelors_degree"
+        app:showAsAction="always"
+        android:title="@string/topics"
+        />
+
+    <item
+        android:id="@+id/test"
+        android:icon="@drawable/ic_lightbulb"
+        app:showAsAction="always"
+        android:title="@string/tests"
+        />
+
+    <item
+        android:id="@+id/extra"
+        android:icon="@drawable/ic_glosary"
+        app:showAsAction="always"
+        android:title="@string/extra"
+        />
+
+    <item
+        android:id="@+id/profile"
+        android:icon="@drawable/ic_profile"
+        app:showAsAction="always"
+        android:title="@string/profile"
+        />
+</menu>
