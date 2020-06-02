@@ -1,76 +1,92 @@
 package uz.mymax.savvyenglish
 
 import android.os.Bundle
+import android.view.ViewTreeObserver
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
+import androidx.appcompat.widget.Toolbar
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import kotlinx.android.synthetic.main.activity_main.*
-import uz.mymax.savvyenglish.utils.log
-import uz.mymax.savvyenglish.utils.setupWithNavController
-import uz.mymax.savvyenglish.utils.slideDown
-import uz.mymax.savvyenglish.utils.slideUp
+import uz.mymax.savvyenglish.utils.*
 
 
 class MainActivity : AppCompatActivity() {
-    private var currentNavController: LiveData<NavController>? = null
+
+    private val onGlobalLayoutListener = ViewTreeObserver.OnGlobalLayoutListener {
+
+        showBottomNavigationOnlyAtTopLevel()
+
+        hideBottomNavigationForSearch()
+    }
+    private lateinit var mainNavController : NavController;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        if (savedInstanceState == null) {
-            setUpBottomNavigation()
+        val mainToolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(mainToolbar)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        mainToolbar.setNavigationIcon(R.drawable.ic_back)
+
+        setUpBottomNavigation()
+
+        rootContainerView.viewTreeObserver.addOnGlobalLayoutListener(onGlobalLayoutListener)
+    }
+
+
+    private fun setUpBottomNavigation() {
+        mainNavController = mainNavHostFragment.findNavController()
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.navigation_topics,
+                R.id.navigation_tests,
+                R.id.navigation_extras,
+                R.id.navigation_profile
+            )
+        )
+        setupActionBarWithNavController(mainNavController, appBarConfiguration)
+
+        bottomNavigationView.setupWithNavController(mainNavController)
+        mainNavController.addOnDestinationChangedListener { controller, destination, arguments ->
+             //set it here for all the destinations, or inside the switch statement if you want to change it based on destination
+            when(destination.id){
+                R.id.navigation_topics,
+                R.id.navigation_tests,
+                R.id.navigation_extras,
+                R.id.navigation_profile ->toolbar.setNavigationIcon(null)
+                else ->toolbar.setNavigationIcon(R.drawable.ic_back)
+            }
         }
     }
 
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-        setUpBottomNavigation()
-    }
-
-    private fun setUpBottomNavigation() {
-        val navGraphIds =
-            listOf(R.navigation.topic, R.navigation.test, R.navigation.extra, R.navigation.profile)
-        val controller = bottomNavigationView.setupWithNavController(
-            navGraphIds,
-            supportFragmentManager,
-            R.id.navHostFragment,
-            intent
-        )
-        var appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.topicsFragment,
-                R.id.testsFragment,
-                R.id.extrasFragment,
-                R.id.profileFragment
-            )
-        )
-
-        controller.observe(this, Observer { navController ->
-            setupActionBarWithNavController(navController, appBarConfiguration)
-            navController.addOnDestinationChangedListener { controller, destination, arguments ->
-                when (destination.id) {
-                    R.id.topicsFragment,
-                    R.id.testsFragment,
-                    R.id.extrasFragment,
-                    R.id.profileFragment -> {
-                        log("UP")
-                        bottomNavigationView.slideUp()
-                    }
-                    else -> {
-                        log("Down")
-                        bottomNavigationView.slideDown()
-                    }
-                }
-            }
-        })
-        currentNavController = controller
-    }
-
     override fun onSupportNavigateUp(): Boolean {
-        return currentNavController?.value?.navigateUp() ?: false
+        return mainNavController.navigateUp()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        rootContainerView.viewTreeObserver.removeOnGlobalLayoutListener(onGlobalLayoutListener)
+    }
+
+    private fun showBottomNavigationOnlyAtTopLevel(){
+        when (mainNavController.currentDestination?.id) {
+            R.id.navigation_topics,
+            R.id.navigation_tests,
+            R.id.navigation_extras,
+            R.id.navigation_profile -> bottomNavigationView.slideUp()
+            else -> bottomNavigationView.slideDown()
+        }
+    }
+
+    private fun hideBottomNavigationForSearch(){
+        val heightDiff = rootContainerView.rootView.height - rootContainerView.height
+        if (heightDiff > this@MainActivity.dpToPx(200f)) { // if more than 200 dp, it's probably a keyboard...
+            bottomNavigationView.hide()
+        } else {
+            bottomNavigationView.show()
+        }
     }
 }

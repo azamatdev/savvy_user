@@ -1,12 +1,13 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+
 
     <!-- TextStyles -->
     <style name="TitleSemiBoldWhite" parent="TextAppearance.MaterialComponents.Headline1">
@@ -53,6 +54,14 @@
         <item name="android:layout_marginBottom">8dp</item>
         <item name="android:layout_marginStart">12dp</item>
     </style>
+
+    <style name="Widget.Savvy.Toolbar" parent="ThemeOverlay.MaterialComponents.ActionBar">
+        <item name="titleTextColor">@android:color/white</item>
+        <item name="fontFamily">@font/sans_bold</item>
+        <item name="titleTextStyle">@style/SettingsText</item>
+        <item name="navigationIcon">@drawable/ic_back</item>
+    </style>
+
 
 
 </resources>

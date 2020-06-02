@@ -1,6 +1,4 @@
-package uz.mymax.savvyenglish.data
-
-import uz.mymax.savvyenglish.R
+package uz.mymax.savvyenglish.model
 
 class Topic(
     var lessonNumber: Int = 0,

@@ -5,7 +5,7 @@
         <import type="android.text.Html"/>
         <variable
             name="questionTypeForm"
-            type="uz.mymax.savvyenglish.data.LessonQuestionTypeForm" />
+            type="uz.mymax.savvyenglish.model.LessonQuestionTypeForm" />
     </data>
 
     <LinearLayout

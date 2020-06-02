@@ -8,7 +8,7 @@
 
         <variable
             name="topic"
-            type="uz.mymax.savvyenglish.data.Topic" />
+            type="uz.mymax.savvyenglish.model.Topic" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

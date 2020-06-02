@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation"
-    app:startDestination="@id/topicsFragment">
+    app:startDestination="@id/navigation_topics">
 
     <!--    <fragment-->
     <!--        android:id="@+id/topicsFragment"-->
@@ -16,12 +16,12 @@
     <!--    </fragment>-->
     <!--    <fragment-->
     <!--        android:id="@+id/testsFragment"-->
-    <!--        android:name="uz.mymax.savvyenglish.ui.TestsFragment"-->
+    <!--        android:name="uz.mymax.savvyenglish.ui.tests.TestsFragment"-->
     <!--        android:label="fragment_tests"-->
     <!--        tools:layout="@layout/fragment_tests" />-->
     <!--    <fragment-->
     <!--        android:id="@+id/extrasFragment"-->
-    <!--        android:name="uz.mymax.savvyenglish.ui.ExtrasFragment"-->
+    <!--        android:name="uz.mymax.savvyenglish.ui.extras.ExtrasFragment"-->
     <!--        android:label="fragment_extras"-->
     <!--        tools:layout="@layout/fragment_extras" />-->
     <!--    <fragment-->
@@ -34,4 +34,32 @@
     <!--        android:name="uz.mymax.savvyenglish.ui.lessons.LessonFragment"-->
     <!--        android:label="fragment_lesson"-->
     <!--        tools:layout="@layout/fragment_lesson" />-->
+    <fragment
+        android:id="@+id/navigation_lesson"
+        android:name="uz.mymax.savvyenglish.ui.lessons.LessonFragment"
+        tools:layout="@layout/fragment_lesson" />
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="uz.mymax.savvyenglish.ui.profile.ProfileFragment"
+        android:label="@string/profile_title"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/navigation_extras"
+        android:name="uz.mymax.savvyenglish.ui.extras.ExtrasFragment"
+        android:label="@string/extra_title"
+        tools:layout="@layout/fragment_extras" />
+    <fragment
+        android:id="@+id/navigation_tests"
+        android:name="uz.mymax.savvyenglish.ui.tests.TestsFragment"
+        android:label="@string/tests_title"
+        tools:layout="@layout/fragment_tests" />
+    <fragment
+        android:id="@+id/navigation_topics"
+        android:name="uz.mymax.savvyenglish.ui.topics.TopicsFragment"
+        android:label="@string/topics_title"
+        tools:layout="@layout/fragment_topics">
+        <action
+            android:id="@+id/action_navigation_topics_to_navigation_lesson"
+            app:destination="@id/navigation_lesson" />
+    </fragment>
 </navigation>

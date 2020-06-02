@@ -8,17 +8,21 @@ import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import uz.mymax.savvyenglish.R
-import uz.mymax.savvyenglish.data.MockData
-import uz.mymax.savvyenglish.data.Topic
-import uz.mymax.savvyenglish.data.TopicHeader
+import uz.mymax.savvyenglish.model.Topic
+import uz.mymax.savvyenglish.model.TopicHeader
+import uz.mymax.savvyenglish.model.TopicType
 import uz.mymax.savvyenglish.databinding.ItemTopicsBinding
 import uz.mymax.savvyenglish.databinding.ItemTopicsHeaderBinding
 
 class TopicsAdapter(val callback : (Int) -> Unit ) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), StickyHeaderInterface {
 
-    var topicList = MockData.getTopicsList()
+    var topicList = ArrayList<TopicType>()
     private val HEADER_TYPE = 1
 
+    fun updateList(newList : List<TopicType>){
+        this.topicList = newList as ArrayList<TopicType>;
+        notifyDataSetChanged()
+    }
     override fun getItemViewType(position: Int): Int {
         return topicList[position].type()
     }

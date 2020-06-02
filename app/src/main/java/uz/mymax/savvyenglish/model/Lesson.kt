@@ -1,4 +1,4 @@
-package uz.mymax.savvyenglish.data
+package uz.mymax.savvyenglish.model
 
 data class LessonRule(
     var lessonNumber: Int,
