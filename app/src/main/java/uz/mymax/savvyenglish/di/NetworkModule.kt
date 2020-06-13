@@ -4,11 +4,14 @@ import uz.mymax.savvyenglish.network.ConnectivityInterceptor
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.readystatesoftware.chuck.ChuckInterceptor
 import okhttp3.OkHttpClient
+import okhttp3.ResponseBody
 import org.koin.dsl.module
+import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import uz.mymax.savvyenglish.BuildConfig
 import uz.mymax.savvyenglish.network.SavvyApi
+import uz.mymax.savvyenglish.network.response.ErrorResponse
 import java.util.concurrent.TimeUnit
 
 
@@ -53,6 +56,13 @@ val networkModule = module {
             clientBuilder.addInterceptor(ChuckInterceptor(get()))
         }
         clientBuilder.build()
+    }
+
+    factory<Converter<ResponseBody, ErrorResponse>> {
+        get<Retrofit>().responseBodyConverter(
+            ErrorResponse::class.java,
+            arrayOfNulls<Annotation>(0)
+        )
     }
 
 

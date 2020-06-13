@@ -11,5 +11,6 @@
     <string name="search_hint">Search for a topic</string>
     <string name="error_not_connected">Internet aloqasi yo\'q</string>
     <string name="error_generic">Xatolik, birozdan so\'ng urinib ko\'ring</string>
+    <string name="warning_fill_the_fields">Iltimos, maydonni to\'ldiring</string>
 
 </resources>

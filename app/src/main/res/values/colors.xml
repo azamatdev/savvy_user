@@ -5,8 +5,12 @@
     <color name="colorAccent">#434375</color>
 
     <color name="textIndigoColor">#525170</color>
+    <color name="textIndigoDarkColor">#151230</color>
     <color name="textGreyColor">#B1B1B3</color>
     <color name="textGreyDarkColor">#757575</color>
+
+    <color name="textHintColor">#ADACB7</color>
+
 
     <color name="greenMain">#41BD39</color>
     <color name="greyMain">#AFB2BE</color>

@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.fragment_profile.*
@@ -26,9 +27,13 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Glide.with(context!!)
+        Glide.with(requireContext())
             .load(R.drawable.emma)
             .apply(RequestOptions.circleCropTransform())
             .into(profilePicture)
+
+        btnLogout.setOnClickListener {
+            findNavController().navigate(R.id.navigation_login)
+        }
     }
 }

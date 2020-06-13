@@ -65,11 +65,11 @@ class TopicsFragment : BaseFragment() {
                     topicsRecycler.scheduleLayoutAnimation()
                     topicsRecycler.adapter = adapter
                     adapter.updateList(sortedList)
-                    hideLoading()
+                    hideSwipeRefreshLoading()
                 }
-                is Resource.Loading -> showLoading()
+                is Resource.Loading -> showSwipeRefreshLoading()
                 is Resource.Error -> {
-                    hideLoading()
+                    hideSwipeRefreshLoading()
                     handleErrors(resource.exception)
                 }
             }
@@ -88,12 +88,12 @@ class TopicsFragment : BaseFragment() {
 
     }
 
-    private fun showLoading() {
+    private fun showSwipeRefreshLoading() {
         topicsSwipeRefreshLayout.show()
         topicsSwipeRefreshLayout.isRefreshing = true
     }
 
-    private fun hideLoading() {
+    private fun hideSwipeRefreshLoading() {
         topicsSwipeRefreshLayout.isRefreshing = false
     }
 

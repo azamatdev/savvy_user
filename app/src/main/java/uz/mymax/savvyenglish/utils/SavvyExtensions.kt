@@ -6,15 +6,19 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.InsetDrawable
 import android.util.Log
+import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.textfield.TextInputEditText
 import kotlinx.android.synthetic.main.dialog_view.view.*
 import uz.mymax.savvyenglish.MainActivity
 import uz.mymax.savvyenglish.R
@@ -35,7 +39,7 @@ fun Context.log(message: String, tag: String = "DefaultTag") {
  * Animating view with slide animation
  */
 fun View.slideDown() {
-    this.animate().translationY(250f).alpha(0.0f).setDuration(50).setInterpolator(
+    this.animate().translationY(500f).alpha(0.0f).setDuration(50).setInterpolator(
         AccelerateDecelerateInterpolator()
     )
     this.hide()
@@ -54,6 +58,7 @@ fun View.slideUp() {
 fun View.hide(): View {
     if (visibility != View.GONE) {
         visibility = View.GONE
+        Log.d("DefaultTag", "actually hidden")
     }
     return this
 }
@@ -77,6 +82,10 @@ fun Activity.hideSoftKeyboard() {
         ) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(currentFocus!!.windowToken, 0)
     }
+}
+
+fun Fragment.hideKeyboard(){
+    activity?.hideSoftKeyboard()
 }
 
 fun Fragment.showKeyboard(view: View) {
@@ -129,4 +138,24 @@ fun Fragment.showBottomDialog(title: String, msg: String) {
 //    alertdialog.setContentView()
     builder.show()
     builder.getWindow()?.setGravity(Gravity.BOTTOM)
+}
+
+
+fun Context.dpToPx(valueInDp: Float): Float {
+    val metrics = resources.displayMetrics
+    return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, valueInDp, metrics)
+}
+
+fun TextInputEditText.hideErrorIfFilled(){
+    this.doOnTextChanged{ text, start, before, count ->
+        if(this.text.toString().isNotEmpty() and !this.error.isNullOrEmpty()){
+            this.error = null
+        }
+    }
+}
+
+fun TextInputEditText.showErrorIfNotFilled(){
+    if(this.text.toString().isEmpty()){
+        this.error = context.getString(R.string.warning_fill_the_fields)
+    }
 }

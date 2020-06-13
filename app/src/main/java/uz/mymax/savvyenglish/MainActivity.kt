@@ -1,6 +1,7 @@
 package uz.mymax.savvyenglish
 
 import android.os.Bundle
+import android.view.View
 import android.view.ViewTreeObserver
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -19,9 +20,9 @@ class MainActivity : AppCompatActivity() {
 
         showBottomNavigationOnlyAtTopLevel()
 
-        hideBottomNavigationForSearch()
+//        hideBottomNavigationForSearch()
     }
-    private lateinit var mainNavController : NavController;
+    private lateinit var mainNavController: NavController;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,13 +52,29 @@ class MainActivity : AppCompatActivity() {
 
         bottomNavigationView.setupWithNavController(mainNavController)
         mainNavController.addOnDestinationChangedListener { controller, destination, arguments ->
-             //set it here for all the destinations, or inside the switch statement if you want to change it based on destination
-            when(destination.id){
+            //set it here for all the destinations, or inside the switch statement if you want to change it based on destination
+
+            log("DestinationID: ${destination.label}")
+
+            when (destination.id) {
                 R.id.navigation_topics,
                 R.id.navigation_tests,
                 R.id.navigation_extras,
-                R.id.navigation_profile ->toolbar.setNavigationIcon(null)
-                else ->toolbar.setNavigationIcon(R.drawable.ic_back)
+                R.id.navigation_profile -> {
+                    toolbar.setNavigationIcon(null)
+                    bottomNavigationView.show()
+                }
+                R.id.navigation_signup,
+                R.id.navigation_login -> {
+                    log("Login ")
+                    toolbar.hide()
+                    bottomNavigationView.slideDown()
+                }
+                else -> {
+                    log("ELse")
+                    bottomNavigationView.slideDown()
+                    toolbar.setNavigationIcon(R.drawable.ic_back)
+                }
             }
         }
     }
@@ -71,7 +88,7 @@ class MainActivity : AppCompatActivity() {
         rootContainerView.viewTreeObserver.removeOnGlobalLayoutListener(onGlobalLayoutListener)
     }
 
-    private fun showBottomNavigationOnlyAtTopLevel(){
+    private fun showBottomNavigationOnlyAtTopLevel() {
         when (mainNavController.currentDestination?.id) {
             R.id.navigation_topics,
             R.id.navigation_tests,
@@ -81,7 +98,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun hideBottomNavigationForSearch(){
+    private fun hideBottomNavigationForSearch() {
         val heightDiff = rootContainerView.rootView.height - rootContainerView.height
         if (heightDiff > this@MainActivity.dpToPx(200f)) { // if more than 200 dp, it's probably a keyboard...
             bottomNavigationView.hide()

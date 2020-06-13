@@ -6,11 +6,14 @@ import android.net.NetworkCapabilities
 import android.os.Build
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import okhttp3.ResponseBody
+import retrofit2.Converter
 import retrofit2.HttpException
 import retrofit2.Response
 import uz.mymax.savvyenglish.exceptions.EmptyBodyException
 import uz.mymax.savvyenglish.exceptions.NoConnectivityException
 import uz.mymax.savvyenglish.network.Resource
+import uz.mymax.savvyenglish.network.response.ErrorResponse
 import java.io.IOException
 import java.lang.Exception
 import java.net.ConnectException
@@ -26,29 +29,33 @@ suspend fun <T> safeApiCall(call: suspend () -> Response<T>): Response<T>? {
     }
 }
 
-suspend fun <T : Any> safeApiCall2(apiCall: suspend () -> Response<T>): Resource<T> {
+suspend fun <T : Any> safeApiCall2(
+    errorConverter: Converter<ResponseBody, ErrorResponse>,
+    apiCall: suspend () -> Response<T>
+): Resource<T> {
     try {
         val response = apiCall()
         return if (response.isSuccessful && response.body() != null)
             Resource.Success<T>(response.body() as T)
-        else
-            Resource.Error(EmptyBodyException())
+        else {
+            errorConverter.convert(response.errorBody())?.let { Resource.GenericError(it) }!!
+        }
     } catch (throwable: Throwable) {
         when (throwable) {
             is ConnectException,
             is NoConnectivityException -> {
                 return Resource.Error(NoConnectivityException())
             }
-//                is HttpException ->{
-////                    val code = throwable.code()
-////                    if(code == 503){
-//////                        val errorResponse = ErrorResponse("Server is unavailable")
-//////                        ResultWrapper.GenericError(code, errorResponse)
-////                    }else{
-//                        val errorResponse : ErrorResponse? = converter.convert(throwable.response()?.errorBody()!!)
-//                        ResultWrapper.GenericError(code, errorResponse)
-////                    }
-//                }
+            is HttpException -> {
+//                    val code = throwable.code()
+//                    if(code == 503){
+////                        val errorResponse = ErrorResponse("Server is unavailable")
+////                        ResultWrapper.GenericError(code, errorResponse)
+//                    }else{
+                val errorResponse: ErrorResponse = throwable.response()?.body() as ErrorResponse
+                return Resource.GenericError(errorResponse)
+//                    }
+            }
             else -> {
                 return Resource.Error(Exception())
             }

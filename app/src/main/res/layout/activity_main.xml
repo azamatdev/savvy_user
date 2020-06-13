@@ -28,10 +28,10 @@
         android:id="@+id/coordinatorLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintBottom_toBottomOf="parent"
         >
 
         <fragment
@@ -53,13 +53,35 @@
         app:menu="@menu/bottom_menu"
         app:elevation="6dp"
         android:background="@color/background1"
-        app:labelVisibilityMode="labeled"
         app:itemIconTint="@color/selector_bottom_navigation_color"
         app:itemTextColor="@color/selector_bottom_navigation_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         />
+
+
+    <RelativeLayout
+        android:id="@+id/loader_layout"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="gone"
+        android:focusableInTouchMode="true"
+        android:background="#50AFB2BE"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            app:lottie_rawRes="@raw/loader"
+            app:lottie_speed="3"
+            android:layout_centerInParent="true"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            />
+
+    </RelativeLayout>
 
 
 
