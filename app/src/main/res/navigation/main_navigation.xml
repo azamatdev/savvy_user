@@ -66,10 +66,20 @@
         android:id="@+id/navigation_login"
         android:name="uz.mymax.savvyenglish.ui.auth.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" />
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_navigation_login_to_navigation_topics"
+            app:destination="@id/navigation_topics"
+            app:popUpTo="@id/navigation_login" />
+    </fragment>
     <fragment
         android:id="@+id/navigation_signup"
         android:name="uz.mymax.savvyenglish.ui.auth.SignUpFragment"
         android:label="SignUpFragment"
-        tools:layout="@layout/fragment_sign_up"/>
+        tools:layout="@layout/fragment_sign_up">
+        <action
+            android:id="@+id/action_navigation_signup_to_navigation_topics"
+            app:destination="@id/navigation_topics"
+            app:popUpTo="@id/navigation_topics" />
+    </fragment>
 </navigation>

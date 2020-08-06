@@ -47,6 +47,7 @@ class SignUpFragment : BaseFragment() {
                     is Resource.Success -> {
                         hideLoading()
                         PrefManager.saveToken(requireContext(), resource.data.authToken)
+                        findNavController().navigate(R.id.action_navigation_signup_to_navigation_topics)
                     }
                     is Resource.Error -> {
                         hideLoading()

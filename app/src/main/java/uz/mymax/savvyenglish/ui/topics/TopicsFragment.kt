@@ -6,6 +6,7 @@ import android.view.*
 import android.view.animation.AnimationUtils
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_topics.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -33,7 +34,12 @@ class TopicsFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_topics, container, false)
+        return if(storedView == null) {
+            storedView = inflater.inflate(R.layout.fragment_topics, container, false)
+            initRecycler(storedView)
+            storedView
+        } else
+            storedView
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,7 +50,6 @@ class TopicsFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initRecycler()
 
         topicsSwipeRefreshLayout.setOnRefreshListener {
             viewModel.fetchTopics()
@@ -74,17 +79,15 @@ class TopicsFragment : BaseFragment() {
                 }
             }
         })
-        if (adapter.itemCount == 0 && storedView == null) {
-            viewModel.fetchTopics()
-            storedView = view
-        }
+        if(adapter.itemCount == 0)
+        viewModel.fetchTopics()
     }
 
-    private fun initRecycler() {
+    private fun initRecycler(view: View?) {
         adapter = TopicsAdapter { position -> onAdapterCallback(position) }
-        topicsRecycler.layoutAnimation =
+        view?.findViewById<RecyclerView>(R.id.topicsRecycler)?.layoutAnimation =
             AnimationUtils.loadLayoutAnimation(requireContext(), R.anim.layout_animation_fall_down)
-        topicsRecycler.adapter = TopicsPlaceholderAdapter()
+        view?.findViewById<RecyclerView>(R.id.topicsRecycler)?.adapter = TopicsPlaceholderAdapter()
 
     }
 

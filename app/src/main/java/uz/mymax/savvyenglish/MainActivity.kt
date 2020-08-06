@@ -61,6 +61,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_tests,
                 R.id.navigation_extras,
                 R.id.navigation_profile -> {
+                    toolbar.show()
                     toolbar.setNavigationIcon(null)
                     bottomNavigationView.show()
                 }
