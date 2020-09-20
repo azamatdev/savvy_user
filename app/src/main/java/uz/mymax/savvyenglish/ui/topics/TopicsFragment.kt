@@ -20,7 +20,7 @@ import uz.mymax.savvyenglish.ui.base.BaseFragment
 import uz.mymax.savvyenglish.ui.lessons.LessonViewModel
 import uz.mymax.savvyenglish.ui.topics.adapter.TopicsAdapter
 import uz.mymax.savvyenglish.ui.topics.adapter.TopicsPlaceholderAdapter
-import uz.mymax.savvyenglish.utils.show
+import uz.mymax.savvyenglish.utils.makeVisible
 
 
 class TopicsFragment : BaseFragment() {
@@ -92,7 +92,7 @@ class TopicsFragment : BaseFragment() {
     }
 
     private fun showSwipeRefreshLoading() {
-        topicsSwipeRefreshLayout.show()
+        topicsSwipeRefreshLayout.makeVisible()
         topicsSwipeRefreshLayout.isRefreshing = true
     }
 

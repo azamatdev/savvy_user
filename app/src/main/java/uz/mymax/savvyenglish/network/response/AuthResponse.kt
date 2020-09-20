@@ -1,6 +1,9 @@
 package uz.mymax.savvyenglish.network.response
 
+import com.squareup.moshi.Json
+
 data class AuthResponse(
-    val authToken : String,
-    val userName : String
+    @Json(name = "token")
+    val token: String,
+    val userName: String
 )

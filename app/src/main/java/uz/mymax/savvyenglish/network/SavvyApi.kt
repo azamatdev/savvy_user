@@ -13,12 +13,12 @@ import uz.mymax.savvyenglish.network.response.TopicResponse
 interface SavvyApi {
 
     @POST("auth/users")
-    fun signUpAsync(@Body registerDto: RegisterDto) : Deferred<Response<AuthResponse>>
+    suspend fun signUp(@Body registerDto: RegisterDto): Response<AuthResponse>
 
-    @POST("auth/login")
-    fun loginAsync(@Body loginDto: LoginDto) : Deferred<Response<AuthResponse>>
+    @POST("api/login")
+    suspend fun login(@Body loginDto: LoginDto): Response<AuthResponse>
 
 
     @GET("topic/sorted")
-    fun geTopicsAsync() : Deferred<Response<List<TopicResponse>>>
+    suspend fun geTopics(): Response<List<TopicResponse>>
 }

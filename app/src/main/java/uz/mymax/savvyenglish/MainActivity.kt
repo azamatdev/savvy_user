@@ -1,7 +1,6 @@
 package uz.mymax.savvyenglish
 
 import android.os.Bundle
-import android.view.View
 import android.view.ViewTreeObserver
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -42,10 +41,10 @@ class MainActivity : AppCompatActivity() {
         mainNavController = mainNavHostFragment.findNavController()
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_topics,
-                R.id.navigation_tests,
-                R.id.navigation_extras,
-                R.id.navigation_profile
+                R.id.destTopics,
+                R.id.destTests,
+                R.id.destExtra,
+                R.id.destProfile
             )
         )
         setupActionBarWithNavController(mainNavController, appBarConfiguration)
@@ -57,18 +56,18 @@ class MainActivity : AppCompatActivity() {
             log("DestinationID: ${destination.label}")
 
             when (destination.id) {
-                R.id.navigation_topics,
-                R.id.navigation_tests,
-                R.id.navigation_extras,
-                R.id.navigation_profile -> {
-                    toolbar.show()
+                R.id.destTopics,
+                R.id.destTests,
+                R.id.destExtra,
+                R.id.destProfile -> {
+                    toolbar.makeVisible()
                     toolbar.setNavigationIcon(null)
-                    bottomNavigationView.show()
+                    bottomNavigationView.makeVisible()
                 }
-                R.id.navigation_signup,
-                R.id.navigation_login -> {
+                R.id.destSignUp,
+                R.id.destLogin -> {
                     log("Login ")
-                    toolbar.hide()
+                    toolbar.hideVisibility()
                     bottomNavigationView.slideDown()
                 }
                 else -> {
@@ -91,10 +90,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun showBottomNavigationOnlyAtTopLevel() {
         when (mainNavController.currentDestination?.id) {
-            R.id.navigation_topics,
-            R.id.navigation_tests,
-            R.id.navigation_extras,
-            R.id.navigation_profile -> bottomNavigationView.slideUp()
+            R.id.destTopics,
+            R.id.destTests,
+            R.id.destExtra,
+            R.id.destProfile -> bottomNavigationView.slideUp()
             else -> bottomNavigationView.slideDown()
         }
     }
@@ -102,9 +101,9 @@ class MainActivity : AppCompatActivity() {
     private fun hideBottomNavigationForSearch() {
         val heightDiff = rootContainerView.rootView.height - rootContainerView.height
         if (heightDiff > this@MainActivity.dpToPx(200f)) { // if more than 200 dp, it's probably a keyboard...
-            bottomNavigationView.hide()
+            bottomNavigationView.hideVisibility()
         } else {
-            bottomNavigationView.show()
+            bottomNavigationView.makeVisible()
         }
     }
 }

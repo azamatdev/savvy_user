@@ -3,28 +3,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/navigation_topics"
+        android:id="@+id/destTopics"
         android:icon="@drawable/ic_bachelors_degree"
         app:showAsAction="always"
         android:title="@string/topics_title"
         />
 
     <item
-        android:id="@+id/navigation_tests"
+        android:id="@+id/destTests"
         android:icon="@drawable/ic_lightbulb"
         app:showAsAction="always"
         android:title="@string/tests_title"
         />
 
     <item
-        android:id="@+id/navigation_extras"
+        android:id="@+id/destExtra"
         android:icon="@drawable/ic_glosary"
         app:showAsAction="always"
         android:title="@string/extra_title"
         />
 
     <item
-        android:id="@+id/navigation_profile"
+        android:id="@+id/destProfile"
         android:icon="@drawable/ic_profile"
         app:showAsAction="always"
         android:title="@string/profile_title"

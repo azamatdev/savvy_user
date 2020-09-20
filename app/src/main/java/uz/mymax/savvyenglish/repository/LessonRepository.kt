@@ -2,29 +2,26 @@ package uz.mymax.savvyenglish.repository
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import okhttp3.ResponseBody
-import retrofit2.Converter
+import retrofit2.Retrofit
 import uz.mymax.savvyenglish.network.SavvyApi
 import uz.mymax.savvyenglish.network.dto.LoginDto
 import uz.mymax.savvyenglish.network.dto.RegisterDto
-import uz.mymax.savvyenglish.network.response.ErrorResponse
-import uz.mymax.savvyenglish.utils.safeApiCall2
+import uz.mymax.savvyenglish.utils.safeApiCall
 
 class LessonRepository constructor(
-    var errorConverter: Converter<ResponseBody, ErrorResponse>,
     private val api: SavvyApi
 ) {
 
     suspend fun login(loginDto: LoginDto) = withContext(Dispatchers.IO) {
-        safeApiCall2(errorConverter) { api.loginAsync(loginDto).await() }
+        safeApiCall { api.login(loginDto) }
     }
 
     suspend fun signUp(registerDto: RegisterDto) = withContext(Dispatchers.IO) {
-        safeApiCall2(errorConverter) { api.signUpAsync(registerDto).await() }
+        safeApiCall { api.signUp(registerDto) }
     }
 
     suspend fun fetchSortedTopics() = withContext(Dispatchers.IO) {
-        safeApiCall2(errorConverter) { api.geTopicsAsync().await() }
+        safeApiCall { api.geTopics() }
     }
 
 

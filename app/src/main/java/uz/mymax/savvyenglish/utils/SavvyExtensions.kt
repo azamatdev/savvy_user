@@ -12,7 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
+import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.core.widget.doOnTextChanged
@@ -30,6 +30,7 @@ import uz.mymax.savvyenglish.R
 fun Fragment.log(message: String, tag: String = "DefaultTag") {
     Log.d(tag, message)
 }
+
 fun Context.log(message: String, tag: String = "DefaultTag") {
     Log.d(tag, message)
 }
@@ -42,11 +43,11 @@ fun View.slideDown() {
     this.animate().translationY(500f).alpha(0.0f).setDuration(50).setInterpolator(
         AccelerateDecelerateInterpolator()
     )
-    this.hide()
+    this.hideVisibility()
 }
 
 fun View.slideUp() {
-    this.show()
+    this.makeVisible()
     this.animate().translationY(0f).alpha(1.0f).setDuration(150).setInterpolator(
         AccelerateDecelerateInterpolator()
     )
@@ -55,7 +56,7 @@ fun View.slideUp() {
 /**
  * Hide the view. (visibility = View.INVISIBLE)
  */
-fun View.hide(): View {
+fun View.hideVisibility(): View {
     if (visibility != View.GONE) {
         visibility = View.GONE
         Log.d("DefaultTag", "actually hidden")
@@ -63,7 +64,7 @@ fun View.hide(): View {
     return this
 }
 
-fun View.show(): View {
+fun View.makeVisible(): View {
     if (visibility != View.VISIBLE) {
         visibility = View.VISIBLE
     }
@@ -84,7 +85,7 @@ fun Activity.hideSoftKeyboard() {
     }
 }
 
-fun Fragment.hideKeyboard(){
+fun Fragment.hideKeyboard() {
     activity?.hideSoftKeyboard()
 }
 
@@ -146,16 +147,31 @@ fun Context.dpToPx(valueInDp: Float): Float {
     return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, valueInDp, metrics)
 }
 
-fun TextInputEditText.hideErrorIfFilled(){
-    this.doOnTextChanged{ text, start, before, count ->
-        if(this.text.toString().isNotEmpty() and !this.error.isNullOrEmpty()){
+fun TextInputEditText.hideErrorIfFilled() {
+    this.doOnTextChanged { text, start, before, count ->
+        if (this.text.toString().isNotEmpty() and !this.error.isNullOrEmpty()) {
             this.error = null
         }
     }
 }
 
-fun TextInputEditText.showErrorIfNotFilled(){
-    if(this.text.toString().isEmpty()){
+fun EditText.hideErrorIfFilled() {
+    if (this.text.toString().isEmpty()) {
         this.error = context.getString(R.string.warning_fill_the_fields)
     }
 }
+
+fun TextInputEditText.showErrorIfNotFilled() {
+    if (this.text.toString().isEmpty()) {
+        this.error = context.getString(R.string.warning_fill_the_fields)
+    }
+}
+
+fun EditText.showErrorIfNotFilled() {
+    if (this.text.toString().isEmpty()) {
+        this.error = context.getString(R.string.warning_fill_the_fields)
+    }
+}
+
+fun Fragment.showSnackbar(message: String) =
+    Snackbar.make(requireView(), message, Snackbar.LENGTH_SHORT).show()

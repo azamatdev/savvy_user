@@ -26,20 +26,14 @@ abstract class BaseFragment() : Fragment() {
     }
     fun showLoading(){
         if(context is MainActivity){
-            (context as MainActivity).findViewById<RelativeLayout>(R.id.loader_layout).show()
+            (context as MainActivity).findViewById<RelativeLayout>(R.id.loader_layout).makeVisible()
         }
     }
     fun hideLoading(){
         if(context is MainActivity){
-            (context as MainActivity).findViewById<RelativeLayout>(R.id.loader_layout).hide()
+            (context as MainActivity).findViewById<RelativeLayout>(R.id.loader_layout).hideVisibility()
         }
     }
 
-//    protected fun acknowledgeResourceError(error: Resource.Error) {
-//        if (!error.isConnected) {
-//            acknowledgeConnectionError()
-//        } else {
-//            error.exception.message?.let { acknowledgeError(it) } ?: acknowledgeGenericError()
-//        }
-//    }
+
 }

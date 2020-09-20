@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit
 
 
 //private const val BASE_URL: String = "http://192.168.0.100:8080/"
-private const val BASE_URL: String = "https://safe-reaches-77218.herokuapp.com"
+private const val BASE_URL: String = "http://95.217.160.86:8080/"
 
 val networkModule = module {
 
@@ -29,7 +29,6 @@ val networkModule = module {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(get<OkHttpClient>())
-            .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .addConverterFactory(MoshiConverterFactory.create())
             .build()
     }
@@ -56,13 +55,6 @@ val networkModule = module {
             clientBuilder.addInterceptor(ChuckInterceptor(get()))
         }
         clientBuilder.build()
-    }
-
-    factory<Converter<ResponseBody, ErrorResponse>> {
-        get<Retrofit>().responseBodyConverter(
-            ErrorResponse::class.java,
-            arrayOfNulls<Annotation>(0)
-        )
     }
 
 

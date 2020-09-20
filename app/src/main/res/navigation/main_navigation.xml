@@ -3,83 +3,55 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation"
-    app:startDestination="@id/navigation_login">
+    app:startDestination="@id/destLogin">
 
-    <!--    <fragment-->
-    <!--        android:id="@+id/topicsFragment"-->
-    <!--        android:name="uz.mymax.savvyenglish.ui.topics.TopicsFragment"-->
-    <!--        android:label="fragment_topics"-->
-    <!--        tools:layout="@layout/fragment_topics" >-->
-    <!--        <action-->
-    <!--            android:id="@+id/action_topicsFragment_to_lessonFragment"-->
-    <!--            app:destination="@id/lessonFragment" />-->
-    <!--    </fragment>-->
-    <!--    <fragment-->
-    <!--        android:id="@+id/testsFragment"-->
-    <!--        android:name="uz.mymax.savvyenglish.ui.tests.TestsFragment"-->
-    <!--        android:label="fragment_tests"-->
-    <!--        tools:layout="@layout/fragment_tests" />-->
-    <!--    <fragment-->
-    <!--        android:id="@+id/extrasFragment"-->
-    <!--        android:name="uz.mymax.savvyenglish.ui.extras.ExtrasFragment"-->
-    <!--        android:label="fragment_extras"-->
-    <!--        tools:layout="@layout/fragment_extras" />-->
-    <!--    <fragment-->
-    <!--        android:id="@+id/profileFragment"-->
-    <!--        android:name="uz.mymax.savvyenglish.ui.profile.ProfileFragment"-->
-    <!--        android:label="fragment_profile"-->
-    <!--        tools:layout="@layout/fragment_profile" />-->
-    <!--    <fragment-->
-    <!--        android:id="@+id/lessonFragment"-->
-    <!--        android:name="uz.mymax.savvyenglish.ui.lessons.LessonFragment"-->
-    <!--        android:label="fragment_lesson"-->
-    <!--        tools:layout="@layout/fragment_lesson" />-->
     <fragment
-        android:id="@+id/navigation_lesson"
+        android:id="@+id/destLesson"
         android:name="uz.mymax.savvyenglish.ui.lessons.LessonFragment"
         tools:layout="@layout/fragment_lesson" />
     <fragment
-        android:id="@+id/navigation_profile"
+        android:id="@+id/destProfile"
         android:name="uz.mymax.savvyenglish.ui.profile.ProfileFragment"
         android:label="@string/profile_title"
         tools:layout="@layout/fragment_profile" />
     <fragment
-        android:id="@+id/navigation_extras"
+        android:id="@+id/destExtra"
         android:name="uz.mymax.savvyenglish.ui.extras.ExtrasFragment"
         android:label="@string/extra_title"
         tools:layout="@layout/fragment_extras" />
     <fragment
-        android:id="@+id/navigation_tests"
+        android:id="@+id/destTests"
         android:name="uz.mymax.savvyenglish.ui.tests.TestsFragment"
         android:label="@string/tests_title"
         tools:layout="@layout/fragment_tests" />
     <fragment
-        android:id="@+id/navigation_topics"
+        android:id="@+id/destTopics"
         android:name="uz.mymax.savvyenglish.ui.topics.TopicsFragment"
         android:label="@string/topics_title"
         tools:layout="@layout/fragment_topics">
         <action
             android:id="@+id/action_navigation_topics_to_navigation_lesson"
-            app:destination="@id/navigation_lesson" />
+            app:destination="@id/destLesson" />
     </fragment>
     <fragment
-        android:id="@+id/navigation_login"
+        android:id="@+id/destLogin"
         android:name="uz.mymax.savvyenglish.ui.auth.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
+        tools:layout="@layout/fragment_login"
+        app:startDestination="@id/action_navigation_login_to_navigation_topics">
         <action
             android:id="@+id/action_navigation_login_to_navigation_topics"
-            app:destination="@id/navigation_topics"
-            app:popUpTo="@id/navigation_login" />
+            app:destination="@id/destTopics"
+            app:popUpTo="@id/destLogin" />
     </fragment>
     <fragment
-        android:id="@+id/navigation_signup"
+        android:id="@+id/destSignUp"
         android:name="uz.mymax.savvyenglish.ui.auth.SignUpFragment"
         android:label="SignUpFragment"
         tools:layout="@layout/fragment_sign_up">
         <action
             android:id="@+id/action_navigation_signup_to_navigation_topics"
-            app:destination="@id/navigation_topics"
-            app:popUpTo="@id/navigation_topics" />
+            app:destination="@id/destTopics"
+            app:popUpTo="@id/destTopics" />
     </fragment>
 </navigation>

@@ -14,7 +14,6 @@ import uz.mymax.savvyenglish.R
 import uz.mymax.savvyenglish.network.Resource
 import uz.mymax.savvyenglish.network.dto.RegisterDto
 import uz.mymax.savvyenglish.ui.base.BaseFragment
-import uz.mymax.savvyenglish.utils.PrefManager
 import uz.mymax.savvyenglish.utils.hideErrorIfFilled
 import uz.mymax.savvyenglish.utils.hideKeyboard
 import uz.mymax.savvyenglish.utils.showErrorIfNotFilled
@@ -38,7 +37,7 @@ class SignUpFragment : BaseFragment() {
 
         authViewModel.registerResource.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let { resource ->
-                when(resource){
+                when (resource) {
                     is Resource.Loading -> {
                         Log.d("LiveDataTag", "Loading")
                         hideKeyboard()
@@ -46,7 +45,7 @@ class SignUpFragment : BaseFragment() {
                     }
                     is Resource.Success -> {
                         hideLoading()
-                        PrefManager.saveToken(requireContext(), resource.data.authToken)
+//                        PrefManager.saveToken(requireContext(), resource.data.authToken)
                         findNavController().navigate(R.id.action_navigation_signup_to_navigation_topics)
                     }
                     is Resource.Error -> {
@@ -66,46 +65,45 @@ class SignUpFragment : BaseFragment() {
         }
 
 
-        btn_sign_up.setOnClickListener {
-            if(allFieldFilled()){
-                if(passwordConfirmed()){
+        signUpButton.setOnClickListener {
+            if (allFieldFilled()) {
+                if (passwordConfirmed()) {
                     authViewModel.registerUser(getRegisterDto())
-                }
-                else{
+                } else {
                     input_confirm_password.error = "Password does not match!"
                 }
-            }
-            else{
+            } else {
                 input_full_name.showErrorIfNotFilled()
-                input_username.showErrorIfNotFilled()
+                usernameInput.showErrorIfNotFilled()
                 input_email.showErrorIfNotFilled()
-                input_password.showErrorIfNotFilled()
+                passwordInput.showErrorIfNotFilled()
                 input_confirm_password.showErrorIfNotFilled()
             }
         }
 
         input_full_name.hideErrorIfFilled()
-        input_username.hideErrorIfFilled()
+        usernameInput.hideErrorIfFilled()
         input_email.hideErrorIfFilled()
-        input_password.hideErrorIfFilled()
+        passwordInput.hideErrorIfFilled()
         input_confirm_password.hideErrorIfFilled()
     }
 
-    private fun passwordConfirmed() = input_password.text.toString().equals(input_confirm_password.text.toString())
+    private fun passwordConfirmed() =
+        passwordInput.text.toString().equals(input_confirm_password.text.toString())
 
     private fun allFieldFilled() =
         input_full_name.text.toString().isNotEmpty() and
-                input_username.text.toString().isNotEmpty() and
+                usernameInput.text.toString().isNotEmpty() and
                 input_email.text.toString().isNotEmpty() and
-                input_password.text.toString().isNotEmpty() and
+                passwordInput.text.toString().isNotEmpty() and
                 input_confirm_password.text.toString().isNotEmpty()
 
 
     private fun getRegisterDto() = RegisterDto(
         name = input_full_name.text.toString(),
-        userName = input_username.text.toString(),
+        userName = usernameInput.text.toString(),
         email = input_email.text.toString(),
         phone = input_phone_number.text.toString().replace(" ", ""),
-        password = input_password.text.toString()
+        password = passwordInput.text.toString()
     )
 }

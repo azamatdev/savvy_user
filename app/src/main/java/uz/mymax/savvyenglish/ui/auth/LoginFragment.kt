@@ -1,29 +1,21 @@
 package uz.mymax.savvyenglish.ui.auth
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.widget.addTextChangedListener
-import androidx.core.widget.doAfterTextChanged
-import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_login.*
-import kotlinx.android.synthetic.main.fragment_sign_up.btn_sign_up
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 import uz.mymax.savvyenglish.R
 import uz.mymax.savvyenglish.network.Resource
 import uz.mymax.savvyenglish.network.dto.LoginDto
-import uz.mymax.savvyenglish.ui.base.BaseFragment
 import uz.mymax.savvyenglish.utils.*
 
-class LoginFragment : BaseFragment() {
+class LoginFragment : Fragment() {
 
     private val authViewModel: AuthViewModel by viewModel()
     override fun onCreateView(
@@ -38,53 +30,66 @@ class LoginFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         authViewModel.loginResource.observe(viewLifecycleOwner, Observer {
-           it.getContentIfNotHandled()?.let { resource ->
-               when(resource){
-                   is Resource.Loading -> {
-                       Log.d("LiveDataTag", "Loading")
-                       hideKeyboard()
-                       showLoading()
-                   }
-                   is Resource.Success -> {
-                       hideLoading()
-                       PrefManager.saveToken(requireContext(), resource.data.authToken)
-                       findNavController().navigate(R.id.action_navigation_login_to_navigation_topics)
-                   }
-                   is Resource.Error -> {
-                       hideLoading()
-                       handleErrors(exception = resource.exception)
-                   }
-                   is Resource.GenericError -> {
-                       hideLoading()
-                       showSnackbar(resource.errorResponse.message)
-                   }
-               }
-           }
+            it.getContentIfNotHandled()?.let { resource ->
+                when (resource) {
+                    is Resource.Loading -> {
+                        changeUiState(true)
+                        hideKeyboard()
+                    }
+                    is Resource.Success -> {
+                        changeUiState(false)
+                        showSnackbar("Success:")
+//                        findNavController().navigate(R.id.action_navigation_login_to_navigation_topics)
+                    }
+                    is Resource.Error -> {
+                        changeUiState(false)
+                        resource.exception.message?.let { it1 -> showSnackbar(it1) }
+                    }
+                    is Resource.GenericError -> {
+                        changeUiState(false)
+                        showSnackbar(resource.errorResponse.status.toString() + ":" + resource.errorResponse.error)
+                    }
+                }
+            }
 
 
         })
 
-        btn_sign_up.setOnClickListener {
-            findNavController().navigate(R.id.navigation_signup)
+        signUpButton.setOnClickListener {
+            findNavController().navigate(R.id.destSignUp)
         }
 
-        btn_login.setOnClickListener {
+        loginButton.setOnClickListener {
             if (allFieldsFilled()) {
                 authViewModel.loginUser(getLoginDto())
             } else {
-                input_username.showErrorIfNotFilled()
-                input_password.showErrorIfNotFilled()
+                usernameInput.showErrorIfNotFilled()
+                passwordInput.showErrorIfNotFilled()
             }
         }
 
-        input_username.hideErrorIfFilled()
-        input_password.hideErrorIfFilled()
+        usernameInput.hideErrorIfFilled()
+        passwordInput.hideErrorIfFilled()
+
+        fbLogin.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_login_to_navigation_topics)
+        }
     }
 
     private fun getLoginDto() =
-        LoginDto(input_username.text.toString(), input_password.text.toString())
+        LoginDto(usernameInput.text.toString(), passwordInput.text.toString())
 
     private fun allFieldsFilled() =
-        input_username.text.toString().isNotEmpty() and input_password.text.toString().isNotEmpty()
+        usernameInput.text.toString().isNotEmpty() and passwordInput.text.toString().isNotEmpty()
+
+    private fun changeUiState(isLoading: Boolean) {
+        if (isLoading) {
+            progressIndicator.makeVisible()
+            loginButton.isEnabled = false
+        } else {
+            progressIndicator.hideVisibility()
+            loginButton.isEnabled = true
+        }
+    }
 
 }

@@ -33,7 +33,7 @@ class ProfileFragment : Fragment() {
             .into(profilePicture)
 
         btnLogout.setOnClickListener {
-            findNavController().navigate(R.id.navigation_login)
+            findNavController().navigate(R.id.destLogin)
         }
     }
 }

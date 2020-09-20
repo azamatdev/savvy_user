@@ -4,15 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:scrollbars="none"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:scrollbars="none">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:nestedScrollingEnabled="true"
         android:background="@color/background2"
+        android:nestedScrollingEnabled="true"
         tools:context=".ui.auth.SignUpFragment">
 
         <ImageView
@@ -39,13 +39,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
             android:layout_marginTop="24dp"
+            android:layout_marginEnd="32dp"
             android:orientation="vertical"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btn_back"
-            >
+            app:layout_constraintTop_toBottomOf="@id/btn_back">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -75,7 +74,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/input_full_name"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/white"
@@ -106,8 +105,8 @@
                     android:src="@drawable/ic_account" />
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/input_username"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+                    android:id="@+id/usernameInput"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/white"
@@ -138,7 +137,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/input_email"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/white"
@@ -170,7 +169,7 @@
 
                 <uz.mymax.savvyenglish.views.PhoneNumberInputEditText
                     android:id="@+id/input_phone_number"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/white"
@@ -201,8 +200,8 @@
                     android:src="@drawable/ic_password" />
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/input_password"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+                    android:id="@+id/passwordInput"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/white"
@@ -234,7 +233,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/input_confirm_password"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/white"
@@ -252,25 +251,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="24dp" />
 
-            <RelativeLayout
-                android:id="@+id/btn_sign_up"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/signUpButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_green_rounded_sharp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
                 android:clickable="true"
+                android:elevation="2dp"
                 android:focusable="true"
+                android:fontFamily="@font/sans_bold"
                 android:paddingTop="8dp"
-                android:paddingBottom="8dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:fontFamily="@font/sans_bold"
-                    android:text="SIGN UP"
-                    android:textColor="@android:color/white"
-                    android:textSize="18sp" />
-            </RelativeLayout>
+                android:paddingBottom="8dp"
+                android:text="Login"
+                app:backgroundTint="@color/greenMain"
+                app:cornerRadius="16dp" />
         </LinearLayout>
 
 
