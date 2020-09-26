@@ -24,11 +24,12 @@
 
     <color name="placeHolderItemColor">#DADADA</color>
 
-    <color name="leftViewColor1">#673AB7</color>
+    <color name="bottomColor">#DBEFFF</color>
     <color name="leftViewColor2">#4D4E87</color>
     <color name="leftViewColor3">#1A99F6</color>
     <color name="leftViewColor4">#F69E1A</color>
     <color name="leftViewColor5">#1AF697</color>
     <color name="leftViewColor6">#FF7C61</color>
     <color name="leftViewColor7">#FFCE1A</color>
+    <color name="light_indigo">#A2A2D4</color>
 </resources>

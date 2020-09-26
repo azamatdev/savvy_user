@@ -1,8 +1,10 @@
 package uz.mymax.savvyenglish.network.response
 
 
-data class TopicResponse(
+
+data class SubtopicResponse(
     val id: Int,
     val title: String,
-    val subtopicCount: Int
+    val description: String,
+    val parentId: Int
 )

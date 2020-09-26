@@ -26,10 +26,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val mainToolbar = findViewById<Toolbar>(R.id.toolbar)
-        setSupportActionBar(mainToolbar)
+        setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        mainToolbar.setNavigationIcon(R.drawable.ic_back)
+        toolbar.setNavigationIcon(R.drawable.ic_back)
 
         setUpBottomNavigation()
 
@@ -54,7 +53,7 @@ class MainActivity : AppCompatActivity() {
             //set it here for all the destinations, or inside the switch statement if you want to change it based on destination
 
             log("DestinationID: ${destination.label}")
-
+            toolbar.title = destination.label
             when (destination.id) {
                 R.id.destTopics,
                 R.id.destTests,

@@ -1,6 +1,5 @@
 package uz.mymax.savvyenglish.network
 
-import kotlinx.coroutines.Deferred
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -18,7 +17,11 @@ interface SavvyApi {
     @POST("api/login")
     suspend fun login(@Body loginDto: LoginDto): Response<AuthResponse>
 
-
-    @GET("topic/sorted")
+    @GET("api/topics")
     suspend fun geTopics(): Response<List<TopicResponse>>
+
+    @GET("api/subtopics")
+    suspend fun getSubtopics(): Response<List<TopicResponse>>
+
+
 }

@@ -2,13 +2,10 @@ package uz.mymax.savvyenglish.network
 
 import uz.mymax.savvyenglish.exceptions.NoConnectivityException
 import android.content.Context
-import android.util.Log
 
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
 import okhttp3.Response
-import uz.mymax.savvyenglish.utils.isNetworkAvailable
-import uz.mymax.savvyenglish.utils.isNetworkConnectedSuspend
 
 
 class ConnectivityInterceptor(val context: Context) : Interceptor {

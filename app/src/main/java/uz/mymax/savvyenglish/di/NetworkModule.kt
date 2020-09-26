@@ -39,11 +39,14 @@ val networkModule = module {
             .writeTimeout(1000, TimeUnit.SECONDS)
             .retryOnConnectionFailure(false)
             .addInterceptor(ConnectivityInterceptor(get()))
-            //If token is added then add the auth-token for every request
             .addInterceptor { chain ->
                 try {
                     val request = chain.request().newBuilder()
                     request.addHeader("Content-type", "application/json")
+                    request.addHeader(
+                        "Authorization",
+                        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaG9ocnVoIiwicm9sZXMiOlsiQURNSU4iXSwiaWF0IjoxNjAxMTM3MjgwLCJleHAiOjE2MDExODA0ODB9.D205jng_3K23Z1kcFb0c4LlwzfVymm64t-0PsMLfme0"
+                    )
                     return@addInterceptor chain.proceed(request.build())
                 } catch (e: Throwable) {
 

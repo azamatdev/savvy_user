@@ -1,4 +1,4 @@
-package uz.mymax.savvyenglish.utils
+package uz.mymax.savvyenglish.network
 
 import android.content.Context
 import android.net.ConnectivityManager
@@ -9,15 +9,9 @@ import com.google.gson.Gson
 import com.google.gson.JsonParser
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import okhttp3.ResponseBody
-import org.json.JSONObject
-import retrofit2.Converter
 import retrofit2.HttpException
 import retrofit2.Response
-import retrofit2.Retrofit
-import uz.mymax.savvyenglish.exceptions.EmptyBodyException
 import uz.mymax.savvyenglish.exceptions.NoConnectivityException
-import uz.mymax.savvyenglish.network.Resource
 import uz.mymax.savvyenglish.network.response.ErrorResponse
 import java.io.IOException
 import java.lang.Exception

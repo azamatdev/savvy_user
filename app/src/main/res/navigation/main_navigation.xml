@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation"
-    app:startDestination="@id/destLogin">
+    app:startDestination="@id/destTopics">
 
     <fragment
-        android:id="@+id/destLesson"
-        android:name="uz.mymax.savvyenglish.ui.lessons.LessonFragment"
-        tools:layout="@layout/fragment_lesson" />
+        android:id="@+id/destSubtopic"
+        android:name="uz.mymax.savvyenglish.ui.topics.SubtopicsFragment"
+        tools:layout="@layout/fragment_subtopic" />
     <fragment
         android:id="@+id/destProfile"
         android:name="uz.mymax.savvyenglish.ui.profile.ProfileFragment"
@@ -31,14 +31,14 @@
         tools:layout="@layout/fragment_topics">
         <action
             android:id="@+id/action_navigation_topics_to_navigation_lesson"
-            app:destination="@id/destLesson" />
+            app:destination="@id/destSubtopic" />
     </fragment>
     <fragment
         android:id="@+id/destLogin"
         android:name="uz.mymax.savvyenglish.ui.auth.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login"
-        app:startDestination="@id/action_navigation_login_to_navigation_topics">
+        app:startDestination="@id/action_navigation_login_to_navigation_topics"
+        tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_navigation_login_to_navigation_topics"
             app:destination="@id/destTopics"

@@ -11,6 +11,8 @@ import kotlinx.android.synthetic.main.fragment_login.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 import uz.mymax.savvyenglish.R
+import uz.mymax.savvyenglish.data.saveToken
+import uz.mymax.savvyenglish.data.setLoggedIn
 import uz.mymax.savvyenglish.network.Resource
 import uz.mymax.savvyenglish.network.dto.LoginDto
 import uz.mymax.savvyenglish.utils.*
@@ -38,8 +40,10 @@ class LoginFragment : Fragment() {
                     }
                     is Resource.Success -> {
                         changeUiState(false)
-                        showSnackbar("Success:")
-//                        findNavController().navigate(R.id.action_navigation_login_to_navigation_topics)
+                        requireContext().saveToken(resource.data.token)
+                        requireContext().setLoggedIn(true)
+//                        showSnackbar("Success:")
+                        findNavController().navigate(R.id.action_navigation_login_to_navigation_topics)
                     }
                     is Resource.Error -> {
                         changeUiState(false)

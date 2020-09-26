@@ -3,7 +3,7 @@
     android:shape="rectangle">
 
     <corners
-        android:topLeftRadius="@dimen/topicCardCornerRadius"/>
-    <solid
-        android:color="@color/leftViewColor1"/>
+        android:bottomLeftRadius="8dp"
+        android:bottomRightRadius="8dp" />
+    <solid android:color="@color/bottomColor" />
 </shape>

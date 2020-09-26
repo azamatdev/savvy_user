@@ -2,6 +2,7 @@ package uz.mymax.savvyenglish.utils
 
 import android.app.Activity
 import android.content.Context
+import android.content.res.Resources
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.InsetDrawable
@@ -17,6 +18,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.android.synthetic.main.dialog_view.view.*
@@ -34,6 +36,12 @@ fun Fragment.log(message: String, tag: String = "DefaultTag") {
 fun Context.log(message: String, tag: String = "DefaultTag") {
     Log.d(tag, message)
 }
+
+val Int.dp: Int
+    get() = (this / Resources.getSystem().displayMetrics.density).toInt()
+
+val Int.px: Int
+    get() = (this * Resources.getSystem().displayMetrics.density).toInt()
 
 
 /**
@@ -175,3 +183,12 @@ fun EditText.showErrorIfNotFilled() {
 
 fun Fragment.showSnackbar(message: String) =
     Snackbar.make(requireView(), message, Snackbar.LENGTH_SHORT).show()
+
+fun SwipeRefreshLayout.hideLoading() {
+    this.isRefreshing = false
+}
+
+fun SwipeRefreshLayout.showLoading() {
+    this.isRefreshing = true
+}
+
