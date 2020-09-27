@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_topics.*
+import kotlinx.android.synthetic.main.fragment_topics.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 import uz.mymax.savvyenglish.R
@@ -21,22 +22,9 @@ import uz.mymax.savvyenglish.utils.showLoading
 
 class TopicsFragment : Fragment() {
 
-    private val viewModel: LessonViewModel by viewModel()
+    private val viewModel: TopicViewModel by viewModel()
     private lateinit var adapter: TopicsAdapter
     private var storedView: View? = null
-
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return if (storedView == null) {
-            storedView = inflater.inflate(R.layout.fragment_topics, container, false)
-            storedView
-        } else
-            storedView
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,17 +32,35 @@ class TopicsFragment : Fragment() {
         adapter = TopicsAdapter()
     }
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        if (storedView == null) {
+            storedView = inflater.inflate(R.layout.fragment_topics, container, false)
+            storedView!!.topicsRecycler.layoutAnimation =
+                AnimationUtils.loadLayoutAnimation(
+                    requireContext(),
+                    R.anim.layout_animation_fall_down
+                )
+            storedView!!.topicsRecycler.addItemDecoration(LinearVerticalDecoration())
+            storedView!!.topicsRecycler.adapter =
+                PlaceHolderAdapter(R.layout.item_topic_placeholder)
+            return storedView
+        } else
+            return storedView
+    }
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        topicsRecycler.adapter = PlaceHolderAdapter(R.layout.item_topic_placeholder)
         adapter.itemClickListener = {
-            findNavController().navigate(R.id.destSubtopic)
+            val action = TopicsFragmentDirections.actionDestTopicsToDestSubtopic()
+            action.topicId = it
+            findNavController().navigate(action)
         }
-
-        topicsRecycler.layoutAnimation =
-            AnimationUtils.loadLayoutAnimation(requireContext(), R.anim.layout_animation_fall_down)
-        topicsRecycler.addItemDecoration(LinearVerticalDecoration())
         viewModel.topicsResource.observe(viewLifecycleOwner, Observer { resource ->
             when (resource) {
                 is Resource.Loading -> {

@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.item_topic.view.*
 import uz.mymax.savvyenglish.databinding.ItemTopicBinding
 import uz.mymax.savvyenglish.network.response.TopicResponse
 
@@ -30,7 +31,7 @@ class TopicsAdapter() :
     override fun onBindViewHolder(holder: TopicsAdapter.TopicsVH, position: Int) {
         holder.binding?.topic = topicList!![position]
 
-        holder.itemView.setOnClickListener {
+        holder.itemView.child.setOnClickListener {
             itemClickListener?.invoke(topicList!![position].id)
         }
     }

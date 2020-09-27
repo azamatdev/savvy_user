@@ -29,9 +29,9 @@ class LessonRepository constructor(
         emit(safeApiCall { api.geTopics() })
     }
 
-    suspend fun fetchSubtopics() = flow {
+    suspend fun fetchSubtopics(topicId : String) = flow {
         emit(Resource.Loading)
-        emit(safeApiCall { api.getSubtopics() })
+        emit(safeApiCall { api.getSubtopics(topicId) })
     }
 
 }

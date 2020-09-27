@@ -8,7 +8,12 @@
     <fragment
         android:id="@+id/destSubtopic"
         android:name="uz.mymax.savvyenglish.ui.topics.SubtopicsFragment"
-        tools:layout="@layout/fragment_subtopic" />
+        tools:layout="@layout/fragment_subtopic">
+        <argument
+            android:name="topicId"
+            android:defaultValue="0"
+            app:argType="integer" />
+    </fragment>
     <fragment
         android:id="@+id/destProfile"
         android:name="uz.mymax.savvyenglish.ui.profile.ProfileFragment"
@@ -29,9 +34,11 @@
         android:name="uz.mymax.savvyenglish.ui.topics.TopicsFragment"
         android:label="@string/topics_title"
         tools:layout="@layout/fragment_topics">
+
         <action
-            android:id="@+id/action_navigation_topics_to_navigation_lesson"
+            android:id="@+id/action_destTopics_to_destSubtopic"
             app:destination="@id/destSubtopic" />
+
     </fragment>
     <fragment
         android:id="@+id/destLogin"

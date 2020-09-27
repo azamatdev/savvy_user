@@ -7,43 +7,17 @@
     android:background="@color/background2"
     tools:context=".ui.profile.ProfileFragment">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/profileToolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimary"
-        app:elevation="4dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                style="@style/TitleSemiBoldWhite"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Profile"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.appcompat.widget.Toolbar>
 
     <!--    Profile Info Layout-->
     <LinearLayout
         android:id="@+id/profileInfoLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:elevation="3dp"
         android:background="@android:color/white"
+        android:elevation="3dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/profileToolbar">
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/profilePicture"
@@ -56,17 +30,17 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginStart="12dp"
             android:gravity="center_vertical"
-            android:orientation="vertical"
-            android:layout_marginStart="12dp">
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:textColor="@color/textIndigoColor"
                 android:fontFamily="@font/sans_bold"
-                android:text="Emma Watson" />
+                android:text="Emma Watson"
+                android:textColor="@color/textIndigoColor"
+                android:textSize="20sp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -111,181 +85,177 @@
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/profileInfoLayout"
+        android:orientation="vertical"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/profileInfoLayout">
+
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="?attr/selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
-            android:padding="4dp"
-            android:background="?attr/selectableItemBackground">
+            android:orientation="horizontal"
+            android:padding="4dp">
 
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_margin="8dp"
-                android:src="@drawable/ic_star"
-                />
+                android:src="@drawable/ic_star" />
 
             <TextView
+                style="@style/SettingsText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="A'zo bo'lish"
-                style="@style/SettingsText"
-                android:textColor="@color/yellow"/>
+                android:textColor="@color/yellow" />
         </LinearLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="0.8dp"
-            android:background="@color/greyDivider"/>
+            android:background="@color/greyDivider" />
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="?attr/selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
-            android:padding="4dp"
-            android:background="?attr/selectableItemBackground">
+            android:orientation="horizontal"
+            android:padding="4dp">
 
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_margin="8dp"
-                android:src="@drawable/ic_bullhorn"
-                />
+                android:src="@drawable/ic_bullhorn" />
 
             <TextView
+                style="@style/SettingsText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Promo Code"
-                style="@style/SettingsText"
-                />
+                android:text="Promo Code" />
         </LinearLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="0.8dp"
-            android:background="@color/greyDivider"/>
+            android:background="@color/greyDivider" />
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="?attr/selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
-            android:padding="4dp"
-            android:background="?attr/selectableItemBackground">
+            android:orientation="horizontal"
+            android:padding="4dp">
 
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_margin="8dp"
-                android:src="@drawable/ic_lock_change_password"
-                />
+                android:src="@drawable/ic_lock_change_password" />
 
             <TextView
+                style="@style/SettingsText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Parolni o'zgartirish"
-                style="@style/SettingsText"
-                />
+                android:text="Parolni o'zgartirish" />
         </LinearLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="0.8dp"
-            android:background="@color/greyDivider"/>
+            android:background="@color/greyDivider" />
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="?attr/selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
-            android:padding="4dp"
-            android:background="?attr/selectableItemBackground">
+            android:orientation="horizontal"
+            android:padding="4dp">
 
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_margin="8dp"
-                android:src="@drawable/ic_rating_star"
-                />
+                android:src="@drawable/ic_rating_star" />
 
             <TextView
+                style="@style/SettingsText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Bizni Play Marketda baholang"
-                style="@style/SettingsText"
-                />
+                android:text="Bizni Play Marketda baholang" />
         </LinearLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="0.8dp"
-            android:background="@color/greyDivider"/>
+            android:background="@color/greyDivider" />
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="?attr/selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
-            android:padding="4dp"
-            android:background="?attr/selectableItemBackground">
+            android:orientation="horizontal"
+            android:padding="4dp">
 
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_margin="8dp"
-                android:src="@drawable/ic_share"
-                />
+                android:src="@drawable/ic_share" />
 
             <TextView
+                style="@style/SettingsText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ilovani bo'lishish"
-                style="@style/SettingsText"
-                />
+                android:text="Ilovani bo'lishish" />
         </LinearLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="0.8dp"
-            android:background="@color/greyDivider"/>
+            android:background="@color/greyDivider" />
 
         <LinearLayout
             android:id="@+id/btnLogout"
-            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="?attr/selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
-            android:padding="4dp"
-            android:background="?attr/selectableItemBackground">
+            android:orientation="horizontal"
+            android:padding="4dp">
 
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_margin="8dp"
-                android:src="@drawable/ic_logout"
-                />
+                android:src="@drawable/ic_logout" />
 
             <TextView
+                style="@style/SettingsText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Chiqish"
-                style="@style/SettingsText"
-                />
+                android:text="Chiqish" />
         </LinearLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="0.8dp"
-            android:background="@color/greyDivider"/>
+            android:background="@color/greyDivider" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -18,7 +18,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_picture_learning"
+            android:src="@drawable/ic_battle_city"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent" />
@@ -27,7 +27,7 @@
             android:id="@+id/subtopicRecycler"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@color/background2"
+            android:background="@android:color/transparent"
             android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
