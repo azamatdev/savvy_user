@@ -192,3 +192,7 @@ fun SwipeRefreshLayout.showLoading() {
     this.isRefreshing = true
 }
 
+fun Fragment.setToolbarTitle(title: String) {
+    requireActivity().findViewById<Toolbar>(R.id.toolbar).title = title
+}
+

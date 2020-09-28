@@ -13,6 +13,9 @@
             android:name="topicId"
             android:defaultValue="0"
             app:argType="integer" />
+        <action
+            android:id="@+id/toExplanation"
+            app:destination="@id/destExplanation" />
     </fragment>
     <fragment
         android:id="@+id/destProfile"
@@ -60,5 +63,19 @@
             android:id="@+id/action_navigation_signup_to_navigation_topics"
             app:destination="@id/destTopics"
             app:popUpTo="@id/destTopics" />
+    </fragment>
+    <fragment
+        android:id="@+id/destExplanation"
+        android:name="uz.mymax.savvyenglish.ui.explanation.ExplanationFragment"
+        android:label="fragment_explanation"
+        tools:layout="@layout/fragment_explanation" >
+        <argument
+            android:name="subtopicId"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <argument
+            android:name="subtopicTitle"
+            app:argType="string"
+            android:defaultValue='""' />
     </fragment>
 </navigation>

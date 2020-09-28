@@ -4,8 +4,8 @@
 
     <data>
         <variable
-            name="rule"
-            type="uz.mymax.savvyenglish.model.LessonRule" />
+            name="explanation"
+            type="uz.mymax.savvyenglish.network.response.ExplanationResponse" />
 
     </data>
 
@@ -41,13 +41,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sans_bold"
-                    android:text="@{String.valueOf(rule.lessonNumber)}"
                     android:textColor="@android:color/white"
                     android:textSize="20sp" />
             </RelativeLayout>
 
             <TextView
-                android:id="@+id/txt_rule"
+                android:id="@+id/txtRule"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"

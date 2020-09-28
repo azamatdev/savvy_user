@@ -8,6 +8,7 @@ import retrofit2.http.Path
 import uz.mymax.savvyenglish.network.dto.LoginDto
 import uz.mymax.savvyenglish.network.dto.RegisterDto
 import uz.mymax.savvyenglish.network.response.AuthResponse
+import uz.mymax.savvyenglish.network.response.ExplanationResponse
 import uz.mymax.savvyenglish.network.response.SubtopicResponse
 import uz.mymax.savvyenglish.network.response.TopicResponse
 
@@ -24,6 +25,9 @@ interface SavvyApi {
 
     @GET("api/subtopics/parent/{id}")
     suspend fun getSubtopics(@Path("id") topicId: String): Response<List<SubtopicResponse>>
+
+    @GET("api/explanations/parent/{id}")
+    suspend fun getExplanations(@Path("id") topicId: String): Response<List<ExplanationResponse>>
 
 
 }

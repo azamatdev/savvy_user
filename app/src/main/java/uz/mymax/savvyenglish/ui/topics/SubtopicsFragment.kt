@@ -7,13 +7,14 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import kotlinx.android.synthetic.main.fragment_subtopic.*
 import kotlinx.android.synthetic.main.fragment_subtopic.view.*
-import kotlinx.android.synthetic.main.fragment_topics.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import uz.mymax.savvyenglish.R
 import uz.mymax.savvyenglish.network.Resource
+import uz.mymax.savvyenglish.network.response.SubtopicResponse
 import uz.mymax.savvyenglish.ui.topics.adapter.SubtopicsAdapter
 import uz.mymax.savvyenglish.utils.PlaceHolderAdapter
 import uz.mymax.savvyenglish.utils.decorations.LinearVerticalDecoration
@@ -45,8 +46,8 @@ class SubtopicsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         if (storedView == null) {
-            storedView = inflater.inflate(R.layout.fragment_topics, container, false)
-            storedView!!.topicsRecycler.layoutAnimation =
+            storedView = inflater.inflate(R.layout.fragment_subtopic, container, false)
+            storedView!!.subtopicRecycler.layoutAnimation =
                 AnimationUtils.loadLayoutAnimation(
                     requireContext(),
                     R.anim.layout_animation_fall_down
@@ -62,6 +63,12 @@ class SubtopicsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        adapter.itemClickListener = { id, title ->
+            val action = SubtopicsFragmentDirections.toExplanation()
+            action.subtopicId = id
+            action.subtopicTitle = title
+            findNavController().navigate(action)
+        }
         viewModel.subtopicResource.observe(viewLifecycleOwner, Observer { resource ->
             when (resource) {
                 is Resource.Loading -> {
@@ -69,7 +76,14 @@ class SubtopicsFragment : Fragment() {
                 }
                 is Resource.Success -> {
                     swipeToRefreshLayout.hideLoading()
-                    adapter.updateList(resource.data)
+                    val list = ArrayList(resource.data)
+                    list.addAll(list)
+                    list.addAll(list)
+                    list.addAll(list)
+                    list.addAll(list)
+                    list.addAll(list)
+                    list.addAll(list)
+                    adapter.updateList(list)
                     subtopicRecycler.adapter = adapter
                     subtopicRecycler.scheduleLayoutAnimation()
                 }

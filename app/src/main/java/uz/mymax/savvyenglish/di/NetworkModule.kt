@@ -37,15 +37,15 @@ val networkModule = module {
             .connectTimeout(1000, TimeUnit.SECONDS)
             .readTimeout(1000, TimeUnit.SECONDS)
             .writeTimeout(1000, TimeUnit.SECONDS)
-            .retryOnConnectionFailure(false)
-            .addInterceptor(ConnectivityInterceptor(get()))
+//            .retryOnConnectionFailure(false)
+//            .addInterceptor(ConnectivityInterceptor(get()))
             .addInterceptor { chain ->
                 try {
                     val request = chain.request().newBuilder()
                     request.addHeader("Content-type", "application/json")
                     request.addHeader(
                         "Authorization",
-                        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaG9ocnVoIiwicm9sZXMiOlsiQURNSU4iXSwiaWF0IjoxNjAxMTkwOTI4LCJleHAiOjE2MDEyMzQxMjh9.9F-TFKi5ZwK8hOjBNpaoKgI8FHGo4wEzyTYaZPzltLo"
+                        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaG9ocnVoIiwicm9sZXMiOlsiQURNSU4iXSwiaWF0IjoxNjAxMjU3NDQyLCJleHAiOjE2MDEzMDA2NDJ9.v02DL8nm58tvMG2RH2Rt0ytT-4FL-FKU53tqR20OGY0"
                     )
                     return@addInterceptor chain.proceed(request.build())
                 } catch (e: Throwable) {

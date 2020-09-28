@@ -8,16 +8,15 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_subtopic.view.*
 import uz.mymax.savvyenglish.databinding.ItemSubtopicBinding
 import uz.mymax.savvyenglish.network.response.SubtopicResponse
-import uz.mymax.savvyenglish.network.response.TopicResponse
 
 class SubtopicsAdapter() :
     RecyclerView.Adapter<SubtopicsAdapter.SubtopicVH>() {
 
-    var itemClickListener: ((Int) -> Unit)? = null
-    var topicList: List<SubtopicResponse>? = null
+    var itemClickListener: ((Int, String) -> Unit)? = null
+    var subtopics: List<SubtopicResponse>? = null
 
     fun updateList(newList: List<SubtopicResponse>) {
-        this.topicList = newList
+        this.subtopics = newList
         notifyDataSetChanged()
     }
 
@@ -26,14 +25,15 @@ class SubtopicsAdapter() :
         return SubtopicVH(view.root)
     }
 
-    override fun getItemCount() = topicList?.size ?: 0
+    override fun getItemCount() = subtopics?.size ?: 0
 
 
     override fun onBindViewHolder(holder: SubtopicsAdapter.SubtopicVH, position: Int) {
-        holder.binding?.topic = topicList!![position]
+        var subtopic = subtopics!![position]
+        holder.binding?.topic = subtopic
 
-        holder.itemView.setOnClickListener {
-            itemClickListener?.invoke(topicList!![position].id)
+        holder.itemView.item.setOnClickListener {
+            itemClickListener?.invoke(subtopic.id, subtopic.description)
         }
 
         holder.itemView.subtopicTopicsLessonNumber.text = "Dars  ${holder.adapterPosition + 1}"
