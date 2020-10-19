@@ -12,5 +12,7 @@
     <string name="error_not_connected">Internet aloqasi yo\'q</string>
     <string name="error_generic">Xatolik, birozdan so\'ng urinib ko\'ring</string>
     <string name="warning_fill_the_fields">Iltimos, maydonni to\'ldiring</string>
+    <string name="topicRelated">Mavzuga oid</string>
+    <string name="variant">Variant</string>
 
 </resources>

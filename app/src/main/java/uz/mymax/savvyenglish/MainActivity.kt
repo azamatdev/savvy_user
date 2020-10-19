@@ -75,6 +75,12 @@ class MainActivity : AppCompatActivity() {
                     toolbar.setNavigationIcon(R.drawable.ic_back)
                 }
             }
+
+            when (destination.id) {
+                R.id.destTests -> {
+                    toolbar.elevation = 0f
+                }
+            }
         }
     }
 

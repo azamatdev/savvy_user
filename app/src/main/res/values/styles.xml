@@ -47,6 +47,7 @@
         <item name="android:height">20dp</item>
         <item name="android:layout_margin">8dp</item>
     </style>
+
     <style name="SettingsText" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/greyMain</item>
         <item name="fontFamily">@font/sans_semibold</item>
@@ -62,6 +63,11 @@
         <item name="navigationIcon">@drawable/ic_back</item>
     </style>
 
+
+    <style name="TabTextAppearance" parent="TextAppearance.AppCompat">
+        <item name="textAllCaps">false</item>
+        <item name="fontFamily">@font/sans_semibold</item>
+    </style>
 
 
 </resources>
