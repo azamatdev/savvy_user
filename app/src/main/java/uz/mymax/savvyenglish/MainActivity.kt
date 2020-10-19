@@ -60,6 +60,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.destExtra,
                 R.id.destProfile -> {
                     toolbar.makeVisible()
+                    toolbar.elevation = 3f
                     toolbar.setNavigationIcon(null)
                     bottomNavigationView.makeVisible()
                 }

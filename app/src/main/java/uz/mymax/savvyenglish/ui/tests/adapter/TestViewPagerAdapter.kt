@@ -5,8 +5,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import uz.mymax.savvyenglish.R
-import uz.mymax.savvyenglish.ui.tests.TopicRelatedTestFragment
-import uz.mymax.savvyenglish.ui.tests.VariantTestFragment
+import uz.mymax.savvyenglish.ui.tests.types.TopicRelatedTestFragment
+import uz.mymax.savvyenglish.ui.tests.types.VariantTestFragment
 
 class TestViewPagerAdapter(fragmentManager: FragmentManager, var context: Context) :
     FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
