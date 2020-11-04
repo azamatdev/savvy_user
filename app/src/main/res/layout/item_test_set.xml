@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/topicsItemMaterialCardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="4dp"
+        android:clickable="true"
+        android:clipToPadding="false"
+        android:focusable="true"
+        app:cardBackgroundColor="@android:color/white"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="3dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/horizontalGuide">
+
+        <LinearLayout
+            android:id="@+id/child"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/testTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:checkedButton="@id/choiceB"
+                android:backgroundTint="@android:color/white"
+                app:selectionRequired="true"
+                app:singleSelection="true">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/choiceA"
+                    style="@style/TestSelectButton"
+                    android:text="A" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/choiceB"
+                    style="@style/TestSelectButton"
+                    android:text="B" />
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/choiceC"
+                    style="@style/TestSelectButton"
+
+                    android:text="C" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/choiceD"
+                    style="@style/TestSelectButton"
+                    android:text="D" />
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+</layout>

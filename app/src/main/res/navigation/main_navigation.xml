@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation"
-    app:startDestination="@id/destTopics">
+    app:startDestination="@id/destTestSet">
 
     <fragment
         android:id="@+id/destSubtopic"
@@ -78,4 +78,9 @@
             app:argType="string"
             android:defaultValue='""' />
     </fragment>
+    <fragment
+        android:id="@+id/destTestSet"
+        android:name="uz.mymax.savvyenglish.ui.tests.TestSetFragment"
+        android:label="Test Set"
+        tools:layout="@layout/fragment_test_set" />
 </navigation>
