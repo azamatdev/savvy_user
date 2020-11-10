@@ -7,14 +7,77 @@
     tools:context=".ui.tests.TestFinishedFragment">
 
     <TextView
-        android:layout_width="match_parent"
+        android:id="@+id/labelSuccess"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:fontFamily="@font/sans_semibold"
-        android:textColor="@color/textIndigoColor"
+        android:gravity="center"
         android:text="Tabriklaymiz testni muvaffaqiyatli tugatdingiz"
+        android:textColor="@color/textIndigoColor"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.7" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animationAward"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/testFinishedTimeTxt"
+        app:layout_constraintHeight_percent="0.5"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/labelSuccess"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="false"
+        app:lottie_rawRes="@raw/award"
+        />
+
+
+    <TextView
+        android:id="@+id/testFinishedTimeTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_rounded_20dp"
+        android:backgroundTint="@android:color/white"
+        android:drawablePadding="8dp"
+        android:elevation="5dp"
+        android:gravity="center_vertical"
+        android:paddingStart="10dp"
+        android:paddingTop="5dp"
+        android:paddingEnd="10dp"
+        android:paddingBottom="5dp"
+        android:text="15:56"
+        android:textColor="@android:color/black"
+        app:drawableStartCompat="@drawable/ic_time"
+        app:drawableTint="@color/textIndigoColor"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/animationAward" />
+
+    <TextView
+        android:id="@+id/testCorrectAnswer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_rounded_20dp"
+        android:backgroundTint="@android:color/white"
+        android:drawablePadding="8dp"
+        android:elevation="5dp"
+        android:gravity="center_vertical"
+        android:paddingStart="10dp"
+        android:paddingTop="5dp"
+        android:paddingEnd="10dp"
+        android:paddingBottom="5dp"
+        android:text="15:56"
+        android:textColor="@android:color/black"
+        app:drawableStartCompat="@drawable/ic_time"
+        app:drawableTint="@color/textIndigoColor"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/animationAward" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

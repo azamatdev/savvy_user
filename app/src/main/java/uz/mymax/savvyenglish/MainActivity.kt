@@ -64,6 +64,7 @@ class MainActivity : AppCompatActivity() {
                     toolbar.setNavigationIcon(null)
                     bottomNavigationView.makeVisible()
                 }
+                R.id.destTestFinished,
                 R.id.destSignUp,
                 R.id.destLogin -> {
                     log("Login ")

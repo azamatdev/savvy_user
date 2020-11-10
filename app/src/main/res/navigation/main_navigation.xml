@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation"
-    app:startDestination="@id/destTestSet">
+    app:startDestination="@id/destTestFinished">
 
     <fragment
         android:id="@+id/destSubtopic"
@@ -68,19 +68,25 @@
         android:id="@+id/destExplanation"
         android:name="uz.mymax.savvyenglish.ui.explanation.ExplanationFragment"
         android:label="fragment_explanation"
-        tools:layout="@layout/fragment_explanation" >
+        tools:layout="@layout/fragment_explanation">
         <argument
             android:name="subtopicId"
-            app:argType="integer"
-            android:defaultValue="0" />
+            android:defaultValue="0"
+            app:argType="integer" />
         <argument
             android:name="subtopicTitle"
-            app:argType="string"
-            android:defaultValue='""' />
+            android:defaultValue='""'
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/destTestSet"
         android:name="uz.mymax.savvyenglish.ui.tests.TestSetFragment"
         android:label="Test Set"
         tools:layout="@layout/fragment_test_set" />
+    <fragment
+        android:id="@+id/destTestFinished"
+        android:name="uz.mymax.savvyenglish.ui.tests.TestFinishedFragment"
+        android:label="fragment_test_finished"
+        tools:layout="@layout/fragment_test_finished" />
+
 </navigation>
