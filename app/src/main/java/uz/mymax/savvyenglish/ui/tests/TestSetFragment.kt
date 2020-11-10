@@ -7,14 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentPagerAdapter
+import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SnapHelper
 import kotlinx.android.synthetic.main.fragment_test_set.*
 import uz.mymax.savvyenglish.R
 import uz.mymax.savvyenglish.ui.tests.adapter.TestSetAdapter
-import uz.mymax.savvyenglish.utils.OnSnapPositionChangeListener
-import uz.mymax.savvyenglish.utils.SnapHelperOneByOne
-import uz.mymax.savvyenglish.utils.SnapOnScrollListener
-import uz.mymax.savvyenglish.utils.attachSnapHelperWithListener
+import uz.mymax.savvyenglish.utils.*
 import uz.mymax.savvyenglish.utils.decorations.LinearVerticalDecoration
 
 
@@ -43,14 +41,24 @@ class TestSetFragment : Fragment() {
         snapHelper.attachToRecyclerView(testSetRecycler)
         testSetRecycler.addItemDecoration(LinearVerticalDecoration())
 
+        progressSet.max = adapter.itemCount
+        progressSet.setProgressCompat(0, true)
 
-        testSetRecycler.attachSnapHelperWithListener(snapHelper, SnapOnScrollListener.Behavior.NOTIFY_ON_SCROLL_STATE_IDLE, object :
-            OnSnapPositionChangeListener {
-            override fun onSnapPositionChange(position: Int) {
-                Log.d("CurrentItemTag", position.toString())
-                currentItem = position
-            }
-        })
+        testSetRecycler.attachSnapHelperWithListener(
+            snapHelper,
+            SnapOnScrollListener.Behavior.NOTIFY_ON_SCROLL,
+            object :
+                OnSnapPositionChangeListener {
+                override fun onSnapPositionChange(position: Int) {
+                    Log.d("CurrentItemTag", position.toString())
+                    currentItem = position
+                    if (position != RecyclerView.NO_POSITION)
+                        progressSet.setProgressCompat(position, true)
+                    else
+                        progressSet.setProgressCompat(progressSet.max, true)
+
+                }
+            })
 
 
     }

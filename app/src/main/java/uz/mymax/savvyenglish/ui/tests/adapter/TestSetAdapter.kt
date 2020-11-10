@@ -5,10 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.item_topic.view.*
 import uz.mymax.savvyenglish.databinding.ItemTestSetBinding
-import uz.mymax.savvyenglish.databinding.ItemTopicBinding
-import uz.mymax.savvyenglish.network.response.TopicResponse
 
 class TestSetAdapter : RecyclerView.Adapter<TestSetAdapter.TestVH>() {
 
@@ -28,6 +25,9 @@ class TestSetAdapter : RecyclerView.Adapter<TestSetAdapter.TestVH>() {
         tests?.add("Test9")
         tests?.add("Test10")
         tests?.add("Test11")
+        tests?.add("Test12")
+        tests?.add("Test13")
+        tests?.add("Test14")
     }
 
 
@@ -39,7 +39,9 @@ class TestSetAdapter : RecyclerView.Adapter<TestSetAdapter.TestVH>() {
     override fun getItemCount() = tests?.size ?: 0
 
     override fun onBindViewHolder(holder: TestVH, position: Int) {
-        holder.binding?.testTitle?.text = tests!![position]
+//        holder.binding?.testTitle?.text = tests!![position]
+        holder.binding?.testTitle?.text = "1.Choose the correct answer"
+        holder.binding?.testQuestion?.text = "More wild animals ... extinct these days"
     }
 
     inner class TestVH(itemView: View) : RecyclerView.ViewHolder(itemView) {

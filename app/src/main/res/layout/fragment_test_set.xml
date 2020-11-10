@@ -6,31 +6,33 @@
     android:layout_height="match_parent"
     tools:context=".ui.tests.TestSetFragment">
 
-    <ProgressBar
+    <com.google.android.material.progressindicator.ProgressIndicator
         android:id="@+id/progressSet"
+        style="@style/Widget.MaterialComponents.ProgressIndicator.Linear.Determinate"
         android:layout_width="match_parent"
-        android:layout_height="6dp"
+        android:layout_height="20dp"
         android:indeterminate="false"
         android:progress="40"
-        android:progressTint="@color/greenMain"
-        android:theme="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        app:indicatorColor="@color/greenMain"
+        app:indicatorCornerRadius="2dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:trackColor="#3341BD39" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/testSetRecycler"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="4dp"
+        android:clipToPadding="false"
         android:orientation="vertical"
+        android:paddingTop="18dp"
+        android:paddingBottom="18dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/progressSet"
-
-        />
+        app:layout_constraintTop_toBottomOf="@id/progressSet" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

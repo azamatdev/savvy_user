@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -30,20 +31,33 @@
             android:id="@+id/child"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="12dp">
 
             <TextView
                 android:id="@+id/testTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                />
+                android:fontFamily="@font/sans_bold"
+                android:textColor="@android:color/black"
+                tools:text="1.Choose the correct answer" />
+
+
+            <TextView
+                android:id="@+id/testQuestion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/sans_regular"
+                android:textColor="@android:color/black"
+                tools:text="More wild animals ... extinct these days" />
 
             <com.google.android.material.button.MaterialButtonToggleGroup
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                app:checkedButton="@id/choiceB"
+                android:layout_marginTop="12dp"
                 android:backgroundTint="@android:color/white"
+                android:orientation="vertical"
                 app:selectionRequired="true"
                 app:singleSelection="true">
 
@@ -55,13 +69,13 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/choiceB"
                     style="@style/TestSelectButton"
-                    android:text="B" />
+                    android:text="B"
+                    />
 
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/choiceC"
                     style="@style/TestSelectButton"
-
                     android:text="C" />
 
                 <com.google.android.material.button.MaterialButton
