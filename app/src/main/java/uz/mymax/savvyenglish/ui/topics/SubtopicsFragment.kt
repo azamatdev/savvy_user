@@ -13,8 +13,7 @@ import kotlinx.android.synthetic.main.fragment_subtopic.*
 import kotlinx.android.synthetic.main.fragment_subtopic.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import uz.mymax.savvyenglish.R
-import uz.mymax.savvyenglish.network.Resource
-import uz.mymax.savvyenglish.network.response.SubtopicResponse
+import uz.mymax.savvyenglish.network.NetworkState
 import uz.mymax.savvyenglish.ui.topics.adapter.SubtopicsAdapter
 import uz.mymax.savvyenglish.utils.PlaceHolderAdapter
 import uz.mymax.savvyenglish.utils.decorations.LinearVerticalDecoration
@@ -71,10 +70,10 @@ class SubtopicsFragment : Fragment() {
         }
         viewModel.subtopicResource.observe(viewLifecycleOwner, Observer { resource ->
             when (resource) {
-                is Resource.Loading -> {
+                is NetworkState.Loading -> {
                     swipeToRefreshLayout.showLoading()
                 }
-                is Resource.Success -> {
+                is NetworkState.Success -> {
                     swipeToRefreshLayout.hideLoading()
                     val list = ArrayList(resource.data)
                     list.addAll(list)
@@ -87,11 +86,11 @@ class SubtopicsFragment : Fragment() {
                     subtopicRecycler.adapter = adapter
                     subtopicRecycler.scheduleLayoutAnimation()
                 }
-                is Resource.Error -> {
+                is NetworkState.Error -> {
                     swipeToRefreshLayout.hideLoading()
                     showSnackbar(resource.exception.message.toString())
                 }
-                is Resource.GenericError -> {
+                is NetworkState.GenericError -> {
                     swipeToRefreshLayout.hideLoading()
                     showSnackbar(resource.errorResponse.message)
                 }

@@ -13,7 +13,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import uz.mymax.savvyenglish.R
 import uz.mymax.savvyenglish.data.saveToken
 import uz.mymax.savvyenglish.data.setLoggedIn
-import uz.mymax.savvyenglish.network.Resource
+import uz.mymax.savvyenglish.network.NetworkState
 import uz.mymax.savvyenglish.network.dto.LoginDto
 import uz.mymax.savvyenglish.utils.*
 
@@ -34,22 +34,22 @@ class LoginFragment : Fragment() {
         authViewModel.loginResource.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let { resource ->
                 when (resource) {
-                    is Resource.Loading -> {
+                    is NetworkState.Loading -> {
                         changeUiState(true)
                         hideKeyboard()
                     }
-                    is Resource.Success -> {
+                    is NetworkState.Success -> {
                         changeUiState(false)
                         requireContext().saveToken(resource.data.token)
                         requireContext().setLoggedIn(true)
 //                        showSnackbar("Success:")
                         findNavController().navigate(R.id.action_navigation_login_to_navigation_topics)
                     }
-                    is Resource.Error -> {
+                    is NetworkState.Error -> {
                         changeUiState(false)
                         resource.exception.message?.let { it1 -> showSnackbar(it1) }
                     }
-                    is Resource.GenericError -> {
+                    is NetworkState.GenericError -> {
                         changeUiState(false)
                         showSnackbar(resource.errorResponse.status.toString() + ":" + resource.errorResponse.error)
                     }

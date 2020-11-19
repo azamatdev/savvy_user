@@ -45,7 +45,7 @@ val networkModule = module {
                     request.addHeader("Content-type", "application/json")
                     request.addHeader(
                         "Authorization",
-                        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaG9ocnVoIiwicm9sZXMiOlsiQURNSU4iXSwiaWF0IjoxNjAxMjU3NDQyLCJleHAiOjE2MDEzMDA2NDJ9.v02DL8nm58tvMG2RH2Rt0ytT-4FL-FKU53tqR20OGY0"
+                        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaG9ocnVoIiwicm9sZXMiOlsiQURNSU4iXSwiaWF0IjoxNjA1ODA2NTkyLCJleHAiOjE2MDU4NDk3OTJ9.OH9Z0etsM2Zv-xkc8ejxwWZqGbwa0WrWw-Rfi8CROow"
                     )
                     return@addInterceptor chain.proceed(request.build())
                 } catch (e: Throwable) {

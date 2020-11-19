@@ -14,6 +14,7 @@ import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.ProgressBar
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.core.widget.doOnTextChanged
@@ -30,6 +31,19 @@ import uz.mymax.savvyenglish.R
 /**
  * Log Extentions
  */
+
+fun View.visible() {
+    this.visibility = View.VISIBLE
+}
+
+fun View.gone() {
+    this.visibility = View.GONE
+}
+
+fun View.invisible() {
+    this.visibility = View.INVISIBLE
+}
+
 
 fun Fragment.log(message: String, tag: String = "DefaultTag") {
     Log.d(tag, message)
@@ -198,3 +212,17 @@ fun Fragment.setToolbarTitle(title: String) {
     requireActivity().findViewById<Toolbar>(R.id.toolbar).title = title
 }
 
+fun Fragment.changeUiStateEnabled(isLoading: Boolean, progressBar: View, viewButton: View) {
+    viewButton.isEnabled = !isLoading
+    if (isLoading) progressBar.visible() else progressBar.gone()
+}
+
+fun Fragment.changeUiStateVisibility(isLoading: Boolean, progressView: ProgressBar, hiddenView: View) {
+    if (isLoading) {
+        progressView.visible()
+        hiddenView.gone()
+    } else {
+        progressView.gone()
+        hiddenView.visible()
+    }
+}

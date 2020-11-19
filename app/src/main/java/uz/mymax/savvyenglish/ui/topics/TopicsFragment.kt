@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.fragment_topics.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 import uz.mymax.savvyenglish.R
-import uz.mymax.savvyenglish.network.Resource
+import uz.mymax.savvyenglish.network.NetworkState
 import uz.mymax.savvyenglish.ui.topics.adapter.TopicsAdapter
 import uz.mymax.savvyenglish.utils.PlaceHolderAdapter
 import uz.mymax.savvyenglish.utils.decorations.LinearVerticalDecoration
@@ -63,20 +63,20 @@ class TopicsFragment : Fragment() {
         }
         viewModel.topicsResource.observe(viewLifecycleOwner, Observer { resource ->
             when (resource) {
-                is Resource.Loading -> {
+                is NetworkState.Loading -> {
                     topicsSwipeRefreshLayout.showLoading()
                 }
-                is Resource.Success -> {
+                is NetworkState.Success -> {
                     topicsSwipeRefreshLayout.hideLoading()
                     adapter.updateList(resource.data)
                     topicsRecycler.adapter = adapter
                     topicsRecycler.scheduleLayoutAnimation()
                 }
-                is Resource.Error -> {
+                is NetworkState.Error -> {
                     topicsSwipeRefreshLayout.hideLoading()
                     showSnackbar(resource.exception.message.toString())
                 }
-                is Resource.GenericError -> {
+                is NetworkState.GenericError -> {
                     topicsSwipeRefreshLayout.hideLoading()
                     showSnackbar(resource.errorResponse.message)
                 }

@@ -6,24 +6,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
-import kotlinx.android.synthetic.main.fragment_variant_test.*
+import kotlinx.android.synthetic.main.fragment_topic_related.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import uz.mymax.savvyenglish.R
 import uz.mymax.savvyenglish.network.NetworkState
 import uz.mymax.savvyenglish.ui.tests.TestViewModel
-import uz.mymax.savvyenglish.ui.tests.adapter.VariantTestAdapter
-import uz.mymax.savvyenglish.utils.hideLoading
-import uz.mymax.savvyenglish.utils.showLoading
+import uz.mymax.savvyenglish.ui.tests.adapter.TopicTestAdapter
 import uz.mymax.savvyenglish.utils.showSnackbar
 
-
-class VariantTestFragment : Fragment() {
+class TopicTestFragment : Fragment() {
 
     private val viewModel: TestViewModel by viewModel()
-    private lateinit var adapter: VariantTestAdapter
+    private lateinit var adapter : TopicTestAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        adapter = VariantTestAdapter()
+        adapter = TopicTestAdapter()
     }
 
     override fun onCreateView(
@@ -31,13 +28,13 @@ class VariantTestFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_variant_test, container, false)
+        return inflater.inflate(R.layout.fragment_topic_related, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        variantTestRecycler.adapter = adapter
-        viewModel.variantTestState.observe(viewLifecycleOwner, Observer { resource ->
+        topicTestRecycler.adapter = adapter
+        viewModel.topicTestState.observe(viewLifecycleOwner, Observer { resource ->
             when (resource) {
                 is NetworkState.Loading -> {
                 }
@@ -55,13 +52,13 @@ class VariantTestFragment : Fragment() {
     }
 
     override fun onResume() {
-        viewModel.fetchVariantTests()
+            viewModel.fetchTopicTests()
         super.onResume()
     }
 
     companion object {
         @JvmStatic
         fun newInstance() =
-            VariantTestFragment()
+            TopicTestFragment()
     }
 }

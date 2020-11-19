@@ -1,9 +1,7 @@
 package uz.mymax.savvyenglish.repository
 
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.withContext
-import uz.mymax.savvyenglish.network.Resource
+import uz.mymax.savvyenglish.network.NetworkState
 import uz.mymax.savvyenglish.network.SavvyApi
 import uz.mymax.savvyenglish.network.dto.LoginDto
 import uz.mymax.savvyenglish.network.dto.RegisterDto
@@ -14,29 +12,39 @@ class LessonRepository constructor(
 ) {
 
     suspend fun login(loginDto: LoginDto) = flow {
-        emit(Resource.Loading)
+        emit(NetworkState.Loading)
         emit(safeApiCall { api.login(loginDto) })
 
     }
 
     suspend fun signUp(registerDto: RegisterDto) = flow {
-        emit(Resource.Loading)
+        emit(NetworkState.Loading)
         emit(safeApiCall { api.signUp(registerDto) })
     }
 
     suspend fun fetchTopics() = flow {
-        emit(Resource.Loading)
+        emit(NetworkState.Loading)
         emit(safeApiCall { api.geTopics() })
     }
 
     suspend fun fetchSubtopics(topicId: String) = flow {
-        emit(Resource.Loading)
+        emit(NetworkState.Loading)
         emit(safeApiCall { api.getSubtopics(topicId) })
     }
 
     suspend fun fetchExplanations(subtopicId: String) = flow {
-        emit(Resource.Loading)
+        emit(NetworkState.Loading)
         emit(safeApiCall { api.getExplanations(subtopicId) })
+    }
+
+    suspend fun fetchTopicTests() = flow {
+        emit(NetworkState.Loading)
+        emit(safeApiCall { api.fetchTopicTests() })
+    }
+
+    suspend fun fetchVariantTests() = flow {
+        emit(NetworkState.Loading)
+        emit(safeApiCall { api.fetchVariantTests() })
     }
 
 }

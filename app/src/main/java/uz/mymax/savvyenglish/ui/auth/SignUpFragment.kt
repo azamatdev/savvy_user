@@ -1,25 +1,22 @@
 package uz.mymax.savvyenglish.ui.auth
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_sign_up.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 import uz.mymax.savvyenglish.R
-import uz.mymax.savvyenglish.network.Resource
+import uz.mymax.savvyenglish.network.NetworkState
 import uz.mymax.savvyenglish.network.dto.RegisterDto
-import uz.mymax.savvyenglish.ui.base.BaseFragment
-import uz.mymax.savvyenglish.utils.hideErrorIfFilled
-import uz.mymax.savvyenglish.utils.hideKeyboard
-import uz.mymax.savvyenglish.utils.showErrorIfNotFilled
+import uz.mymax.savvyenglish.utils.*
 
 
-class SignUpFragment : BaseFragment() {
+class SignUpFragment : Fragment() {
 
     private val authViewModel: AuthViewModel by viewModel()
 
@@ -38,22 +35,19 @@ class SignUpFragment : BaseFragment() {
         authViewModel.registerResource.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let { resource ->
                 when (resource) {
-                    is Resource.Loading -> {
-                        Log.d("LiveDataTag", "Loading")
-                        hideKeyboard()
-                        showLoading()
+                    is NetworkState.Loading -> {
+                        changeUiStateVisibility(true, progressBar, signUpButton)
                     }
-                    is Resource.Success -> {
-                        hideLoading()
-//                        PrefManager.saveToken(requireContext(), resource.data.authToken)
+                    is NetworkState.Success -> {
+                        changeUiStateVisibility(true, progressBar, signUpButton)
                         findNavController().navigate(R.id.action_navigation_signup_to_navigation_topics)
                     }
-                    is Resource.Error -> {
-                        hideLoading()
-                        handleErrors(exception = resource.exception)
+                    is NetworkState.Error -> {
+                        changeUiStateVisibility(true, progressBar, signUpButton)
+                        showSnackbar(resource.exception.message.toString())
                     }
-                    is Resource.GenericError -> {
-                        hideLoading()
+                    is NetworkState.GenericError -> {
+                        changeUiStateVisibility(true, progressBar, signUpButton)
                         showSnackbar(resource.errorResponse.message)
                     }
                 }
@@ -68,6 +62,7 @@ class SignUpFragment : BaseFragment() {
         signUpButton.setOnClickListener {
             if (allFieldFilled()) {
                 if (passwordConfirmed()) {
+                    hideKeyboard()
                     authViewModel.registerUser(getRegisterDto())
                 } else {
                     input_confirm_password.error = "Password does not match!"

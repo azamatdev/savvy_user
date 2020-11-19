@@ -5,14 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import kotlinx.android.synthetic.main.fragment_explanation.*
 import kotlinx.android.synthetic.main.fragment_explanation.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import uz.mymax.savvyenglish.R
-import uz.mymax.savvyenglish.network.Resource
+import uz.mymax.savvyenglish.network.NetworkState
 import uz.mymax.savvyenglish.ui.topics.TopicViewModel
 import uz.mymax.savvyenglish.utils.decorations.LinearVerticalDecoration
 import uz.mymax.savvyenglish.utils.hideVisibility
@@ -57,19 +56,19 @@ class ExplanationFragment : Fragment() {
         setToolbarTitle(args.subtopicTitle)
         viewModel.explanationResource.observe(viewLifecycleOwner, Observer { resource ->
             when (resource) {
-                is Resource.Loading -> {
+                is NetworkState.Loading -> {
                     progressIndicator.makeVisible()
                 }
-                is Resource.Success -> {
+                is NetworkState.Success -> {
                     progressIndicator.hideVisibility()
                     adapter.updateList(resource.data)
 
                 }
-                is Resource.Error -> {
+                is NetworkState.Error -> {
                     progressIndicator.hideVisibility()
                     showSnackbar(resource.exception.message.toString())
                 }
-                is Resource.GenericError -> {
+                is NetworkState.GenericError -> {
                     progressIndicator.hideVisibility()
                     showSnackbar(resource.errorResponse.message)
                 }

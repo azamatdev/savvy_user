@@ -7,9 +7,8 @@
         <import type="android.view.View" />
 
         <variable
-            name="variant"
-            type="uz.mymax.savvyenglish.network.response.VariantTestResponse" />
-
+            name="test"
+            type="uz.mymax.savvyenglish.network.response.TopicTestResponse" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -57,11 +56,12 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    android:id="@+id/variantTitle"
+                    android:id="@+id/topicTestTitle"
                     style="@style/TitleTopicBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sans_semibold"
+                    android:text="@{test.title}"
                     android:gravity="center" />
 
                 <LinearLayout
@@ -74,10 +74,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:src="@drawable/ic_outline_person_outline_24" />
+                        android:src="@drawable/ic_file" />
 
                     <TextView
-                        android:id="@+id/numberOfUsersSolved"
+                        android:id="@+id/numberOfTests"
                         style="@style/TitleTopicLessonNumber"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -90,18 +90,6 @@
             </LinearLayout>
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_hafl_rounded"
-                android:paddingStart="8dp"
-                android:paddingTop="4dp"
-                android:paddingEnd="4dp"
-                android:paddingBottom="4dp"
-                android:text="27/30"
-                android:textColor="@android:color/white"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>

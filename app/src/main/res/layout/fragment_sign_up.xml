@@ -251,21 +251,34 @@
                 android:layout_width="match_parent"
                 android:layout_height="24dp" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/signUpButton"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:clickable="true"
-                android:elevation="2dp"
-                android:focusable="true"
-                android:fontFamily="@font/sans_bold"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
-                android:text="Login"
-                app:backgroundTint="@color/greenMain"
-                app:cornerRadius="16dp" />
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/signUpButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:elevation="2dp"
+                    android:focusable="true"
+                    android:fontFamily="@font/sans_bold"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:text="Login"
+                    app:backgroundTint="@color/greenMain"
+                    app:cornerRadius="16dp" />
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="4dp"
+                    android:elevation="4dp"
+                    android:indeterminateTint="@android:color/white" />
+            </RelativeLayout>
         </LinearLayout>
 
 

@@ -22,11 +22,11 @@ import java.net.Socket
 
 suspend fun <T : Any> safeApiCall(
     apiCall: suspend () -> Response<T>
-): Resource<T> {
+): NetworkState<T> {
     try {
         val response = apiCall()
         if (response.isSuccessful && response.body() != null) {
-            return Resource.Success<T>(response.body() as T)
+            return NetworkState.Success<T>(response.body() as T)
         } else {
             if (response.errorBody() != null) {
                 val jsonParser = JsonParser()
@@ -35,26 +35,26 @@ suspend fun <T : Any> safeApiCall(
                     jsonElement,
                     ErrorResponse::class.java
                 )
-                return Resource.GenericError(errorResponse)
+                return NetworkState.GenericError(errorResponse)
             } else
-                return Resource.GenericError(ErrorResponse(message = "Unknown error"))
+                return NetworkState.GenericError(ErrorResponse(message = "Unknown error"))
         }
     } catch (throwable: Throwable) {
         Log.d("ErrorTag", throwable.message.toString())
         when (throwable) {
             is ConnectException,
             is NoConnectivityException -> {
-                return Resource.Error(NoConnectivityException())
+                return NetworkState.Error(NoConnectivityException())
             }
             is HttpException -> {
                 val errorResponse: ErrorResponse = throwable.response()?.body() as ErrorResponse
-                return Resource.GenericError(errorResponse)
+                return NetworkState.GenericError(errorResponse)
             }
             is IOException -> {
-                return Resource.Error(Exception("IOException: " + throwable.message))
+                return NetworkState.Error(Exception("IOException: " + throwable.message))
             }
             else -> {
-                return Resource.Error(Exception(throwable.message))
+                return NetworkState.Error(Exception(throwable.message))
             }
         }
     }

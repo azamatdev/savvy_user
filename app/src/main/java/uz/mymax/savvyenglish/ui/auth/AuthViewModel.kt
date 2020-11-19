@@ -4,7 +4,7 @@ import androidx.lifecycle.*
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import uz.mymax.savvyenglish.network.Resource
+import uz.mymax.savvyenglish.network.NetworkState
 import uz.mymax.savvyenglish.network.dto.LoginDto
 import uz.mymax.savvyenglish.network.dto.RegisterDto
 import uz.mymax.savvyenglish.network.response.AuthResponse
@@ -13,8 +13,8 @@ import uz.mymax.savvyenglish.utils.Event
 
 class AuthViewModel constructor(private val repository: LessonRepository) : ViewModel() {
 
-    val loginResource = MutableLiveData<Event<Resource<AuthResponse>>>()
-    val registerResource = MutableLiveData<Event<Resource<AuthResponse>>>()
+    val loginResource = MutableLiveData<Event<NetworkState<AuthResponse>>>()
+    val registerResource = MutableLiveData<Event<NetworkState<AuthResponse>>>()
 
     fun loginUser(loginDto: LoginDto) {
         viewModelScope.launch {

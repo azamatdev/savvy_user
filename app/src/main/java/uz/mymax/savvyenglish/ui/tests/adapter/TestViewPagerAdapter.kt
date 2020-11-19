@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import uz.mymax.savvyenglish.R
-import uz.mymax.savvyenglish.ui.tests.types.TopicRelatedTestFragment
+import uz.mymax.savvyenglish.ui.tests.types.TopicTestFragment
 import uz.mymax.savvyenglish.ui.tests.types.VariantTestFragment
 
 class TestViewPagerAdapter(fragmentManager: FragmentManager, var context: Context) :
@@ -15,9 +15,9 @@ class TestViewPagerAdapter(fragmentManager: FragmentManager, var context: Contex
 
     override fun getItem(position: Int): Fragment {
         return when (position) {
-            0 -> TopicRelatedTestFragment.newInstance()
+            0 -> TopicTestFragment.newInstance()
             1 -> VariantTestFragment.newInstance()
-            else -> TopicRelatedTestFragment.newInstance()
+            else -> TopicTestFragment.newInstance()
         }
     }
 

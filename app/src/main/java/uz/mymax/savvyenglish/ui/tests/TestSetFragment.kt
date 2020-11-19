@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentPagerAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SnapHelper
 import kotlinx.android.synthetic.main.fragment_test_set.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import uz.mymax.savvyenglish.R
 import uz.mymax.savvyenglish.ui.tests.adapter.TestSetAdapter
 import uz.mymax.savvyenglish.utils.*
@@ -21,6 +22,8 @@ class TestSetFragment : Fragment() {
     private lateinit var adapter: TestSetAdapter
     private lateinit var snapHelper: SnapHelper
     private var currentItem = 0
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         adapter = TestSetAdapter()
