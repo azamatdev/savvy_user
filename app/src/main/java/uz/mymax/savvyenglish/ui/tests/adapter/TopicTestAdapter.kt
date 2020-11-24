@@ -1,5 +1,6 @@
 package uz.mymax.savvyenglish.ui.tests.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,6 +35,7 @@ class TopicTestAdapter : RecyclerView.Adapter<TopicTestAdapter.TestVH>() {
         holder.itemView.child.setOnClickListener {
             itemClickListener?.invoke(topicList!![position].id)
         }
+
     }
 
     inner class TestVH(itemView: View) : RecyclerView.ViewHolder(itemView) {

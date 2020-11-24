@@ -3,6 +3,7 @@ package uz.mymax.savvyenglish.ui.topics
 import android.os.Bundle
 import android.view.*
 import android.view.animation.AnimationUtils
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -11,6 +12,7 @@ import kotlinx.android.synthetic.main.fragment_topics.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 import uz.mymax.savvyenglish.R
+import uz.mymax.savvyenglish.data.isAdmin
 import uz.mymax.savvyenglish.network.NetworkState
 import uz.mymax.savvyenglish.ui.topics.adapter.TopicsAdapter
 import uz.mymax.savvyenglish.utils.PlaceHolderAdapter
@@ -39,6 +41,7 @@ class TopicsFragment : Fragment() {
     ): View? {
         if (storedView == null) {
             storedView = inflater.inflate(R.layout.fragment_topics, container, false)
+            storedView?.addTopicButton?.isVisible = requireContext().isAdmin()
             storedView!!.topicsRecycler.layoutAnimation =
                 AnimationUtils.loadLayoutAnimation(
                     requireContext(),
@@ -84,6 +87,9 @@ class TopicsFragment : Fragment() {
         })
         topicsSwipeRefreshLayout.setOnRefreshListener {
             viewModel.fetchTopics()
+        }
+
+        addTopicButton.setOnClickListener {
         }
     }
 

@@ -7,6 +7,10 @@
 
         <import type="android.view.View" />
 
+        <variable
+            name="question"
+            type="uz.mymax.savvyenglish.network.response.QuestionItem" />
+
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -16,9 +20,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="4dp"
-        android:clickable="true"
         android:clipToPadding="false"
-        android:focusable="true"
         app:cardBackgroundColor="@android:color/white"
         app:cardCornerRadius="8dp"
         app:cardElevation="3dp"
@@ -40,6 +42,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/sans_bold"
                 android:textColor="@android:color/black"
+                android:text="@{question.title}"
                 tools:text="1.Choose the correct answer" />
 
 
@@ -53,6 +56,7 @@
                 tools:text="More wild animals ... extinct these days" />
 
             <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/questionToggleGroup"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="12dp"
@@ -62,26 +66,25 @@
                 app:singleSelection="true">
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/choiceA"
+                    android:id="@+id/A"
                     style="@style/TestSelectButton"
-                    android:text="A" />
+                    android:text="@{`A ` + question.ansA}" />
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/choiceB"
+                    android:id="@+id/B"
                     style="@style/TestSelectButton"
-                    android:text="B"
-                    />
+                    android:text="@{`B ` + question.ansB}"/>
 
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/choiceC"
+                    android:id="@+id/C"
                     style="@style/TestSelectButton"
-                    android:text="C" />
+                    android:text="@{`C ` + question.ansC}"/>
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/choiceD"
+                    android:id="@+id/D"
                     style="@style/TestSelectButton"
-                    android:text="D" />
+                    android:text="@{`D ` + question.ansD}" />
             </com.google.android.material.button.MaterialButtonToggleGroup>
         </LinearLayout>
 

@@ -17,12 +17,35 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
+
+    flavorDimensions 'default'
+    productFlavors {
+
+        Client {
+            dimension 'default'
+            applicationId "uz.mymax.savvyenglish"
+        }
+
+        Admin {
+            dimension 'default'
+            applicationId "uz.mymax.savvyenglish.admin"
+
+        }
+
+    }
+
+
     dataBinding {
         enabled true
     }
     buildTypes {
+        debug {
+            minifyEnabled true
+            applicationIdSuffix ".debug"
+        }
         release {
             minifyEnabled false
+            shrinkResources
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -112,4 +135,5 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.3.0-alpha07"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.3.0-alpha07"
 
+    implementation "com.squareup.moshi:moshi-kotlin:1.11.0"
 }

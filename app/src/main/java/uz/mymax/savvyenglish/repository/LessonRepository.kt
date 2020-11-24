@@ -47,4 +47,9 @@ class LessonRepository constructor(
         emit(safeApiCall { api.fetchVariantTests() })
     }
 
+    suspend fun fetchAllQuestion() = flow {
+        emit(NetworkState.Loading)
+        emit(safeApiCall { api.fetchAllQuestions() })
+    }
+
 }

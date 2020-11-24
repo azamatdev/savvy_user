@@ -32,5 +32,8 @@ interface SavvyApi {
     @GET("api/test/tests")
     suspend fun fetchVariantTests(): Response<List<VariantTestResponse>>
 
+    @GET("api/question")
+    suspend fun fetchAllQuestions(): Response<List<QuestionItem>>
+
 
 }

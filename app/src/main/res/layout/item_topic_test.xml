@@ -17,7 +17,8 @@
         android:layout_height="96dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="4dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:clickable="true"
         android:clipToPadding="false"
         android:focusable="true"
@@ -61,8 +62,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sans_semibold"
-                    android:text="@{test.title}"
-                    android:gravity="center" />
+                    android:gravity="center"
+                    android:text="@{test.title}" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -83,6 +84,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="12dp"
                         android:fontFamily="@font/sans_semibold"
+                        android:text="@{String.valueOf(test.testCount)}"
                         android:textColor="@color/light_indigo"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />

@@ -1,7 +1,9 @@
 package uz.mymax.savvyenglish.network.response
 
+import androidx.annotation.Keep
 import com.squareup.moshi.Json
 
+@Keep
 data class VariantTestResponse(
     @Json(name = "testCount")
     val testCount: Int = 0,

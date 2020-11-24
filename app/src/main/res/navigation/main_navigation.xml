@@ -21,7 +21,13 @@
         android:id="@+id/destProfile"
         android:name="uz.mymax.savvyenglish.ui.profile.ProfileFragment"
         android:label="@string/profile_title"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/toLogin"
+            app:destination="@id/destLogin"
+            app:popUpTo="@id/destProfile"
+            app:popUpToInclusive="true" />
+    </fragment>
     <fragment
         android:id="@+id/destExtra"
         android:name="uz.mymax.savvyenglish.ui.extras.ExtrasFragment"
@@ -82,11 +88,19 @@
         android:id="@+id/destTestSet"
         android:name="uz.mymax.savvyenglish.ui.tests.TestSetFragment"
         android:label="Test Set"
-        tools:layout="@layout/fragment_test_set" />
+        tools:layout="@layout/fragment_test_set" >
+        <action
+            android:id="@+id/toTestFinished"
+            app:destination="@id/destTestFinished"
+            app:popUpTo="@id/destTestSet"
+            app:popUpToInclusive="true" />
+    </fragment>
     <fragment
         android:id="@+id/destTestFinished"
         android:name="uz.mymax.savvyenglish.ui.tests.TestFinishedFragment"
         android:label="fragment_test_finished"
         tools:layout="@layout/fragment_test_finished" />
+
+
 
 </navigation>

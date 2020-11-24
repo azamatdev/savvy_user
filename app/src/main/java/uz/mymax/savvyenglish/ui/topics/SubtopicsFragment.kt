@@ -76,12 +76,6 @@ class SubtopicsFragment : Fragment() {
                 is NetworkState.Success -> {
                     swipeToRefreshLayout.hideLoading()
                     val list = ArrayList(resource.data)
-                    list.addAll(list)
-                    list.addAll(list)
-                    list.addAll(list)
-                    list.addAll(list)
-                    list.addAll(list)
-                    list.addAll(list)
                     adapter.updateList(list)
                     subtopicRecycler.adapter = adapter
                     subtopicRecycler.scheduleLayoutAnimation()
