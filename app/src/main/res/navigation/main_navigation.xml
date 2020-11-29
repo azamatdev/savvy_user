@@ -5,6 +5,7 @@
     android:id="@+id/main_navigation"
     app:startDestination="@id/destTests">
 
+    <!--    region Topic-->
     <fragment
         android:id="@+id/destSubtopic"
         android:name="uz.mymax.savvyenglish.ui.topics.SubtopicsFragment"
@@ -18,10 +19,38 @@
             app:destination="@id/destExplanation" />
     </fragment>
     <fragment
+        android:id="@+id/destTopics"
+        android:name="uz.mymax.savvyenglish.ui.topics.TopicsFragment"
+        android:label="@string/topics_title"
+        tools:layout="@layout/fragment_topics">
+
+        <action
+            android:id="@+id/action_destTopics_to_destSubtopic"
+            app:destination="@id/destSubtopic" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/destExplanation"
+        android:name="uz.mymax.savvyenglish.ui.explanation.ExplanationFragment"
+        android:label="fragment_explanation"
+        tools:layout="@layout/fragment_explanation">
+        <argument
+            android:name="subtopicId"
+            android:defaultValue="0"
+            app:argType="integer" />
+        <argument
+            android:name="subtopicTitle"
+            android:defaultValue='""'
+            app:argType="string" />
+    </fragment>
+    <!--    endregion-->
+
+    <fragment
         android:id="@+id/destProfile"
         android:name="uz.mymax.savvyenglish.ui.profile.ProfileFragment"
         android:label="@string/profile_title"
-        tools:layout="@layout/fragment_profile" >
+        tools:layout="@layout/fragment_profile">
         <action
             android:id="@+id/toLogin"
             app:destination="@id/destLogin"
@@ -33,22 +62,8 @@
         android:name="uz.mymax.savvyenglish.ui.extras.ExtrasFragment"
         android:label="@string/extra_title"
         tools:layout="@layout/fragment_extras" />
-    <fragment
-        android:id="@+id/destTests"
-        android:name="uz.mymax.savvyenglish.ui.tests.TestsFragment"
-        android:label="@string/tests_title"
-        tools:layout="@layout/fragment_tests" />
-    <fragment
-        android:id="@+id/destTopics"
-        android:name="uz.mymax.savvyenglish.ui.topics.TopicsFragment"
-        android:label="@string/topics_title"
-        tools:layout="@layout/fragment_topics">
 
-        <action
-            android:id="@+id/action_destTopics_to_destSubtopic"
-            app:destination="@id/destSubtopic" />
 
-    </fragment>
     <fragment
         android:id="@+id/destLogin"
         android:name="uz.mymax.savvyenglish.ui.auth.LoginFragment"
@@ -70,37 +85,53 @@
             app:destination="@id/destTopics"
             app:popUpTo="@id/destTopics" />
     </fragment>
+
+
+    <!--    region Tests-->
     <fragment
-        android:id="@+id/destExplanation"
-        android:name="uz.mymax.savvyenglish.ui.explanation.ExplanationFragment"
-        android:label="fragment_explanation"
-        tools:layout="@layout/fragment_explanation">
-        <argument
-            android:name="subtopicId"
-            android:defaultValue="0"
-            app:argType="integer" />
-        <argument
-            android:name="subtopicTitle"
-            android:defaultValue='""'
-            app:argType="string" />
+        android:id="@+id/destTests"
+        android:name="uz.mymax.savvyenglish.ui.tests.TestsFragment"
+        android:label="@string/tests_title"
+        tools:layout="@layout/fragment_tests">
+        <action
+            android:id="@+id/toThemeTest"
+            app:destination="@id/destThemeTests" />
+        <action
+            android:id="@+id/fromTestsToTestSet"
+            app:destination="@id/destTestSet" />
     </fragment>
     <fragment
         android:id="@+id/destTestSet"
         android:name="uz.mymax.savvyenglish.ui.tests.TestSetFragment"
         android:label="Test Set"
-        tools:layout="@layout/fragment_test_set" >
+        tools:layout="@layout/fragment_test_set">
         <action
             android:id="@+id/toTestFinished"
             app:destination="@id/destTestFinished"
             app:popUpTo="@id/destTestSet"
             app:popUpToInclusive="true" />
+        <argument
+            android:name="testId"
+            app:argType="string"
+            android:defaultValue='""' />
     </fragment>
     <fragment
         android:id="@+id/destTestFinished"
         android:name="uz.mymax.savvyenglish.ui.tests.TestFinishedFragment"
         android:label="fragment_test_finished"
         tools:layout="@layout/fragment_test_finished" />
-
-
+    <fragment
+        android:id="@+id/destThemeTests"
+        android:name="uz.mymax.savvyenglish.ui.tests.ThemeTestsFragment"
+        android:label="fragment_theme_tests"
+        tools:layout="@layout/fragment_theme_tests" >
+        <argument
+            android:name="themeId"
+            app:argType="string" />
+        <action
+            android:id="@+id/toTestSet"
+            app:destination="@id/destTestSet" />
+    </fragment>
+    <!--endregion -->
 
 </navigation>

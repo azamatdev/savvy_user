@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -17,9 +18,9 @@
         android:layout_width="match_parent"
         android:layout_height="96dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"
         android:clickable="true"
         android:clipToPadding="false"
         android:focusable="true"
@@ -82,13 +83,15 @@
                         android:id="@+id/numberOfUsersSolved"
                         style="@style/TitleTopicLessonNumber"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
                         android:layout_marginStart="12dp"
                         android:fontFamily="@font/sans_semibold"
                         android:text="@{String.valueOf(variant.attemps)}"
                         android:textColor="@color/light_indigo"
                         app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="12" />
                 </LinearLayout>
             </LinearLayout>
 

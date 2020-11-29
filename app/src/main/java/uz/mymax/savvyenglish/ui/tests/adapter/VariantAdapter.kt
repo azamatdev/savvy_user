@@ -6,16 +6,14 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_topic.view.*
-import uz.mymax.savvyenglish.databinding.ItemTopicBinding
-import uz.mymax.savvyenglish.databinding.ItemTopicTestBinding
 import uz.mymax.savvyenglish.databinding.ItemVariantBinding
-import uz.mymax.savvyenglish.network.response.TopicResponse
-import uz.mymax.savvyenglish.network.response.TopicTestResponse
 import uz.mymax.savvyenglish.network.response.VariantTestResponse
 
-class VariantTestAdapter : RecyclerView.Adapter<VariantTestAdapter.TestVH>() {
+class VariantAdapter : RecyclerView.Adapter<VariantAdapter.TestVH>() {
 
     var itemClickListener: ((Int) -> Unit)? = null
+    var onLongClickListener: ((VariantTestResponse) -> Unit)? = null
+
     var topicList: ArrayList<VariantTestResponse>? = null
 
     fun updateList(newList: List<VariantTestResponse>) {
@@ -35,6 +33,10 @@ class VariantTestAdapter : RecyclerView.Adapter<VariantTestAdapter.TestVH>() {
 
         holder.itemView.child.setOnClickListener {
             itemClickListener?.invoke(topicList!![position].id)
+        }
+        holder.itemView.child.setOnLongClickListener {
+            onLongClickListener?.invoke(topicList!![position])
+            return@setOnLongClickListener true
         }
     }
 

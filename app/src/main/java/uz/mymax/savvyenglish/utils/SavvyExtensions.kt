@@ -6,6 +6,7 @@ import android.content.res.Resources
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.InsetDrawable
+import android.util.DisplayMetrics
 import android.util.Log
 import android.util.TypedValue
 import android.view.Gravity
@@ -22,6 +23,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SnapHelper
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.android.synthetic.main.dialog_view.view.*
@@ -171,7 +174,7 @@ fun Context.dpToPx(valueInDp: Float): Float {
     return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, valueInDp, metrics)
 }
 
-fun TextInputEditText.hideErrorIfFilled() {
+fun EditText.hideErrorIfFilled() {
     this.doOnTextChanged { text, start, before, count ->
         if (this.text.toString().isNotEmpty() and !this.error.isNullOrEmpty()) {
             this.error = null
@@ -179,11 +182,6 @@ fun TextInputEditText.hideErrorIfFilled() {
     }
 }
 
-fun EditText.hideErrorIfFilled() {
-    if (this.text.toString().isEmpty()) {
-        this.error = context.getString(R.string.warning_fill_the_fields)
-    }
-}
 
 fun TextInputEditText.showErrorIfNotFilled() {
     if (this.text.toString().isEmpty()) {
@@ -226,3 +224,20 @@ fun Fragment.changeUiStateVisibility(isLoading: Boolean, progressView: ProgressB
         hiddenView.visible()
     }
 }
+fun Context.getDisplayMetrics(): DisplayMetrics {
+    val metrics = DisplayMetrics()
+    (this as MainActivity).windowManager.defaultDisplay.getMetrics(metrics)
+    return metrics
+}
+
+
+
+fun Fragment.createBottomSheet(layout: Int): BottomSheetDialog {
+    val bottomSheetDialog = BottomSheetDialog(requireContext())
+    bottomSheetDialog.setContentView(layout)
+    val bottomSheetInternal = bottomSheetDialog.findViewById<View>(R.id.design_bottom_sheet)
+    BottomSheetBehavior.from<View?>(bottomSheetInternal!!).peekHeight = (requireContext().getDisplayMetrics().heightPixels*0.8).toInt()
+
+    return bottomSheetDialog
+}
+

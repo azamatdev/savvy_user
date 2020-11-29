@@ -3,9 +3,10 @@ package uz.mymax.savvyenglish.network.response
 
 import androidx.annotation.Keep
 import com.squareup.moshi.Json
+import java.io.Serializable
 
 @Keep
-data class TopicTestResponse(
+data class ThemeTestResponse(
     @Json(name = "id")
     val id: Int = 0,
     @Json(name = "title")
@@ -18,8 +19,7 @@ data class TopicTestResponse(
     val testCount: Int = 0,
     @Json(name = "paymentId")
     val paymentId: Int? = 0
-
-)
+) : Serializable
 
 
 

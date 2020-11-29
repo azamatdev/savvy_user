@@ -35,6 +35,7 @@ suspend fun <T : Any> safeApiCall(
                     jsonElement,
                     ErrorResponse::class.java
                 )
+                errorResponse.message = errorResponse.error
                 return NetworkState.GenericError(errorResponse)
             } else
                 return NetworkState.GenericError(ErrorResponse(message = "Unknown error"))
