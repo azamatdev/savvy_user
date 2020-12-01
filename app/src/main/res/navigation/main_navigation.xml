@@ -97,23 +97,26 @@
             android:id="@+id/toThemeTest"
             app:destination="@id/destThemeTests" />
         <action
-            android:id="@+id/fromTestsToTestSet"
-            app:destination="@id/destTestSet" />
+            android:id="@+id/toQeustionSet"
+            app:destination="@id/destQuestionSet" />
     </fragment>
     <fragment
-        android:id="@+id/destTestSet"
-        android:name="uz.mymax.savvyenglish.ui.tests.TestSetFragment"
+        android:id="@+id/destQuestionSet"
+        android:name="uz.mymax.savvyenglish.ui.question.QuestionSetFragment"
         android:label="Test Set"
         tools:layout="@layout/fragment_test_set">
         <action
             android:id="@+id/toTestFinished"
             app:destination="@id/destTestFinished"
-            app:popUpTo="@id/destTestSet"
+            app:popUpTo="@id/destQuestionSet"
             app:popUpToInclusive="true" />
         <argument
             android:name="testId"
             app:argType="string"
             android:defaultValue='""' />
+        <action
+            android:id="@+id/toCreateQuestion"
+            app:destination="@id/destCreateQuestion" />
     </fragment>
     <fragment
         android:id="@+id/destTestFinished"
@@ -123,14 +126,36 @@
     <fragment
         android:id="@+id/destThemeTests"
         android:name="uz.mymax.savvyenglish.ui.tests.ThemeTestsFragment"
-        android:label="fragment_theme_tests"
-        tools:layout="@layout/fragment_theme_tests" >
+        android:label="Theme"
+        tools:layout="@layout/fragment_theme_tests">
         <argument
             android:name="themeId"
             app:argType="string" />
         <action
             android:id="@+id/toTestSet"
-            app:destination="@id/destTestSet" />
+            app:destination="@id/destQuestionSet" />
+    </fragment>
+    <fragment
+        android:id="@+id/destCreateQuestion"
+        android:name="uz.mymax.savvyenglish.ui.question.CreateQuestionFragment"
+        android:label="Create Question"
+        tools:layout="@layout/fragment_create_question" >
+        <argument android:name="testId"
+            app:argType="string" />
+        <action
+            android:id="@+id/toQuestionSet"
+            app:destination="@id/destQuestionSet"
+            app:popUpTo="@id/destQuestionSet"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="isUpdating"
+            app:argType="boolean"
+            android:defaultValue="false" />
+        <argument
+            android:name="question"
+            app:argType="uz.mymax.savvyenglish.network.response.QuestionResponse"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
     <!--endregion -->
 

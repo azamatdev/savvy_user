@@ -27,9 +27,12 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.dialog_view.view.*
+import org.w3c.dom.Text
 import uz.mymax.savvyenglish.MainActivity
 import uz.mymax.savvyenglish.R
+import java.util.ArrayList
 
 /**
  * Log Extentions
@@ -215,7 +218,11 @@ fun Fragment.changeUiStateEnabled(isLoading: Boolean, progressBar: View, viewBut
     if (isLoading) progressBar.visible() else progressBar.gone()
 }
 
-fun Fragment.changeUiStateVisibility(isLoading: Boolean, progressView: ProgressBar, hiddenView: View) {
+fun Fragment.changeUiStateVisibility(
+    isLoading: Boolean,
+    progressView: ProgressBar,
+    hiddenView: View
+) {
     if (isLoading) {
         progressView.visible()
         hiddenView.gone()
@@ -224,6 +231,7 @@ fun Fragment.changeUiStateVisibility(isLoading: Boolean, progressView: ProgressB
         hiddenView.visible()
     }
 }
+
 fun Context.getDisplayMetrics(): DisplayMetrics {
     val metrics = DisplayMetrics()
     (this as MainActivity).windowManager.defaultDisplay.getMetrics(metrics)
@@ -231,13 +239,41 @@ fun Context.getDisplayMetrics(): DisplayMetrics {
 }
 
 
-
 fun Fragment.createBottomSheet(layout: Int): BottomSheetDialog {
     val bottomSheetDialog = BottomSheetDialog(requireContext())
     bottomSheetDialog.setContentView(layout)
     val bottomSheetInternal = bottomSheetDialog.findViewById<View>(R.id.design_bottom_sheet)
-    BottomSheetBehavior.from<View?>(bottomSheetInternal!!).peekHeight = (requireContext().getDisplayMetrics().heightPixels*0.8).toInt()
+    BottomSheetBehavior.from<View?>(bottomSheetInternal!!).peekHeight =
+        (requireContext().getDisplayMetrics().heightPixels * 0.8).toInt()
 
     return bottomSheetDialog
 }
 
+
+fun ArrayList<TextInputEditText>.showErrorIfNotFilled(textInputLayout: ArrayList<TextInputLayout>) {
+    this.forEachIndexed { index, it ->
+        if (it.text.toString().isEmpty()) {
+            textInputLayout[index].error = it.context.getString(R.string.warning_fill_the_fields)
+        }
+    }
+}
+fun TextInputEditText.getStringText() = this.text.toString()
+
+fun ArrayList<TextInputEditText>.hideErrorIfFilled(textInputLayout: ArrayList<TextInputLayout>) {
+    this.forEachIndexed { index, it ->
+        it.doOnTextChanged { text, start, before, count ->
+            if (it.text.toString().isNotEmpty() and !textInputLayout[index].error.isNullOrEmpty()) {
+                textInputLayout[index].error = null
+            }
+        }
+    }
+}
+
+fun ArrayList<TextInputEditText>.areAllFieldsFilled(): Boolean {
+    var filled = false
+    for (counter in this.indices)
+        if (this[counter].text.toString().isNotEmpty())
+            filled = true
+
+    return filled
+}

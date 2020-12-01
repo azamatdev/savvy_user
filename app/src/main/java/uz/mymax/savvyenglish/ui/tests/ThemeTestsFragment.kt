@@ -1,37 +1,39 @@
-package uz.mymax.savvyenglish.ui.tests.types
+package uz.mymax.savvyenglish.ui.tests
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import kotlinx.android.synthetic.main.fragment_variant.*
+import kotlinx.android.synthetic.main.fragment_theme_tests.*
 import kotlinx.android.synthetic.main.layout_bottom_update_delete.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import uz.mymax.savvyenglish.R
 import uz.mymax.savvyenglish.network.NetworkState
-import uz.mymax.savvyenglish.ui.tests.TestEvent
-import uz.mymax.savvyenglish.ui.tests.TestViewModel
-import uz.mymax.savvyenglish.ui.tests.TestsFragmentDirections
-import uz.mymax.savvyenglish.ui.tests.adapter.VariantAdapter
+import uz.mymax.savvyenglish.network.response.VariantTestResponse
+import uz.mymax.savvyenglish.ui.tests.adapter.ThemeTestAdapter
 import uz.mymax.savvyenglish.ui.tests.admin.AddTestDialog
 import uz.mymax.savvyenglish.ui.tests.admin.DialogEvent
+import uz.mymax.savvyenglish.utils.VerticalSpaceItemDecoration
 import uz.mymax.savvyenglish.utils.createBottomSheet
 import uz.mymax.savvyenglish.utils.showSnackbar
 
 
-class VariantFragment : Fragment() {
+class ThemeTestsFragment : Fragment() {
 
+    private val args: ThemeTestsFragmentArgs by navArgs()
     private val viewModel: TestViewModel by viewModel()
-    private lateinit var adapter: VariantAdapter
+    private lateinit var adapter: ThemeTestAdapter
     private lateinit var bottomSheet: BottomSheetDialog
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        adapter = VariantAdapter()
+        adapter = ThemeTestAdapter()
+        viewModel.setStateTheme(ThemeEvent.GetTestsOfTheme(args.themeId))
     }
 
     override fun onCreateView(
@@ -39,21 +41,93 @@ class VariantFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_variant, container, false)
+        return inflater.inflate(R.layout.fragment_theme_tests, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        variantRecycler.adapter = adapter
+        themeTestRecycler.adapter = adapter
+        themeTestRecycler.addItemDecoration(VerticalSpaceItemDecoration(16))
+        connectObservers()
 
         adapter.itemClickListener = {
-            val action = TestsFragmentDirections.toQeustionSet()
+            val action = ThemeTestsFragmentDirections.toTestSet()
             action.testId = it.toString()
 
-            findNavController().navigate(
-                action
-            )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            20000000000000+-22
+            findNavController().navigate(action)
         }
+
         adapter.onLongClickListener = { test ->
             bottomSheet = createBottomSheet(R.layout.layout_bottom_update_delete)
             bottomSheet.show()
@@ -65,53 +139,60 @@ class VariantFragment : Fragment() {
 
             bottomSheet.updateButton.setOnClickListener {
                 val fm = childFragmentManager
+                val updateTest = VariantTestResponse()
+                updateTest.id = test.id
+                updateTest.title = test.title
+                updateTest.isFree = test.isFree
+                updateTest.price = test.price
+                updateTest.paymentId = test.paymentId
+                updateTest.themeId = args.themeId.toInt()
                 val orderDialogFragment =
-                    AddTestDialog.newInstance(DialogEvent.UpdateTest(test))
-                orderDialogFragment.show(fm, "addTheme")
+                    AddTestDialog.newInstance(DialogEvent.UpdateTest(updateTest))
+                orderDialogFragment.show(fm, "addTest")
                 orderDialogFragment.addCLick = {
-                    viewModel.setStateTest(TestEvent.GetAllTestsOfDTM)
+                    viewModel.setStateTheme(ThemeEvent.GetTestsOfTheme(args.themeId))
                 }
                 bottomSheet.dismiss()
             }
         }
 
-        fabAddTest.setOnClickListener {
+        fabAddTestTheme.setOnClickListener {
             val fm = childFragmentManager
             val orderDialogFragment =
-                AddTestDialog.newInstance(DialogEvent.CreateTest)
-            orderDialogFragment.show(fm, "addTheme")
+                AddTestDialog.newInstance(DialogEvent.CreateThemeTest(args.themeId))
+            orderDialogFragment.show(fm, "addTest")
             orderDialogFragment.addCLick = {
-                viewModel.setStateTest(TestEvent.GetAllTestsOfDTM)
+                viewModel.setStateTheme(ThemeEvent.GetTestsOfTheme(args.themeId))
             }
         }
-
-        connectObservers()
-
     }
 
     private fun connectObservers() {
-        viewModel.variantTestState.observe(viewLifecycleOwner, Observer { resource ->
+        viewModel.testsOfThemeState.observe(viewLifecycleOwner, Observer { resource ->
             when (resource) {
                 is NetworkState.Loading -> {
+                    progressIndicator.show()
                 }
                 is NetworkState.Success -> {
+                    progressIndicator.hide()
                     adapter.updateList(resource.data)
                 }
                 is NetworkState.Error -> {
+                    progressIndicator.hide()
                     showSnackbar(resource.exception.message.toString())
                 }
                 is NetworkState.GenericError -> {
+                    progressIndicator.hide()
                     showSnackbar(resource.errorResponse.message)
                 }
             }
         })
-
         viewModel.deleteTestState.observe(viewLifecycleOwner, Observer { resource ->
             when (resource) {
                 is NetworkState.Loading -> {
                 }
                 is NetworkState.Success -> {
-                    viewModel.setStateTest(TestEvent.GetAllTestsOfDTM)
+                    viewModel.setStateTheme(ThemeEvent.GetTestsOfTheme(args.themeId))
                 }
                 is NetworkState.Error -> {
                     showSnackbar(resource.exception.message.toString())
@@ -121,17 +202,5 @@ class VariantFragment : Fragment() {
                 }
             }
         })
-    }
-
-    override fun onResume() {
-        if (adapter.itemCount == 0)
-            viewModel.setStateTest(TestEvent.GetAllTestsOfDTM)
-        super.onResume()
-    }
-
-    companion object {
-        @JvmStatic
-        fun newInstance() =
-            VariantFragment()
     }
 }

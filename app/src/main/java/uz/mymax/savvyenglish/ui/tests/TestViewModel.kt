@@ -9,7 +9,6 @@ import kotlinx.coroutines.launch
 import uz.mymax.savvyenglish.network.NetworkState
 import uz.mymax.savvyenglish.network.dto.CreateTestDto
 import uz.mymax.savvyenglish.network.dto.ThemeUpdateDto
-import uz.mymax.savvyenglish.network.response.QuestionItem
 import uz.mymax.savvyenglish.network.response.ThemeTestResponse
 import uz.mymax.savvyenglish.network.response.VariantTestResponse
 import uz.mymax.savvyenglish.repository.LessonRepository
@@ -32,7 +31,6 @@ sealed class TestEvent {
 
 class TestViewModel(val repository: LessonRepository) : ViewModel() {
 
-    val testSetState = MutableLiveData<NetworkState<List<QuestionItem>>>()
 
     val variantTestState = MutableLiveData<NetworkState<List<VariantTestResponse>>>()
     val createTestState = MutableLiveData<NetworkState<VariantTestResponse>>()
@@ -120,13 +118,6 @@ class TestViewModel(val repository: LessonRepository) : ViewModel() {
         }
     }
 
-    fun fetchTestSet() {
-        viewModelScope.launch {
-            repository.fetchAllQuestion()
-                .onEach {
-                    testSetState.value = it
-                }.launchIn(viewModelScope)
-        }
-    }
+
 
 }

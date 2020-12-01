@@ -9,7 +9,7 @@
 
         <variable
             name="question"
-            type="uz.mymax.savvyenglish.network.response.QuestionItem" />
+            type="uz.mymax.savvyenglish.network.response.QuestionResponse" />
 
     </data>
 
@@ -68,23 +68,23 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/A"
                     style="@style/TestSelectButton"
-                    android:text="@{`A ` + question.ansA}" />
+                    android:text="@{`A. ` + question.ansA}" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/B"
                     style="@style/TestSelectButton"
-                    android:text="@{`B ` + question.ansB}"/>
+                    android:text="@{`B. ` + question.ansB}"/>
 
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/C"
                     style="@style/TestSelectButton"
-                    android:text="@{`C ` + question.ansC}"/>
+                    android:text="@{`C. ` + question.ansC}"/>
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/D"
                     style="@style/TestSelectButton"
-                    android:text="@{`D ` + question.ansD}" />
+                    android:text="@{`D. ` + question.ansD}" />
             </com.google.android.material.button.MaterialButtonToggleGroup>
         </LinearLayout>
 

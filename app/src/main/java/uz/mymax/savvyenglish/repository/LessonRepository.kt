@@ -1,21 +1,12 @@
 package uz.mymax.savvyenglish.repository
 
-import com.google.gson.JsonArray
-import com.google.gson.JsonObject
 import kotlinx.coroutines.flow.flow
-import okhttp3.MediaType
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.toRequestBody
-import org.json.JSONArray
-import org.json.JSONObject
 import uz.mymax.savvyenglish.network.NetworkState
 import uz.mymax.savvyenglish.network.SavvyApi
 import uz.mymax.savvyenglish.network.dto.*
-import uz.mymax.savvyenglish.network.response.ErrorResponse
-import uz.mymax.savvyenglish.network.response.ThemeTestResponse
 import uz.mymax.savvyenglish.network.response.VariantTestResponse
 import uz.mymax.savvyenglish.network.safeApiCall
+import uz.mymax.savvyenglish.ui.question.QuestionEvent
 
 class LessonRepository constructor(
     private val api: SavvyApi
@@ -50,7 +41,7 @@ class LessonRepository constructor(
 
     suspend fun fetchAllQuestion() = flow {
         emit(NetworkState.Loading)
-        emit(safeApiCall { api.fetchAllQuestions() })
+        emit(safeApiCall { api.getAllQuestions() })
     }
 
     //region Tests CRUD
@@ -142,6 +133,45 @@ class LessonRepository constructor(
             emit(addTestToThemeCall)
         }
 
+    }
+    //endregion
+
+    //region Question
+    suspend fun questionCalls(event: QuestionEvent) = flow {
+        emit(NetworkState.Loading)
+        when (event) {
+            is QuestionEvent.GetQuestionsOfTest -> {
+                emit(safeApiCall { api.getQuestionsOfTest(event.testId) })
+            }
+            is QuestionEvent.GetAllQuestions -> {
+                emit(safeApiCall { api.getAllQuestions() })
+            }
+            is QuestionEvent.CreateQuestion -> {
+                val createQuestionCall = safeApiCall { api.createQuestion(event.question) }
+                if (createQuestionCall is NetworkState.Success) {
+                    val questionIds = ArrayList<Int>()
+                    questionIds.add(createQuestionCall.data.id)
+
+                    val addQuestionToTestCall =
+                        safeApiCall {
+                            api.addQuestionToTest(
+                                testId = event.testId,
+                                questionIds = AddQuestionToTestDto(questionIds)
+                            )
+                        }
+
+                    emit(addQuestionToTestCall)
+                } else
+                    emit(createQuestionCall)
+
+            }
+            is QuestionEvent.UpdateQuestion -> {
+                emit(safeApiCall { api.updateQuestion(event.question) })
+            }
+            is QuestionEvent.DeleteQuestion -> {
+                emit(safeApiCall { api.deleteQuestion(event.questionId) })
+            }
+        }
     }
     //endregion
 }

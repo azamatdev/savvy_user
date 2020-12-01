@@ -1,8 +1,5 @@
 package uz.mymax.savvyenglish.network
 
-import com.google.gson.JsonObject
-import okhttp3.RequestBody
-import org.json.JSONObject
 import retrofit2.Response
 import retrofit2.http.*
 import uz.mymax.savvyenglish.network.dto.*
@@ -13,16 +10,16 @@ interface SavvyApi {
     @POST("auth/users")
     suspend fun signUp(@Body registerDto: RegisterDto): Response<AuthResponse>
 
-    @POST("api/login")
+    @POST("login")
     suspend fun login(@Body loginDto: LoginDto): Response<AuthResponse>
 
-    @GET("api/topics")
+    @GET("topics")
     suspend fun geTopics(): Response<List<TopicResponse>>
 
-    @GET("api/subtopics/parent/{id}")
+    @GET("subtopics/parent/{id}")
     suspend fun getSubtopics(@Path("id") topicId: String): Response<List<SubtopicResponse>>
 
-    @GET("api/explanations/parent/{id}")
+    @GET("explanations/parent/{id}")
     suspend fun getExplanations(@Path("id") topicId: String): Response<List<ExplanationResponse>>
 
     //region Themes
@@ -67,9 +64,29 @@ interface SavvyApi {
 
     //endregion
 
+    //region Question
+    @GET(QUESTION)
+    suspend fun getAllQuestions(): Response<List<QuestionResponse>>
 
-    @GET("api/question")
-    suspend fun fetchAllQuestions(): Response<List<QuestionItem>>
+    @GET("$TEST$QUESTION{testId}")
+    suspend fun getQuestionsOfTest(@Path("testId") testId: String): Response<List<QuestionResponse>>
+
+    @POST(QUESTION)
+    suspend fun createQuestion(@Body question: QuestionResponse): Response<QuestionResponse>
+
+    @POST("$TEST{testId}")
+    suspend fun addQuestionToTest(
+        @Path("testId") testId: String,
+        @Body questionIds: AddQuestionToTestDto
+    ): Response<String>
+
+    @DELETE("$QUESTION{questionId}")
+    suspend fun deleteQuestion(@Path("questionId") questionId: String): Response<QuestionResponse>
+
+    @PUT(QUESTION)
+    suspend fun updateQuestion(@Body question: QuestionResponse): Response<QuestionResponse>
+
+    //endregion
 
 
 }
