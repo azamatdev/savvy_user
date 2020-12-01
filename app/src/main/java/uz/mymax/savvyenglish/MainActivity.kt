@@ -51,17 +51,15 @@ class MainActivity : AppCompatActivity() {
         bottomNavigationView.setupWithNavController(mainNavController)
         mainNavController.addOnDestinationChangedListener { controller, destination, arguments ->
             //set it here for all the destinations, or inside the switch statement if you want to change it based on destination
-
-            log("DestinationID: ${destination.label}")
             toolbar.title = destination.label
+            toolbar.makeVisible()
+            bottomNavigationView.slideDown()
             when (destination.id) {
                 R.id.destTopics,
-                R.id.destTests,
                 R.id.destExtra,
                 R.id.destProfile -> {
-                    toolbar.makeVisible()
-                    toolbar.elevation = 3f
-                    toolbar.setNavigationIcon(null)
+
+//                    toolbar.setNavigationIcon(null)
                     bottomNavigationView.makeVisible()
                 }
                 R.id.destTestFinished,
@@ -72,17 +70,19 @@ class MainActivity : AppCompatActivity() {
                     bottomNavigationView.slideDown()
                 }
                 else -> {
-                    log("ELse")
-                    bottomNavigationView.slideDown()
                     toolbar.setNavigationIcon(R.drawable.ic_back)
                 }
             }
-
             when (destination.id) {
                 R.id.destTests -> {
                     toolbar.elevation = 0f
                 }
+                else -> {
+                    toolbar.elevation = 3f
+                }
             }
+            log("DestinationID: ${destination.label}")
+
         }
     }
 

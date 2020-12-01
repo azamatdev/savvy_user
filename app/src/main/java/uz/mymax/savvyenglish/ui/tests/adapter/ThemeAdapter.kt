@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_topic.view.*
 import uz.mymax.savvyenglish.databinding.ItemThemeBinding
 import uz.mymax.savvyenglish.network.response.ThemeTestResponse
+import uz.mymax.savvyenglish.utils.isAdmin
 
 class ThemeAdapter : RecyclerView.Adapter<ThemeAdapter.TestVH>() {
 
@@ -34,7 +35,8 @@ class ThemeAdapter : RecyclerView.Adapter<ThemeAdapter.TestVH>() {
             itemClickListener?.invoke(themeList!![position].id)
         }
         holder.itemView.child.setOnLongClickListener {
-            onLongClickListener?.invoke(themeList!![position])
+            if (holder.itemView.context.isAdmin())
+                onLongClickListener?.invoke(themeList!![position])
             return@setOnLongClickListener true
         }
 

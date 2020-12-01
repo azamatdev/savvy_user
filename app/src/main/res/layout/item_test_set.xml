@@ -41,8 +41,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/sans_bold"
-                android:textColor="@android:color/black"
                 android:text="@{question.title}"
+                android:textColor="@android:color/black"
                 tools:text="1.Choose the correct answer" />
 
 
@@ -67,24 +67,57 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/A"
-                    style="@style/TestSelectButton"
-                    android:text="@{`A. ` + question.ansA}" />
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:gravity="start|center_vertical"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:textAllCaps="false"
+                    android:text="@{`A. ` + question.ansA}"
+                    />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/B"
-                    style="@style/TestSelectButton"
-                    android:text="@{`B. ` + question.ansB}"/>
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:gravity="start|center_vertical"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+
+                    android:text="@{`B. ` + question.ansB}"
+                    android:textAllCaps="false"
+                    />
 
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/C"
-                    style="@style/TestSelectButton"
-                    android:text="@{`C. ` + question.ansC}"/>
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:gravity="start|center_vertical"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:textAllCaps="false"
+                    android:text="@{`C. ` + question.ansC}"
+                    />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/D"
-                    style="@style/TestSelectButton"
-                    android:text="@{`D. ` + question.ansD}" />
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:gravity="start|center_vertical"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:textAllCaps="false"
+                    android:text="@{`D. ` + question.ansD}"
+                    />
             </com.google.android.material.button.MaterialButtonToggleGroup>
         </LinearLayout>
 

@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -20,9 +19,7 @@ import uz.mymax.savvyenglish.ui.tests.ThemeEvent
 import uz.mymax.savvyenglish.ui.tests.adapter.ThemeAdapter
 import uz.mymax.savvyenglish.ui.tests.admin.AddTestDialog
 import uz.mymax.savvyenglish.ui.tests.admin.DialogEvent
-import uz.mymax.savvyenglish.utils.VerticalSpaceItemDecoration
-import uz.mymax.savvyenglish.utils.createBottomSheet
-import uz.mymax.savvyenglish.utils.showSnackbar
+import uz.mymax.savvyenglish.utils.*
 
 class ThemeFragment : Fragment() {
 
@@ -44,6 +41,7 @@ class ThemeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        checkViewForAdmin(fabAddTheme)
         themeRecycler.adapter = adapter
         themeRecycler.addItemDecoration(VerticalSpaceItemDecoration(16))
         adapter.itemClickListener = {
@@ -61,10 +59,10 @@ class ThemeFragment : Fragment() {
 
             bottomSheet.updateButton.setOnClickListener {
                 val fm = childFragmentManager
-                val orderDialogFragment =
+                val testDialog =
                     AddTestDialog.newInstance(DialogEvent.UpdateTheme(theme))
-                orderDialogFragment.show(fm, "addTheme")
-                orderDialogFragment.addCLick = {
+                testDialog.show(fm, "addTheme")
+                testDialog.addCLick = {
                     viewModel.setStateTheme(ThemeEvent.GetAllThemes)
                 }
                 bottomSheet.dismiss()
@@ -87,14 +85,18 @@ class ThemeFragment : Fragment() {
         viewModel.allThemeState.observe(viewLifecycleOwner, Observer { resource ->
             when (resource) {
                 is NetworkState.Loading -> {
+                    changeUiStateVisibility(true, progressIndicator, themeRecycler)
                 }
                 is NetworkState.Success -> {
+                    changeUiStateVisibility(false, progressIndicator, themeRecycler)
                     adapter.updateList(resource.data)
                 }
                 is NetworkState.Error -> {
+                    changeUiStateVisibility(false, progressIndicator, themeRecycler)
                     showSnackbar(resource.exception.message.toString())
                 }
                 is NetworkState.GenericError -> {
+                    changeUiStateVisibility(false, progressIndicator, themeRecycler)
                     showSnackbar(resource.errorResponse.message)
                 }
             }

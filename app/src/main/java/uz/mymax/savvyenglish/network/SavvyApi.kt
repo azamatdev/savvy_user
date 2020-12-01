@@ -13,14 +13,46 @@ interface SavvyApi {
     @POST("login")
     suspend fun login(@Body loginDto: LoginDto): Response<AuthResponse>
 
-    @GET("topics")
+    //region  Topic
+    @GET(TOPIC)
     suspend fun geTopics(): Response<List<TopicResponse>>
 
-    @GET("subtopics/parent/{id}")
-    suspend fun getSubtopics(@Path("id") topicId: String): Response<List<SubtopicResponse>>
+    @POST(TOPIC)
+    suspend fun createTopic(@Body createTopic: TopicResponse): Response<TopicResponse>
 
-    @GET("explanations/parent/{id}")
-    suspend fun getExplanations(@Path("id") topicId: String): Response<List<ExplanationResponse>>
+    @PUT(TOPIC)
+    suspend fun updateTopic(@Body updateTopic: TopicResponse): Response<TopicResponse>
+
+    @DELETE("$TOPIC{id}")
+    suspend fun deleteTopic(@Path("id") topicId: String): Response<String>
+    //endregion
+
+    //region Subtopic
+    @GET("$SUBTOPIC_PARENT{id}")
+    suspend fun getSubtopicsOfTopic(@Path("id") topicId: String): Response<List<SubtopicResponse>>
+
+    @POST(SUBTOPIC)
+    suspend fun createSubtopic(@Body subtopic: SubtopicResponse): Response<SubtopicResponse>
+
+    @POST(SUBTOPIC)
+    suspend fun updateSubtopic(@Body subtopic: SubtopicResponse): Response<SubtopicResponse>
+
+    @DELETE("$SUBTOPIC{id}")
+    suspend fun deleteSubtopic(@Path("id") subtopicId: String): Response<String>
+
+    //region Explanations
+    @GET("$EXPLANATION_PARENT{id}")
+    suspend fun getExplanationsOfTopic(@Path("id") topicId: String): Response<List<ExplanationResponse>>
+
+    @POST(EXPLANATION)
+    suspend fun createExplanation(@Body explanation: ExplanationResponse): Response<ExplanationResponse>
+
+    @POST(EXPLANATION)
+    suspend fun updateSubtopic(@Body explanation: ExplanationResponse): Response<ExplanationResponse>
+
+    @DELETE("$EXPLANATION{id}")
+    suspend fun deleteExplanation(@Path("id") explanationId: String): Response<String>
+    //endregion
 
     //region Themes
     @DELETE("$THEME{themeId}")
@@ -81,7 +113,7 @@ interface SavvyApi {
     ): Response<String>
 
     @DELETE("$QUESTION{questionId}")
-    suspend fun deleteQuestion(@Path("questionId") questionId: String): Response<QuestionResponse>
+    suspend fun deleteQuestion(@Path("questionId") questionId: String): Response<String>
 
     @PUT(QUESTION)
     suspend fun updateQuestion(@Body question: QuestionResponse): Response<QuestionResponse>

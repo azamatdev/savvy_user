@@ -33,7 +33,7 @@ class SubtopicsAdapter() :
         holder.binding?.topic = subtopic
 
         holder.itemView.item.setOnClickListener {
-            itemClickListener?.invoke(subtopic.id, subtopic.description)
+            itemClickListener?.invoke(subtopic.id, subtopic.title)
         }
 
         holder.itemView.subtopicTopicsLessonNumber.text = "Dars  ${holder.adapterPosition + 1}"

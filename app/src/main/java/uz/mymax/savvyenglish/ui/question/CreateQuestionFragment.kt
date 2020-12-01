@@ -14,7 +14,6 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.fragment_create_question.*
 import kotlinx.android.synthetic.main.fragment_create_question.addQuestionButton
-import kotlinx.android.synthetic.main.fragment_test_set.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import uz.mymax.savvyenglish.R
 import uz.mymax.savvyenglish.network.NetworkState
@@ -51,12 +50,19 @@ class CreateQuestionFragment : Fragment() {
 
             if (inputArrayList.areAllFieldsFilled()) {
                 if (getCheckedAnswer() != "")
-                    viewModel.setStateQuestion(
-                        QuestionEvent.CreateQuestion(
-                            getQuestion(),
-                            args.testId
+                    if (args.isUpdating)
+                        viewModel.setStateQuestion(
+                            QuestionEvent.UpdateQuestion(
+                                getQuestion()
+                            )
                         )
-                    )
+                    else
+                        viewModel.setStateQuestion(
+                            QuestionEvent.CreateQuestion(
+                                getQuestion(),
+                                args.testId
+                            )
+                        )
                 else
                     showSnackbar("Check at least one answer")
             } else {
@@ -64,6 +70,29 @@ class CreateQuestionFragment : Fragment() {
             }
         }
         viewModel.createQuestionState.observe(viewLifecycleOwner, Observer { resource ->
+            when (resource) {
+                is NetworkState.Loading -> {
+                    changeUiStateEnabled(true, progressIndicator, addQuestionButton)
+                }
+                is NetworkState.Success -> {
+                    hideKeyboard()
+                    changeUiStateEnabled(false, progressIndicator, addQuestionButton)
+                    val action = CreateQuestionFragmentDirections.toQuestionSet()
+                    action.testId = args.testId
+                    findNavController().navigate(action)
+                }
+                is NetworkState.Error -> {
+                    changeUiStateEnabled(false, progressIndicator, addQuestionButton)
+                    showSnackbar(resource.exception.message.toString())
+                }
+                is NetworkState.GenericError -> {
+                    changeUiStateEnabled(false, progressIndicator, addQuestionButton)
+                    showSnackbar(resource.errorResponse.message)
+                }
+            }
+        })
+
+        viewModel.updateQuestionState.observe(viewLifecycleOwner, Observer { resource ->
             when (resource) {
                 is NetworkState.Loading -> {
                     changeUiStateEnabled(true, progressIndicator, addQuestionButton)
@@ -120,12 +149,10 @@ class CreateQuestionFragment : Fragment() {
         question.ansB = answerBInput.getStringText()
         question.ansC = answerCInput.getStringText()
         question.ansD = answerDInput.getStringText()
-
+        if (args.isUpdating)
+            question.id = args.question?.id!!
         question.correctAns = getCheckedAnswer()
-
         question.base = "String"
-        Log.d("TagCheck", question.toString())
-
         return question
     }
 

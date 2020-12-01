@@ -9,17 +9,20 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_topics.*
 import kotlinx.android.synthetic.main.fragment_topics.view.*
+import kotlinx.android.synthetic.main.layout_bottom_update_delete.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 import uz.mymax.savvyenglish.R
 import uz.mymax.savvyenglish.data.isAdmin
 import uz.mymax.savvyenglish.network.NetworkState
+import uz.mymax.savvyenglish.ui.tests.ThemeEvent
+import uz.mymax.savvyenglish.ui.tests.admin.AddTestDialog
+import uz.mymax.savvyenglish.ui.tests.admin.DialogEvent
 import uz.mymax.savvyenglish.ui.topics.adapter.TopicsAdapter
-import uz.mymax.savvyenglish.utils.PlaceHolderAdapter
+import uz.mymax.savvyenglish.ui.topics.admin.TopicDialog
+import uz.mymax.savvyenglish.ui.topics.admin.TopicDialogEvent
+import uz.mymax.savvyenglish.utils.*
 import uz.mymax.savvyenglish.utils.decorations.LinearVerticalDecoration
-import uz.mymax.savvyenglish.utils.showSnackbar
-import uz.mymax.savvyenglish.utils.hideLoading
-import uz.mymax.savvyenglish.utils.showLoading
 
 
 class TopicsFragment : Fragment() {
@@ -41,7 +44,7 @@ class TopicsFragment : Fragment() {
     ): View? {
         if (storedView == null) {
             storedView = inflater.inflate(R.layout.fragment_topics, container, false)
-            storedView?.addTopicButton?.isVisible = requireContext().isAdmin()
+            storedView?.addTopicButton?.isVisible = isAdmin()
             storedView!!.topicsRecycler.layoutAnimation =
                 AnimationUtils.loadLayoutAnimation(
                     requireContext(),
@@ -64,7 +67,34 @@ class TopicsFragment : Fragment() {
             action.topicId = it
             findNavController().navigate(action)
         }
-        viewModel.topicsResource.observe(viewLifecycleOwner, Observer { resource ->
+
+        adapter.onLongClickListener = { topic, position ->
+            val bottomSheet = createBottomSheet(R.layout.layout_bottom_update_delete)
+            bottomSheet.show()
+
+            bottomSheet.deleteButton.setOnClickListener {
+                viewModel.setTopicState(
+                    TopicEvent.DeleteTopic(
+                        topicId = topic.id.toString(),
+                        position = position
+                    )
+                )
+                bottomSheet.dismiss()
+            }
+
+            bottomSheet.updateButton.setOnClickListener {
+                val fm = childFragmentManager
+                topic.positionUpdated = position
+                val topicDialog =
+                    TopicDialog.newInstance(TopicDialogEvent.UpdateTopic(topic))
+                topicDialog.show(fm, "topic")
+                topicDialog.addCLick = {
+                    viewModel.setTopicState(TopicEvent.GetTopics)
+                }
+                bottomSheet.dismiss()
+            }
+        }
+        viewModel.getTopicsState.observe(viewLifecycleOwner, Observer { resource ->
             when (resource) {
                 is NetworkState.Loading -> {
                     topicsSwipeRefreshLayout.showLoading()
@@ -85,11 +115,57 @@ class TopicsFragment : Fragment() {
                 }
             }
         })
+
+        viewModel.deleteTopicsState.observe(viewLifecycleOwner, Observer { resource ->
+            when (resource) {
+                is NetworkState.Loading -> {
+                    topicsSwipeRefreshLayout.showLoading()
+                }
+                is NetworkState.Success -> {
+                    topicsSwipeRefreshLayout.hideLoading()
+                    adapter.itemRemoved(resource.data.toInt())
+                }
+                is NetworkState.Error -> {
+                    topicsSwipeRefreshLayout.hideLoading()
+                    showSnackbar(resource.exception.message.toString())
+                }
+                is NetworkState.GenericError -> {
+                    topicsSwipeRefreshLayout.hideLoading()
+                    showSnackbar(resource.errorResponse.message)
+                }
+            }
+        })
+        viewModel.updateTopicsState.observe(viewLifecycleOwner, Observer { resource ->
+            when (resource) {
+                is NetworkState.Loading -> {
+                    topicsSwipeRefreshLayout.showLoading()
+                }
+                is NetworkState.Success -> {
+                    topicsSwipeRefreshLayout.hideLoading()
+                    adapter.updateItem(resource.data.positionUpdated, resource.data)
+                }
+                is NetworkState.Error -> {
+                    topicsSwipeRefreshLayout.hideLoading()
+                    showSnackbar(resource.exception.message.toString())
+                }
+                is NetworkState.GenericError -> {
+                    topicsSwipeRefreshLayout.hideLoading()
+                    showSnackbar(resource.errorResponse.message)
+                }
+            }
+        })
         topicsSwipeRefreshLayout.setOnRefreshListener {
             viewModel.fetchTopics()
         }
 
         addTopicButton.setOnClickListener {
+            val fm = childFragmentManager
+            val topicDialog =
+                TopicDialog.newInstance(TopicDialogEvent.CreateTopic)
+            topicDialog.show(fm, "topic")
+            topicDialog.addCLick = {
+                viewModel.setTopicState(TopicEvent.GetTopics)
+            }
         }
     }
 

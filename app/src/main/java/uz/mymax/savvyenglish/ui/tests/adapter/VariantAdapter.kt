@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_topic.view.*
 import uz.mymax.savvyenglish.databinding.ItemVariantBinding
 import uz.mymax.savvyenglish.network.response.VariantTestResponse
+import uz.mymax.savvyenglish.utils.isAdmin
 
 class VariantAdapter : RecyclerView.Adapter<VariantAdapter.TestVH>() {
 
@@ -35,7 +36,8 @@ class VariantAdapter : RecyclerView.Adapter<VariantAdapter.TestVH>() {
             itemClickListener?.invoke(topicList!![position].id)
         }
         holder.itemView.child.setOnLongClickListener {
-            onLongClickListener?.invoke(topicList!![position])
+            if (holder.itemView.context.isAdmin())
+                onLongClickListener?.invoke(topicList!![position])
             return@setOnLongClickListener true
         }
     }

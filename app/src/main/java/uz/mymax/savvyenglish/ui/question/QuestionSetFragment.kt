@@ -52,6 +52,7 @@ class QuestionSetFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        checkViewForAdmin(addQuestionButton)
         testSetRecycler.adapter = adapter
         adapter.onLongClickListener = { question, position ->
             bottomSheet = createBottomSheet(R.layout.layout_bottom_update_delete)
@@ -140,15 +141,19 @@ class QuestionSetFragment : Fragment() {
         viewModel.questionsOfTestState.observe(viewLifecycleOwner, Observer { resource ->
             when (resource) {
                 is NetworkState.Loading -> {
+                    changeUiStateVisibility(true, progressIndicator, testSetRecycler)
                 }
                 is NetworkState.Success -> {
+                    changeUiStateVisibility(false, progressIndicator, testSetRecycler)
                     adapter.updateList(resource.data as ArrayList<QuestionResponse>)
                     progressSet.max = adapter.itemCount
                 }
                 is NetworkState.Error -> {
+                    changeUiStateVisibility(false, progressIndicator, testSetRecycler)
                     showSnackbar(resource.exception.message.toString())
                 }
                 is NetworkState.GenericError -> {
+                    changeUiStateVisibility(false, progressIndicator, testSetRecycler)
                     showSnackbar(resource.errorResponse.message)
                 }
             }

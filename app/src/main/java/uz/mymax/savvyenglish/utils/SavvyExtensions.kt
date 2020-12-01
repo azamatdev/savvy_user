@@ -30,6 +30,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.dialog_view.view.*
 import org.w3c.dom.Text
+import uz.mymax.savvyenglish.BuildConfig
 import uz.mymax.savvyenglish.MainActivity
 import uz.mymax.savvyenglish.R
 import java.util.ArrayList
@@ -257,6 +258,7 @@ fun ArrayList<TextInputEditText>.showErrorIfNotFilled(textInputLayout: ArrayList
         }
     }
 }
+
 fun TextInputEditText.getStringText() = this.text.toString()
 
 fun ArrayList<TextInputEditText>.hideErrorIfFilled(textInputLayout: ArrayList<TextInputLayout>) {
@@ -276,4 +278,15 @@ fun ArrayList<TextInputEditText>.areAllFieldsFilled(): Boolean {
             filled = true
 
     return filled
+}
+
+fun Fragment.isAdmin() = BuildConfig.FLAVOR == "Admin"
+
+fun Context.isAdmin() = BuildConfig.FLAVOR == "Admin"
+
+fun Fragment.checkViewForAdmin(view: View) {
+    if (isAdmin())
+        view.visible()
+    else
+        view.gone()
 }

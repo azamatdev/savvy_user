@@ -7,6 +7,7 @@ import uz.mymax.savvyenglish.network.dto.*
 import uz.mymax.savvyenglish.network.response.VariantTestResponse
 import uz.mymax.savvyenglish.network.safeApiCall
 import uz.mymax.savvyenglish.ui.question.QuestionEvent
+import uz.mymax.savvyenglish.ui.topics.TopicEvent
 
 class LessonRepository constructor(
     private val api: SavvyApi
@@ -23,19 +24,44 @@ class LessonRepository constructor(
         emit(safeApiCall { api.signUp(registerDto) })
     }
 
+    //region Topics
     suspend fun fetchTopics() = flow {
         emit(NetworkState.Loading)
         emit(safeApiCall { api.geTopics() })
     }
 
+    suspend fun topicCalls(event: TopicEvent) = flow {
+        emit(NetworkState.Loading)
+        when (event) {
+            is TopicEvent.CreateTopic -> {
+                emit(safeApiCall { api.createTopic(event.topic) })
+            }
+            is TopicEvent.UpdateTopic -> {
+                val updateCall = safeApiCall { api.updateTopic(event.topic) }
+                if (updateCall is NetworkState.Success)
+                    updateCall.data.positionUpdated = event.position
+                emit(updateCall)
+            }
+            is TopicEvent.DeleteTopic -> {
+                emit(safeApiCall { api.deleteTopic(event.topicId) })
+            }
+            is TopicEvent.GetTopics -> {
+                emit(safeApiCall { api.geTopics() })
+            }
+        }
+    }
+
+    //endregion
+
+
     suspend fun fetchSubtopics(topicId: String) = flow {
         emit(NetworkState.Loading)
-        emit(safeApiCall { api.getSubtopics(topicId) })
+        emit(safeApiCall { api.getSubtopicsOfTopic(topicId) })
     }
 
     suspend fun fetchExplanations(subtopicId: String) = flow {
         emit(NetworkState.Loading)
-        emit(safeApiCall { api.getExplanations(subtopicId) })
+        emit(safeApiCall { api.getExplanationsOfTopic(subtopicId) })
     }
 
 

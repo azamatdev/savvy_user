@@ -23,6 +23,10 @@ data class QuestionResponse(@Json(name = "ansC")
                         var title: String = "",
                             @Json(name = "correctAns")
                         var correctAns: String = "") : Serializable {
+    @Transient
     var isChecked = false
-    var checkedId = -1213
+    @Transient
+    var checkedId = -1
+    @Transient
+    var checkedIdName= ""
 }

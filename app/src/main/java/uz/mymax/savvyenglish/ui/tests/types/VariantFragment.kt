@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -20,6 +19,7 @@ import uz.mymax.savvyenglish.ui.tests.TestsFragmentDirections
 import uz.mymax.savvyenglish.ui.tests.adapter.VariantAdapter
 import uz.mymax.savvyenglish.ui.tests.admin.AddTestDialog
 import uz.mymax.savvyenglish.ui.tests.admin.DialogEvent
+import uz.mymax.savvyenglish.utils.changeUiStateVisibility
 import uz.mymax.savvyenglish.utils.createBottomSheet
 import uz.mymax.savvyenglish.utils.showSnackbar
 
@@ -77,10 +77,10 @@ class VariantFragment : Fragment() {
 
         fabAddTest.setOnClickListener {
             val fm = childFragmentManager
-            val orderDialogFragment =
+            val testDialog =
                 AddTestDialog.newInstance(DialogEvent.CreateTest)
-            orderDialogFragment.show(fm, "addTheme")
-            orderDialogFragment.addCLick = {
+            testDialog.show(fm, "addTheme")
+            testDialog.addCLick = {
                 viewModel.setStateTest(TestEvent.GetAllTestsOfDTM)
             }
         }
@@ -93,14 +93,18 @@ class VariantFragment : Fragment() {
         viewModel.variantTestState.observe(viewLifecycleOwner, Observer { resource ->
             when (resource) {
                 is NetworkState.Loading -> {
+                    changeUiStateVisibility(true, progressIndicator, variantRecycler)
                 }
                 is NetworkState.Success -> {
+                    changeUiStateVisibility(false, progressIndicator, variantRecycler)
                     adapter.updateList(resource.data)
                 }
                 is NetworkState.Error -> {
+                    changeUiStateVisibility(false, progressIndicator, variantRecycler)
                     showSnackbar(resource.exception.message.toString())
                 }
                 is NetworkState.GenericError -> {
+                    changeUiStateVisibility(false, progressIndicator, variantRecycler)
                     showSnackbar(resource.errorResponse.message)
                 }
             }

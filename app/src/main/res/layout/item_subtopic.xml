@@ -87,7 +87,7 @@
                     android:layout_marginTop="8dp"
                     android:fontFamily="@font/sans_semibold"
                     android:gravity="center"
-                    android:text="@{topic.description}"
+                    android:text="@{topic.title}"
                     android:textColor="@android:color/black" />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>

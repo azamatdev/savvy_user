@@ -19,6 +19,7 @@ import uz.mymax.savvyenglish.ui.tests.adapter.ThemeTestAdapter
 import uz.mymax.savvyenglish.ui.tests.admin.AddTestDialog
 import uz.mymax.savvyenglish.ui.tests.admin.DialogEvent
 import uz.mymax.savvyenglish.utils.VerticalSpaceItemDecoration
+import uz.mymax.savvyenglish.utils.checkViewForAdmin
 import uz.mymax.savvyenglish.utils.createBottomSheet
 import uz.mymax.savvyenglish.utils.showSnackbar
 
@@ -46,6 +47,7 @@ class ThemeTestsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        checkViewForAdmin(fabAddTestTheme)
         themeTestRecycler.adapter = adapter
         themeTestRecycler.addItemDecoration(VerticalSpaceItemDecoration(16))
         connectObservers()
@@ -53,78 +55,6 @@ class ThemeTestsFragment : Fragment() {
         adapter.itemClickListener = {
             val action = ThemeTestsFragmentDirections.toTestSet()
             action.testId = it.toString()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            20000000000000+-22
             findNavController().navigate(action)
         }
 

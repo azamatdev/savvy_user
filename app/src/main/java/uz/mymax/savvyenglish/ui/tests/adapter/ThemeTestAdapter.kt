@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_topic.view.*
 import uz.mymax.savvyenglish.databinding.ItemThemeTestBinding
 import uz.mymax.savvyenglish.network.response.ThemeTestResponse
+import uz.mymax.savvyenglish.utils.isAdmin
 
 class ThemeTestAdapter : RecyclerView.Adapter<ThemeTestAdapter.TestVH>() {
 
@@ -34,13 +35,15 @@ class ThemeTestAdapter : RecyclerView.Adapter<ThemeTestAdapter.TestVH>() {
             itemClickListener?.invoke(themeList!![position].id)
         }
         holder.itemView.child.setOnLongClickListener {
-            onLongClickListener?.invoke(themeList!![position])
-            return@setOnLongClickListener true
+            if (holder.itemView.context.isAdmin())
+                onLongClickListener?.invoke(themeList!![position])
+                return@setOnLongClickListener true
+            }
+
         }
 
+        inner class TestVH(itemView: View) : RecyclerView.ViewHolder(itemView) {
+            var binding: ItemThemeTestBinding? =
+                DataBindingUtil.bind<ItemThemeTestBinding>(itemView)
+        }
     }
-
-    inner class TestVH(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var binding: ItemThemeTestBinding? = DataBindingUtil.bind<ItemThemeTestBinding>(itemView)
-    }
-}
