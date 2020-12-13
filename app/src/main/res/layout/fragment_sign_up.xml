@@ -23,7 +23,7 @@
             android:clickable="true"
             android:focusable="true"
             android:padding="12dp"
-            android:src="@drawable/ic_icon_back"
+            android:src="@drawable/ic_back"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -277,7 +277,8 @@
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="4dp"
                     android:elevation="4dp"
-                    android:indeterminateTint="@android:color/white" />
+                    android:indeterminateTint="@android:color/white"
+                    android:visibility="gone" />
             </RelativeLayout>
         </LinearLayout>
 

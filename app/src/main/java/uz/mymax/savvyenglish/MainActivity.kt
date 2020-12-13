@@ -49,19 +49,14 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(mainNavController, appBarConfiguration)
 
         bottomNavigationView.setupWithNavController(mainNavController)
+        toolbar.setNavigationIcon(R.drawable.ic_back)
         mainNavController.addOnDestinationChangedListener { controller, destination, arguments ->
             //set it here for all the destinations, or inside the switch statement if you want to change it based on destination
             toolbar.title = destination.label
             toolbar.makeVisible()
-            bottomNavigationView.slideDown()
+            bottomNavigationView.makeVisible()
+            timeLayout.gone()
             when (destination.id) {
-                R.id.destTopics,
-                R.id.destExtra,
-                R.id.destProfile -> {
-
-//                    toolbar.setNavigationIcon(null)
-                    bottomNavigationView.makeVisible()
-                }
                 R.id.destTestFinished,
                 R.id.destSignUp,
                 R.id.destLogin -> {
@@ -69,10 +64,13 @@ class MainActivity : AppCompatActivity() {
                     toolbar.hideVisibility()
                     bottomNavigationView.slideDown()
                 }
+                R.id.destQuestionSet -> {
+                    timeLayout.visible()
+                }
                 else -> {
-                    toolbar.setNavigationIcon(R.drawable.ic_back)
                 }
             }
+
             when (destination.id) {
                 R.id.destTests -> {
                     toolbar.elevation = 0f

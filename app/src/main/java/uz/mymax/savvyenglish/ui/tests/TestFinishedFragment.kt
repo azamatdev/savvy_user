@@ -8,11 +8,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import kotlinx.android.synthetic.main.fragment_test_finished.*
 import uz.mymax.savvyenglish.R
 
 class TestFinishedFragment : Fragment() {
 
+    val args: TestFinishedFragmentArgs by navArgs()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -24,22 +26,15 @@ class TestFinishedFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         animationAward.setMaxFrame(90)
-        testCorrectAnswer.text = arguments?.getInt("correctAnswer").toString() + " ta to'g'ri"
-//        animationAward.addAnimatorListener(object : Animator.AnimatorListener {
-//            override fun onAnimationRepeat(p0: Animator?) {
-//                animationAward.setMinAndMaxFrame(70, 99)
-//            }
-//
-//            override fun onAnimationEnd(p0: Animator?) {
-//            }
-//
-//            override fun onAnimationCancel(p0: Animator?) {
-//            }
-//
-//            override fun onAnimationStart(p0: Animator?) {
-//            }
-//        })
+        testCorrectAnswer.text = args.correctAnswer.toString() + " ta to'g'ri"
 
+
+        testSolvedTime.text = args.testFinishedTime
+
+        seeTestResultButton.setOnClickListener {
+            val action = TestFinishedFragmentDirections.toQuestionsAnswers(args.questions)
+            findNavController().navigate(action)
+        }
         comeBackToTests.setOnClickListener {
             findNavController().popBackStack(R.id.destTests, false)
         }

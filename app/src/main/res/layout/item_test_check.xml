@@ -66,8 +66,9 @@
                 android:layout_marginTop="12dp"
                 android:backgroundTint="@android:color/white"
                 android:orientation="vertical"
+                app:checkedButton="@id/correctAnswer"
                 app:selectionRequired="true"
-                app:singleSelection="true">
+                app:singleSelection="false">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/A"
@@ -75,6 +76,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
+                    android:clickable="false"
                     android:gravity="start|center_vertical"
                     android:insetTop="0dp"
                     android:insetBottom="0dp"
@@ -87,10 +89,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
+                    android:clickable="false"
                     android:gravity="start|center_vertical"
                     android:insetTop="0dp"
                     android:insetBottom="0dp"
-
                     android:text="@{`B. ` + question.ansB}"
                     android:textAllCaps="false" />
 
@@ -101,6 +103,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
+                    android:clickable="false"
                     android:gravity="start|center_vertical"
                     android:insetTop="0dp"
                     android:insetBottom="0dp"
@@ -113,11 +116,25 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
+                    android:clickable="false"
                     android:gravity="start|center_vertical"
                     android:insetTop="0dp"
                     android:insetBottom="0dp"
                     android:text="@{`D. ` + question.ansD}"
                     android:textAllCaps="false" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/correctAnswer"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:clickable="false"
+                    android:gravity="start|center_vertical"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white" />
             </com.google.android.material.button.MaterialButtonToggleGroup>
         </LinearLayout>
 

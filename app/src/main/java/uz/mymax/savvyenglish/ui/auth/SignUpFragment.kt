@@ -36,18 +36,18 @@ class SignUpFragment : Fragment() {
             it.getContentIfNotHandled()?.let { resource ->
                 when (resource) {
                     is NetworkState.Loading -> {
-                        changeUiStateVisibility(true, progressBar, signUpButton)
+                        changeUiStateEnabled(true, progressBar, signUpButton)
                     }
                     is NetworkState.Success -> {
-                        changeUiStateVisibility(true, progressBar, signUpButton)
+                        changeUiStateEnabled(false, progressBar, signUpButton)
                         findNavController().navigate(R.id.action_navigation_signup_to_navigation_topics)
                     }
                     is NetworkState.Error -> {
-                        changeUiStateVisibility(true, progressBar, signUpButton)
+                        changeUiStateEnabled(false, progressBar, signUpButton)
                         showSnackbar(resource.exception.message.toString())
                     }
                     is NetworkState.GenericError -> {
-                        changeUiStateVisibility(true, progressBar, signUpButton)
+                        changeUiStateEnabled(false, progressBar, signUpButton)
                         showSnackbar(resource.errorResponse.message)
                     }
                 }

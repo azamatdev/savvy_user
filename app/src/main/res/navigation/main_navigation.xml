@@ -103,7 +103,7 @@
     <fragment
         android:id="@+id/destQuestionSet"
         android:name="uz.mymax.savvyenglish.ui.question.QuestionSetFragment"
-        android:label="Test Set"
+        android:label=""
         tools:layout="@layout/fragment_test_set">
         <action
             android:id="@+id/toTestFinished"
@@ -112,8 +112,8 @@
             app:popUpToInclusive="true" />
         <argument
             android:name="testId"
-            app:argType="string"
-            android:defaultValue='""' />
+            android:defaultValue='""'
+            app:argType="string" />
         <action
             android:id="@+id/toCreateQuestion"
             app:destination="@id/destCreateQuestion" />
@@ -122,7 +122,21 @@
         android:id="@+id/destTestFinished"
         android:name="uz.mymax.savvyenglish.ui.tests.TestFinishedFragment"
         android:label="fragment_test_finished"
-        tools:layout="@layout/fragment_test_finished" />
+        tools:layout="@layout/fragment_test_finished">
+        <action
+            android:id="@+id/toQuestionsAnswers"
+            app:destination="@id/destQuestionsSet" />
+        <argument
+            android:name="questions"
+            app:argType="uz.mymax.savvyenglish.network.response.QuestionResponse[]" />
+        <argument
+            android:name="correctAnswer"
+            android:defaultValue="0"
+            app:argType="integer" />
+        <argument
+            android:name="testFinishedTime"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/destThemeTests"
         android:name="uz.mymax.savvyenglish.ui.tests.ThemeTestsFragment"
@@ -139,8 +153,9 @@
         android:id="@+id/destCreateQuestion"
         android:name="uz.mymax.savvyenglish.ui.question.CreateQuestionFragment"
         android:label="Create Question"
-        tools:layout="@layout/fragment_create_question" >
-        <argument android:name="testId"
+        tools:layout="@layout/fragment_create_question">
+        <argument
+            android:name="testId"
             app:argType="string" />
         <action
             android:id="@+id/toQuestionSet"
@@ -149,13 +164,22 @@
             app:popUpToInclusive="true" />
         <argument
             android:name="isUpdating"
-            app:argType="boolean"
-            android:defaultValue="false" />
+            android:defaultValue="false"
+            app:argType="boolean" />
         <argument
             android:name="question"
+            android:defaultValue="@null"
             app:argType="uz.mymax.savvyenglish.network.response.QuestionResponse"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            app:nullable="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/destQuestionsSet"
+        android:name="uz.mymax.savvyenglish.ui.question.QuestionsAnswersFragment"
+        android:label="Answers"
+        tools:layout="@layout/fragment_questions_answers">
+        <argument
+            android:name="questions"
+            app:argType="uz.mymax.savvyenglish.network.response.QuestionResponse[]" />
     </fragment>
     <!--endregion -->
 

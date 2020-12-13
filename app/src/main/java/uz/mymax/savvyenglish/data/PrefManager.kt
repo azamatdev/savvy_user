@@ -9,7 +9,8 @@ private val SAVVY = "savvy"
 private val KEY_TOKEN = "token"
 private val IS_LOGGED_IN = "is_logged_in"
 private val IS_ADMIN = "is_admin"
-
+private const val TIME_STARTED = "time_started"
+private const val ORDER_START_TIME = "order_start_time"
 private fun getInstance(context: Context): SharedPreferences {
     return context.getSharedPreferences(SAVVY, Context.MODE_PRIVATE)
 }
@@ -38,3 +39,18 @@ fun Context.isAdmin(): Boolean {
     return getInstance(this).getBoolean(IS_ADMIN, false)
 }
 
+fun Fragment.isTimeStarted(): Boolean {
+    return getInstance(requireContext()).getBoolean(TIME_STARTED, false)
+}
+
+fun Fragment.setTimeStarted(status: Boolean) {
+    getInstance(requireContext()).edit().putBoolean(TIME_STARTED, status).apply()
+}
+
+fun Fragment.setOrderStartTime(startTime: Long) {
+    getInstance(requireContext()).edit().putLong(ORDER_START_TIME, startTime).apply()
+}
+
+fun Fragment.getOrderStartTime(): Long {
+    return getInstance(requireContext()).getLong(ORDER_START_TIME, 0)
+}

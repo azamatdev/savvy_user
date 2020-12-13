@@ -19,9 +19,7 @@ import uz.mymax.savvyenglish.ui.tests.TestsFragmentDirections
 import uz.mymax.savvyenglish.ui.tests.adapter.VariantAdapter
 import uz.mymax.savvyenglish.ui.tests.admin.AddTestDialog
 import uz.mymax.savvyenglish.ui.tests.admin.DialogEvent
-import uz.mymax.savvyenglish.utils.changeUiStateVisibility
-import uz.mymax.savvyenglish.utils.createBottomSheet
-import uz.mymax.savvyenglish.utils.showSnackbar
+import uz.mymax.savvyenglish.utils.*
 
 
 class VariantFragment : Fragment() {
@@ -75,16 +73,18 @@ class VariantFragment : Fragment() {
             }
         }
 
-        fabAddTest.setOnClickListener {
-            val fm = childFragmentManager
-            val testDialog =
-                AddTestDialog.newInstance(DialogEvent.CreateTest)
-            testDialog.show(fm, "addTheme")
-            testDialog.addCLick = {
-                viewModel.setStateTest(TestEvent.GetAllTestsOfDTM)
+        if (!isAdmin()) {
+            fabAddTest.gone()
+            fabAddTest.setOnClickListener {
+                val fm = childFragmentManager
+                val testDialog =
+                    AddTestDialog.newInstance(DialogEvent.CreateTest)
+                testDialog.show(fm, "addTheme")
+                testDialog.addCLick = {
+                    viewModel.setStateTest(TestEvent.GetAllTestsOfDTM)
+                }
             }
         }
-
         connectObservers()
 
     }
