@@ -12,7 +12,7 @@ import uz.mymax.savvyenglish.utils.isAdmin
 
 class VariantAdapter : RecyclerView.Adapter<VariantAdapter.TestVH>() {
 
-    var itemClickListener: ((Int) -> Unit)? = null
+    var itemClickListener: ((VariantTestResponse) -> Unit)? = null
     var onLongClickListener: ((VariantTestResponse) -> Unit)? = null
 
     var topicList: ArrayList<VariantTestResponse>? = null
@@ -33,7 +33,7 @@ class VariantAdapter : RecyclerView.Adapter<VariantAdapter.TestVH>() {
         holder.binding?.variant = topicList!![position]
 
         holder.itemView.child.setOnClickListener {
-            itemClickListener?.invoke(topicList!![position].id)
+            itemClickListener?.invoke(topicList!![position])
         }
         holder.itemView.child.setOnLongClickListener {
             if (holder.itemView.context.isAdmin())

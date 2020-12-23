@@ -16,17 +16,17 @@
         android:title="@string/tests_title"
         />
 
-    <item
-        android:id="@+id/destExtra"
-        android:icon="@drawable/ic_glosary"
-        app:showAsAction="always"
-        android:title="@string/extra_title"
-        />
+<!--    <item-->
+<!--        android:id="@+id/destExtra"-->
+<!--        android:icon="@drawable/ic_glosary"-->
+<!--        app:showAsAction="always"-->
+<!--        android:title="@string/extra_title"-->
+<!--        />-->
 
-    <item
-        android:id="@+id/destProfile"
-        android:icon="@drawable/ic_profile"
-        app:showAsAction="always"
-        android:title="@string/profile_title"
-        />
+<!--    <item-->
+<!--        android:id="@+id/destProfile"-->
+<!--        android:icon="@drawable/ic_profile"-->
+<!--        app:showAsAction="always"-->
+<!--        android:title="@string/profile_title"-->
+<!--        />-->
 </menu>

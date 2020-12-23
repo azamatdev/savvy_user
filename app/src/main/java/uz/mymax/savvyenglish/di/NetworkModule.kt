@@ -10,6 +10,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import uz.mymax.savvyenglish.BuildConfig
 import uz.mymax.savvyenglish.data.getToken
+import uz.mymax.savvyenglish.di.interceptor.LogoutInterceptor
 import uz.mymax.savvyenglish.network.BASE_URL
 import uz.mymax.savvyenglish.network.SavvyApi
 import uz.mymax.savvyenglish.network.StringConverterFactory
@@ -45,7 +46,7 @@ val networkModule = module {
             .readTimeout(10, TimeUnit.SECONDS)
             .writeTimeout(10, TimeUnit.SECONDS)
 //            .retryOnConnectionFailure(false)
-//            .addInterceptor(ConnectivityInterceptor(get()))
+            .addInterceptor(LogoutInterceptor(get()))
             .addInterceptor { chain ->
                 val token = get<Context>().getToken()
                 try {

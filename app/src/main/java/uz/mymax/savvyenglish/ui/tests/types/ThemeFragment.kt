@@ -26,6 +26,7 @@ class ThemeFragment : Fragment() {
     private val viewModel: TestViewModel by viewModel()
     private lateinit var adapter: ThemeAdapter
     private lateinit var bottomSheet: BottomSheetDialog
+    private var clickedId = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         adapter = ThemeAdapter()
@@ -45,7 +46,12 @@ class ThemeFragment : Fragment() {
         themeRecycler.adapter = adapter
         themeRecycler.addItemDecoration(VerticalSpaceItemDecoration(16))
         adapter.itemClickListener = {
-            findNavController().navigate(TestsFragmentDirections.toThemeTest(it.toString()))
+            if (it.isFree)
+                findNavController().navigate(TestsFragmentDirections.toThemeTest(it.id.toString()))
+            else {
+                viewModel.checkTopic(it.id.toString())
+                clickedId = it.id.toString()
+            }
         }
 
         adapter.onLongClickListener = { theme ->
@@ -69,13 +75,17 @@ class ThemeFragment : Fragment() {
             }
         }
 
-        fabAddTheme.setOnClickListener {
-            val fm = childFragmentManager
-            val orderDialogFragment =
-                AddTestDialog.newInstance(DialogEvent.CreateTheme)
-            orderDialogFragment.show(fm, "addTheme")
-            orderDialogFragment.addCLick = {
-                viewModel.setStateTheme(ThemeEvent.GetAllThemes)
+        fabAddTheme.gone()
+        if (isAdmin()) {
+            fabAddTheme.visible()
+            fabAddTheme.setOnClickListener {
+                val fm = childFragmentManager
+                val orderDialogFragment =
+                    AddTestDialog.newInstance(DialogEvent.CreateTheme)
+                orderDialogFragment.show(fm, "addTheme")
+                orderDialogFragment.addCLick = {
+                    viewModel.setStateTheme(ThemeEvent.GetAllThemes)
+                }
             }
         }
         connectObservers()
@@ -115,6 +125,38 @@ class ThemeFragment : Fragment() {
                     showSnackbar(resource.errorResponse.message)
                 }
             }
+        })
+        viewModel.checkPayState.observe(viewLifecycleOwner, Observer {
+            it.getContentIfNotHandled()?.let { resource ->
+                when (resource) {
+                    is NetworkState.Loading -> {
+                    }
+                    is NetworkState.Success -> {
+                        if (resource.data.contains("true")) {
+                            findNavController().navigate(
+                                TestsFragmentDirections.toThemeTest(
+                                    clickedId
+                                )
+                            )
+                        } else {
+                            val fm = childFragmentManager
+                            val testDialog =
+                                AddTestDialog.newInstance(DialogEvent.PayToTest(true, clickedId))
+                            testDialog.show(fm, "addTheme")
+                            testDialog.addCLick = {
+                                viewModel.setStateTheme(ThemeEvent.GetAllThemes)
+                            }
+                        }
+                    }
+                    is NetworkState.Error -> {
+                        showSnackbar(resource.exception.message.toString())
+                    }
+                    is NetworkState.GenericError -> {
+                        showSnackbar(resource.errorResponse.message)
+                    }
+                }
+            }
+
         })
     }
 

@@ -1,5 +1,9 @@
 package uz.mymax.savvyenglish
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.view.ViewTreeObserver
 import androidx.appcompat.app.AppCompatActivity
@@ -10,6 +14,9 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import kotlinx.android.synthetic.main.activity_main.*
+import uz.mymax.savvyenglish.data.isLoggedIn
+import uz.mymax.savvyenglish.data.setLoggedIn
+import uz.mymax.savvyenglish.network.LOGOUT
 import uz.mymax.savvyenglish.utils.*
 
 
@@ -22,17 +29,31 @@ class MainActivity : AppCompatActivity() {
 //        hideBottomNavigationForSearch()
     }
     private lateinit var mainNavController: NavController;
-
+    private lateinit var broadcast: BroadcastReceiver
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        toolbar.setNavigationIcon(R.drawable.ic_back)
-
         setUpBottomNavigation()
 
+//        if (!isLoggedIn()) {
+//            mainNavController.popBackStack()
+//            mainNavController.navigate(R.id.destLogin)
+//        }
         rootContainerView.viewTreeObserver.addOnGlobalLayoutListener(onGlobalLayoutListener)
+
+        broadcast = object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                if (intent?.action.equals(LOGOUT)) {
+                    if (mainNavController != null) {
+                        mainNavController.popBackStack()
+                        mainNavController.navigate(R.id.destLogin)
+                        setLoggedIn(false)
+                    }
+                }
+            }
+        }
+        registerReceiver(broadcast, IntentFilter(LOGOUT))
     }
 
 
@@ -42,14 +63,12 @@ class MainActivity : AppCompatActivity() {
             setOf(
                 R.id.destTopics,
                 R.id.destTests,
-                R.id.destExtra,
                 R.id.destProfile
             )
         )
         setupActionBarWithNavController(mainNavController, appBarConfiguration)
-
+        toolbar.titleMarginStart = 8
         bottomNavigationView.setupWithNavController(mainNavController)
-        toolbar.setNavigationIcon(R.drawable.ic_back)
         mainNavController.addOnDestinationChangedListener { controller, destination, arguments ->
             //set it here for all the destinations, or inside the switch statement if you want to change it based on destination
             toolbar.title = destination.label
@@ -91,6 +110,8 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         rootContainerView.viewTreeObserver.removeOnGlobalLayoutListener(onGlobalLayoutListener)
+        unregisterReceiver(broadcast)
+
     }
 
     private fun showBottomNavigationOnlyAtTopLevel() {

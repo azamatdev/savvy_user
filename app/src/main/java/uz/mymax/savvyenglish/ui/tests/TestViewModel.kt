@@ -12,6 +12,7 @@ import uz.mymax.savvyenglish.network.dto.ThemeUpdateDto
 import uz.mymax.savvyenglish.network.response.ThemeTestResponse
 import uz.mymax.savvyenglish.network.response.VariantTestResponse
 import uz.mymax.savvyenglish.repository.LessonRepository
+import uz.mymax.savvyenglish.utils.SingleEvent
 
 sealed class ThemeEvent {
     object GetAllThemes : ThemeEvent()
@@ -43,6 +44,9 @@ class TestViewModel(val repository: LessonRepository) : ViewModel() {
     val updateThemeState = MutableLiveData<NetworkState<ThemeTestResponse>>()
     val testsOfThemeState = MutableLiveData<NetworkState<List<ThemeTestResponse>>>()
     val createThemeTestState = MutableLiveData<NetworkState<String>>()
+
+    val checkPayState = MutableLiveData<SingleEvent<NetworkState<String>>>()
+    val payTopicState = MutableLiveData<SingleEvent<NetworkState<String>>>()
 
     fun setStateTheme(themeEvent: ThemeEvent) {
         viewModelScope.launch {
@@ -118,6 +122,20 @@ class TestViewModel(val repository: LessonRepository) : ViewModel() {
         }
     }
 
+    fun checkTopic(id: String) {
+        viewModelScope.launch {
+            repository.checkTopic(id).onEach {
+                checkPayState.value = SingleEvent(it)
+            }.launchIn(viewModelScope)
+        }
+    }
 
+    fun payToTopic(isTheme: Boolean, id: String, phone: String) {
+        viewModelScope.launch {
+            repository.pay(isTheme, id, phone).onEach {
+                payTopicState.value = SingleEvent(it)
+            }.launchIn(viewModelScope)
+        }
+    }
 
 }

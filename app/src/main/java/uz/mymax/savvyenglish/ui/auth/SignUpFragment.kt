@@ -40,7 +40,7 @@ class SignUpFragment : Fragment() {
                     }
                     is NetworkState.Success -> {
                         changeUiStateEnabled(false, progressBar, signUpButton)
-                        findNavController().navigate(R.id.action_navigation_signup_to_navigation_topics)
+                        findNavController().popBackStack()
                     }
                     is NetworkState.Error -> {
                         changeUiStateEnabled(false, progressBar, signUpButton)
@@ -68,7 +68,6 @@ class SignUpFragment : Fragment() {
                     input_confirm_password.error = "Password does not match!"
                 }
             } else {
-                input_full_name.showErrorIfNotFilled()
                 usernameInput.showErrorIfNotFilled()
                 input_email.showErrorIfNotFilled()
                 passwordInput.showErrorIfNotFilled()
@@ -76,7 +75,6 @@ class SignUpFragment : Fragment() {
             }
         }
 
-        input_full_name.hideErrorIfFilled()
         usernameInput.hideErrorIfFilled()
         input_email.hideErrorIfFilled()
         passwordInput.hideErrorIfFilled()
@@ -84,21 +82,19 @@ class SignUpFragment : Fragment() {
     }
 
     private fun passwordConfirmed() =
-        passwordInput.text.toString().equals(input_confirm_password.text.toString())
+        passwordInput.text.toString() == input_confirm_password.text.toString()
 
     private fun allFieldFilled() =
-        input_full_name.text.toString().isNotEmpty() and
-                usernameInput.text.toString().isNotEmpty() and
+        usernameInput.text.toString().isNotEmpty() and
                 input_email.text.toString().isNotEmpty() and
                 passwordInput.text.toString().isNotEmpty() and
                 input_confirm_password.text.toString().isNotEmpty()
 
 
     private fun getRegisterDto() = RegisterDto(
-        name = input_full_name.text.toString(),
-        userName = usernameInput.text.toString(),
+        username = usernameInput.text.toString(),
         email = input_email.text.toString(),
-        phone = input_phone_number.text.toString().replace(" ", ""),
+        phonenumber = input_phone_number.text.toString().replace(" ", ""),
         password = passwordInput.text.toString()
     )
 }

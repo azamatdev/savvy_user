@@ -9,18 +9,18 @@ import uz.mymax.savvyenglish.network.dto.LoginDto
 import uz.mymax.savvyenglish.network.dto.RegisterDto
 import uz.mymax.savvyenglish.network.response.AuthResponse
 import uz.mymax.savvyenglish.repository.LessonRepository
-import uz.mymax.savvyenglish.utils.Event
+import uz.mymax.savvyenglish.utils.SingleEvent
 
 class AuthViewModel constructor(private val repository: LessonRepository) : ViewModel() {
 
-    val loginResource = MutableLiveData<Event<NetworkState<AuthResponse>>>()
-    val registerResource = MutableLiveData<Event<NetworkState<AuthResponse>>>()
+    val loginResource = MutableLiveData<SingleEvent<NetworkState<AuthResponse>>>()
+    val registerResource = MutableLiveData<SingleEvent<NetworkState<Any>>>()
 
     fun loginUser(loginDto: LoginDto) {
         viewModelScope.launch {
             repository.login(loginDto)
                 .onEach {
-                    loginResource.value = Event(it)
+                    loginResource.value = SingleEvent(it)
                 }
                 .launchIn(viewModelScope)
         }
@@ -30,7 +30,7 @@ class AuthViewModel constructor(private val repository: LessonRepository) : View
         viewModelScope.launch {
             repository.signUp(registerDto)
                 .onEach {
-                    registerResource.value = Event(it)
+                    registerResource.value = SingleEvent(it)
                 }
                 .launchIn(viewModelScope)
         }

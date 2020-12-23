@@ -4,6 +4,7 @@ import kotlinx.coroutines.flow.flow
 import uz.mymax.savvyenglish.network.NetworkState
 import uz.mymax.savvyenglish.network.SavvyApi
 import uz.mymax.savvyenglish.network.dto.*
+import uz.mymax.savvyenglish.network.response.ErrorResponse
 import uz.mymax.savvyenglish.network.response.VariantTestResponse
 import uz.mymax.savvyenglish.network.safeApiCall
 import uz.mymax.savvyenglish.ui.question.QuestionEvent
@@ -13,15 +14,15 @@ class LessonRepository constructor(
     private val api: SavvyApi
 ) {
 
+    suspend fun signUp(registerDto: RegisterDto) = flow {
+        emit(NetworkState.Loading)
+        emit(safeApiCall { api.signUp(registerDto) })
+    }
+
     suspend fun login(loginDto: LoginDto) = flow {
         emit(NetworkState.Loading)
         emit(safeApiCall { api.login(loginDto) })
 
-    }
-
-    suspend fun signUp(registerDto: RegisterDto) = flow {
-        emit(NetworkState.Loading)
-        emit(safeApiCall { api.signUp(registerDto) })
     }
 
     //region Topics
@@ -52,7 +53,6 @@ class LessonRepository constructor(
     }
 
     //endregion
-
 
     suspend fun fetchSubtopics(topicId: String) = flow {
         emit(NetworkState.Loading)
@@ -197,6 +197,34 @@ class LessonRepository constructor(
             is QuestionEvent.DeleteQuestion -> {
                 emit(safeApiCall { api.deleteQuestion(event.questionId) })
             }
+        }
+    }
+    //endregion
+
+    //region Payment
+    suspend fun checkTopic(themeId: String) = flow {
+        emit(NetworkState.Loading)
+        emit(safeApiCall { api.payCheck(themeId) })
+    }
+
+    suspend fun pay(isTheme: Boolean, id: String, phone: String) = flow {
+        emit(NetworkState.Loading)
+        val createReceiptApi = safeApiCall { api.createReceipt(isTheme, id) }
+
+        if (createReceiptApi is NetworkState.Success) {
+            val sendToPhone = safeApiCall { api.paySend(phone, id) }
+            if (sendToPhone is NetworkState.Success) {
+                emit(sendToPhone)
+            }
+            if (sendToPhone is NetworkState.GenericError) {
+                emit(NetworkState.GenericError(sendToPhone.errorResponse))
+            } else if (sendToPhone is NetworkState.Error) {
+                emit(NetworkState.Error(sendToPhone.exception))
+            }
+        } else if (createReceiptApi is NetworkState.GenericError) {
+            emit(NetworkState.GenericError(createReceiptApi.errorResponse))
+        } else if (createReceiptApi is NetworkState.Error) {
+            emit(NetworkState.Error(createReceiptApi.exception))
         }
     }
     //endregion

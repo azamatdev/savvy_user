@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import kotlinx.android.synthetic.main.fragment_theme.*
 import kotlinx.android.synthetic.main.fragment_variant.*
+import kotlinx.android.synthetic.main.fragment_variant.progressIndicator
 import kotlinx.android.synthetic.main.layout_bottom_update_delete.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import uz.mymax.savvyenglish.R
@@ -16,6 +18,7 @@ import uz.mymax.savvyenglish.network.NetworkState
 import uz.mymax.savvyenglish.ui.tests.TestEvent
 import uz.mymax.savvyenglish.ui.tests.TestViewModel
 import uz.mymax.savvyenglish.ui.tests.TestsFragmentDirections
+import uz.mymax.savvyenglish.ui.tests.ThemeEvent
 import uz.mymax.savvyenglish.ui.tests.adapter.VariantAdapter
 import uz.mymax.savvyenglish.ui.tests.admin.AddTestDialog
 import uz.mymax.savvyenglish.ui.tests.admin.DialogEvent
@@ -27,6 +30,8 @@ class VariantFragment : Fragment() {
     private val viewModel: TestViewModel by viewModel()
     private lateinit var adapter: VariantAdapter
     private lateinit var bottomSheet: BottomSheetDialog
+    private var clickedId = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         adapter = VariantAdapter()
@@ -45,12 +50,17 @@ class VariantFragment : Fragment() {
         variantRecycler.adapter = adapter
 
         adapter.itemClickListener = {
-            val action = TestsFragmentDirections.toQeustionSet()
-            action.testId = it.toString()
+            if (it.isFree) {
+                val action = TestsFragmentDirections.toQeustionSet()
+                action.testId = it.id.toString()
+                findNavController().navigate(
+                    action
+                )
+            } else {
+                viewModel.checkTopic(it.id.toString())
+                clickedId = it.id.toString()
+            }
 
-            findNavController().navigate(
-                action
-            )
         }
         adapter.onLongClickListener = { test ->
             bottomSheet = createBottomSheet(R.layout.layout_bottom_update_delete)
@@ -73,8 +83,9 @@ class VariantFragment : Fragment() {
             }
         }
 
-        if (!isAdmin()) {
-            fabAddTest.gone()
+        fabAddTest.gone()
+        if (isAdmin()) {
+            fabAddTest.visible()
             fabAddTest.setOnClickListener {
                 val fm = childFragmentManager
                 val testDialog =
@@ -122,6 +133,37 @@ class VariantFragment : Fragment() {
                 }
                 is NetworkState.GenericError -> {
                     showSnackbar(resource.errorResponse.message)
+                }
+            }
+        })
+        viewModel.checkPayState.observe(viewLifecycleOwner, Observer {
+            it.getContentIfNotHandled()?.let { resource ->
+                when (resource) {
+                    is NetworkState.Loading -> {
+                    }
+                    is NetworkState.Success -> {
+                        if (resource.data.contains("false")) {
+                            val action = TestsFragmentDirections.toQeustionSet()
+                            action.testId = clickedId
+                            findNavController().navigate(
+                                action
+                            )
+                        } else {
+                            val fm = childFragmentManager
+                            val testDialog =
+                                AddTestDialog.newInstance(DialogEvent.PayToTest(false, clickedId))
+                            testDialog.show(fm, "payToTopic")
+                            testDialog.addCLick = {
+                                viewModel.setStateTheme(ThemeEvent.GetAllThemes)
+                            }
+                        }
+                    }
+                    is NetworkState.Error -> {
+                        showSnackbar(resource.exception.message.toString())
+                    }
+                    is NetworkState.GenericError -> {
+                        showSnackbar(resource.errorResponse.message)
+                    }
                 }
             }
         })

@@ -1,6 +1,6 @@
 package uz.mymax.savvyenglish.utils
 
-open class Event<out T>(private val content: T) {
+open class SingleEvent<out T>(private val content: T) {
 
     var hasBeenHandled = false
         private set // Allow external read but not write

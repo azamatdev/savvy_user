@@ -9,6 +9,7 @@ import com.google.gson.Gson
 import com.google.gson.JsonParser
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import org.json.JSONObject
 import retrofit2.HttpException
 import retrofit2.Response
 import uz.mymax.savvyenglish.exceptions.NoConnectivityException
@@ -27,19 +28,25 @@ suspend fun <T : Any> safeApiCall(
         val response = apiCall()
         if (response.isSuccessful && response.body() != null) {
             return NetworkState.Success<T>(response.body() as T)
-        } else {
-            if (response.errorBody() != null) {
-                val jsonParser = JsonParser()
-                val jsonElement = jsonParser.parse(response.errorBody()!!.string())
-                val errorResponse = Gson().fromJson(
-                    jsonElement,
-                    ErrorResponse::class.java
-                )
-                errorResponse.message = errorResponse.error
-                return NetworkState.GenericError(errorResponse)
-            } else
-                return NetworkState.GenericError(ErrorResponse(message = "Unknown error"))
-        }
+        } else
+            if (response.isSuccessful) {
+                return NetworkState.Success<T>("" as T)
+            } else {
+                if (response.errorBody() != null) {
+                    val json = JSONObject(response.errorBody()!!.string())
+                    val jsonParser = JsonParser()
+                    val jsonElement = jsonParser.parse(response.errorBody()!!.string())
+                    val errorResponse = Gson().fromJson(
+                        jsonElement,
+                        ErrorResponse::class.java
+                    )
+                    errorResponse.message = errorResponse.error
+                    if(json.has("error"))
+                        errorResponse.message = errorResponse.error
+                    return NetworkState.GenericError(errorResponse)
+                } else
+                    return NetworkState.GenericError(ErrorResponse(message = "Unknown error"))
+            }
     } catch (throwable: Throwable) {
         Log.d("ErrorTag", throwable.message.toString())
         when (throwable) {

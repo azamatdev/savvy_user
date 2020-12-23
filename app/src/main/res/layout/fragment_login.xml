@@ -115,16 +115,16 @@
 
             </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginTop="8dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:padding="4dp"
-                android:text="Forget Password?"
-                android:textColor="@color/textHintColor" />
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="end"-->
+<!--                android:layout_marginTop="8dp"-->
+<!--                android:clickable="true"-->
+<!--                android:focusable="true"-->
+<!--                android:padding="4dp"-->
+<!--                android:text="Forget Password?"-->
+<!--                android:textColor="@color/textHintColor" />-->
 
             <Space
                 android:layout_width="match_parent"
@@ -209,12 +209,12 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/middle_section">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/sans_semibold"
-                    android:text="Or connect using"
-                    android:textColor="@color/textHintColor" />
+<!--                <TextView-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:fontFamily="@font/sans_semibold"-->
+                <!--                    android:text="Or connect using"-->
+                <!--                    android:textColor="@color/textHintColor" />-->
 
                 <Space
                     android:layout_width="match_parent"
@@ -228,41 +228,41 @@
 
                     >
 
-                    <com.google.android.material.floatingactionbutton.FloatingActionButton
-                        android:id="@+id/fbLogin"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="4dp"
-                        android:layout_marginBottom="8dp"
-                        android:backgroundTint="@android:color/white"
-                        android:elevation="5dp"
-                        android:src="@drawable/ic_facebook"
-                        app:background="@android:color/white"
-                        app:backgroundTint="@android:color/white"
-                        app:borderWidth="0dp"
-                        app:elevation="5dp"
-                        app:tint="#3d5d90" />
+<!--                    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--                        android:id="@+id/fbLogin"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:layout_marginTop="4dp"-->
+<!--                        android:layout_marginBottom="8dp"-->
+<!--                        android:backgroundTint="@android:color/white"-->
+<!--                        android:elevation="5dp"-->
+<!--                        android:src="@drawable/ic_facebook"-->
+<!--                        app:background="@android:color/white"-->
+<!--                        app:backgroundTint="@android:color/white"-->
+<!--                        app:borderWidth="0dp"-->
+<!--                        app:elevation="5dp"-->
+<!--                        app:tint="#3d5d90" />-->
 
                     <Space
                         android:layout_width="32dp"
                         android:layout_height="wrap_content" />
 
 
-                    <com.google.android.material.floatingactionbutton.FloatingActionButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="4dp"
-                        android:layout_marginBottom="8dp"
-                        android:backgroundTint="@android:color/white"
-                        android:elevation="5dp"
-                        android:src="@drawable/ic_google"
-                        app:background="@android:color/white"
-                        app:backgroundTint="@android:color/white"
-                        app:borderWidth="0dp"
-                        app:elevation="5dp"
-                        app:tint="#ff641a" />
+<!--                    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:layout_marginTop="4dp"-->
+<!--                        android:layout_marginBottom="8dp"-->
+<!--                        android:backgroundTint="@android:color/white"-->
+<!--                        android:elevation="5dp"-->
+<!--                        android:src="@drawable/ic_google"-->
+<!--                        app:background="@android:color/white"-->
+<!--                        app:backgroundTint="@android:color/white"-->
+<!--                        app:borderWidth="0dp"-->
+<!--                        app:elevation="5dp"-->
+<!--                        app:tint="#ff641a" />-->
 
 
                 </LinearLayout>

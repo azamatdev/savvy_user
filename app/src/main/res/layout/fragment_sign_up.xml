@@ -56,36 +56,36 @@
                 android:textColor="@color/textIndigoDarkColor"
                 android:textSize="24sp" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:background="@drawable/bg_white_rounded"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="12dp">
+            <!--            <LinearLayout-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="24dp"-->
+            <!--                android:background="@drawable/bg_white_rounded"-->
+            <!--                android:gravity="center_vertical"-->
+            <!--                android:orientation="horizontal"-->
+            <!--                android:padding="12dp">-->
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginEnd="12dp"
-                    android:src="@drawable/ic_name" />
+            <!--                <ImageView-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_marginStart="12dp"-->
+            <!--                    android:layout_marginEnd="12dp"-->
+            <!--                    android:src="@drawable/ic_name" />-->
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/input_full_name"
+            <!--                <com.google.android.material.textfield.TextInputEditText-->
+            <!--                    android:id="@+id/input_full_name"-->
 
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/white"
-                    android:fontFamily="@font/sans_semibold"
-                    android:hint="Full name"
-                    android:imeOptions="actionNext"
-                    android:lines="1"
-                    android:textColorHint="@color/textHintColor"
-                    android:textSize="16sp" />
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:background="@android:color/white"-->
+            <!--                    android:fontFamily="@font/sans_semibold"-->
+            <!--                    android:hint="Full name"-->
+            <!--                    android:imeOptions="actionNext"-->
+            <!--                    android:lines="1"-->
+            <!--                    android:textColorHint="@color/textHintColor"-->
+            <!--                    android:textSize="16sp" />-->
 
-            </LinearLayout>
+            <!--            </LinearLayout>-->
 
 
             <LinearLayout
@@ -169,7 +169,6 @@
 
                 <uz.mymax.savvyenglish.views.PhoneNumberInputEditText
                     android:id="@+id/input_phone_number"
-
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/white"

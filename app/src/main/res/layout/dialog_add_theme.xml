@@ -14,6 +14,7 @@
 
 
     <TextView
+        android:id="@+id/labelTitle"
         style="@style/TextOrder"
         android:layout_width="match_parent"
         android:text="Title"
@@ -29,6 +30,23 @@
         android:background="@drawable/bg_input"
         android:inputType="text"
         android:padding="16dp" />
+
+
+    <uz.mymax.savvyenglish.views.PhoneNumberInputEditText
+        android:id="@+id/input_phone_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/TextOrder"
+        android:background="@drawable/bg_input"
+        android:fontFamily="@font/sans_semibold"
+        android:hint="99 123 45 67"
+        android:imeOptions="actionNext"
+        android:inputType="phone"
+        android:lines="1"
+        android:visibility="gone"
+        android:padding="16dp"
+        android:textColorHint="@color/textHintColor"
+        android:textSize="16sp" />
 
     <Space
         android:layout_width="16dp"
@@ -74,11 +92,11 @@
             android:background="@drawable/bg_input"
             android:backgroundTint="@color/colorPrimary"
             android:clickable="true"
+            android:elevation="0dp"
             android:focusable="true"
             android:gravity="center"
             android:insetTop="0dp"
             android:insetBottom="0dp"
-            android:elevation="0dp"
             android:orientation="horizontal"
             android:text="Add" />
 

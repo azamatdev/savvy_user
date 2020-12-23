@@ -11,6 +11,8 @@ import android.view.Window
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.dialog_add_theme.*
+import kotlinx.android.synthetic.main.dialog_add_theme.input_phone_number
+import kotlinx.android.synthetic.main.fragment_sign_up.*
 import org.koin.android.ext.android.inject
 import uz.mymax.savvyenglish.R
 import uz.mymax.savvyenglish.network.NetworkState
@@ -31,6 +33,7 @@ sealed class DialogEvent : Serializable {
     data class UpdateTheme(val theme: ThemeTestResponse) : DialogEvent()
     object CreateTest : DialogEvent()
     data class UpdateTest(val variant: VariantTestResponse) : DialogEvent()
+    data class PayToTest(val isTheme: Boolean, val id: String) : DialogEvent()
 }
 
 class AddTestDialog : DialogFragment() {
@@ -99,6 +102,13 @@ class AddTestDialog : DialogFragment() {
                     }
                     btnAddTest.text = "Update"
                 }
+                is DialogEvent.PayToTest -> {
+                    labelTitle.text = "Phone"
+                    input_phone_number.visible()
+                    themeTitleInput.gone()
+                    paidCheckbox.gone()
+                    btnAddTest.text = "Pay"
+                }
                 else -> null
             }
         }
@@ -116,17 +126,27 @@ class AddTestDialog : DialogFragment() {
             }
         }
         btnAddTest.setOnClickListener {
-            if (themeTitleInput.text.toString().isEmpty()) {
-                themeTitleInput.showErrorIfNotFilled()
-                return@setOnClickListener
-            }
-            if (paidCheckbox.isChecked) {
-                if (priceTestInput.text.toString().isEmpty()) {
-                    priceTestInput.showErrorIfNotFilled()
+            val event = arguments?.getSerializable("event") as DialogEvent
+            if (event is DialogEvent.PayToTest) {
+                if (input_phone_number.text.toString().replace(" ", "").length < 9) {
+                    input_phone_number.showErrorIfNotFilled()
                     return@setOnClickListener
                 }
+
+            } else {
+                if (themeTitleInput.text.toString().isEmpty()) {
+                    themeTitleInput.showErrorIfNotFilled()
+                    return@setOnClickListener
+                }
+                if (paidCheckbox.isChecked) {
+                    if (priceTestInput.text.toString().isEmpty()) {
+                        priceTestInput.showErrorIfNotFilled()
+                        return@setOnClickListener
+                    }
+                }
+
             }
-            val event = arguments?.getSerializable("event") as DialogEvent
+
             val createDto = CreateTestDto()
             createDto.title = themeTitleInput.text.toString()
             createDto.isFree = !paidCheckbox.isChecked
@@ -140,6 +160,13 @@ class AddTestDialog : DialogFragment() {
                 }
                 is DialogEvent.CreateTest -> {
                     viewModel.setStateTest(TestEvent.CreateTest(createDto))
+                }
+                is DialogEvent.PayToTest -> {
+                    viewModel.payToTopic(
+                        event.isTheme,
+                        event.id,
+                        "998" + input_phone_number.text.toString().replace(" ", "")
+                    )
                 }
                 is DialogEvent.UpdateTest -> {
                     val updatedTest = event.variant
@@ -183,6 +210,29 @@ class AddTestDialog : DialogFragment() {
         })
         viewModel.createThemeTestState.observe(this, Observer { resource ->
             stateHandler(resource)
+        })
+        viewModel.payTopicState.observe(this, Observer { it ->
+            it.getContentIfNotHandled()?.let { resource ->
+                when (resource) {
+                    is NetworkState.Loading -> {
+                        changeUiStateEnabled(true, progressIndicator, btnAddTest)
+                    }
+                    is NetworkState.Success -> {
+                        changeUiStateEnabled(false, progressIndicator, btnAddTest)
+                        addCLick.invoke(true)
+                        dismiss()
+                    }
+                    is NetworkState.Error -> {
+                        changeUiStateEnabled(false, progressIndicator, btnAddTest)
+                        showSnackbar(resource.exception.message.toString())
+                    }
+                    is NetworkState.GenericError -> {
+                        changeUiStateEnabled(false, progressIndicator, btnAddTest)
+                        showSnackbar(resource.errorResponse.message)
+                    }
+                }
+
+            }
         })
     }
 

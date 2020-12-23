@@ -7,8 +7,8 @@ import uz.mymax.savvyenglish.network.response.*
 
 interface SavvyApi {
 
-    @POST("auth/users")
-    suspend fun signUp(@Body registerDto: RegisterDto): Response<AuthResponse>
+    @POST("signup")
+    suspend fun signUp(@Body registerDto: RegisterDto): Response<String>
 
     @POST("login")
     suspend fun login(@Body loginDto: LoginDto): Response<AuthResponse>
@@ -119,6 +119,24 @@ interface SavvyApi {
     suspend fun updateQuestion(@Body question: QuestionResponse): Response<QuestionResponse>
 
     //endregion
+    @POST(PAY)
+    suspend fun createReceipt(
+        @Query("isTheme") isTheme: Boolean,
+        @Query("themeOrTestId") id: String
+    ): Response<PaymentReceiptResponse>
 
+    @POST(PAY_CHECK)
+    suspend fun payCheck(
+        @Path("id") id: String
+    ): Response<String>
+
+    @POST(PAY_SEND)
+    suspend fun paySend(
+        @Query("phoneNumber") phone: String,
+        @Query("themeOrTestId") id: String
+    ): Response<String>
+    //region payme
+
+    //
 
 }

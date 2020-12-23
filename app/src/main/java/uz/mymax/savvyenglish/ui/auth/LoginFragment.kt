@@ -75,9 +75,9 @@ class LoginFragment : Fragment() {
         usernameInput.hideErrorIfFilled()
         passwordInput.hideErrorIfFilled()
 
-        fbLogin.setOnClickListener {
-            findNavController().navigate(R.id.action_navigation_login_to_navigation_topics)
-        }
+//        fbLogin.setOnClickListener {
+//            findNavController().navigate(R.id.action_navigation_login_to_navigation_topics)
+//        }
     }
 
     private fun getLoginDto() =
