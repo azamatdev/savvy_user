@@ -49,7 +49,7 @@ class ThemeFragment : Fragment() {
             if (it.isFree)
                 findNavController().navigate(TestsFragmentDirections.toThemeTest(it.id.toString()))
             else {
-                viewModel.checkTopic(it.id.toString())
+                viewModel.checkTopic(true, it.id.toString())
                 clickedId = it.id.toString()
             }
         }

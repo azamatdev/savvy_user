@@ -16,7 +16,7 @@ data class ThemeTestResponse(
     @Json(name = "price")
     val price: Int = 0,
     @Json(name = "testCount")
-    val testCount: Int = 0,
+    val testCount: Int? = 0,
     @Json(name = "paymentId")
     val paymentId: Int? = 0
 ) : Serializable

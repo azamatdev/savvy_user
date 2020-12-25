@@ -57,7 +57,7 @@ class VariantFragment : Fragment() {
                     action
                 )
             } else {
-                viewModel.checkTopic(it.id.toString())
+                viewModel.checkTopic(false, it.id.toString())
                 clickedId = it.id.toString()
             }
 

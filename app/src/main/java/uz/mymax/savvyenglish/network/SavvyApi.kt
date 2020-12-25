@@ -121,21 +121,23 @@ interface SavvyApi {
     //endregion
     @POST(PAY)
     suspend fun createReceipt(
-        @Query("isTheme") isTheme: Boolean,
-        @Query("themeOrTestId") id: String
+        @Query("isTopic") isTopic: Boolean,
+        @Query("topicOrTestId") id: String
     ): Response<PaymentReceiptResponse>
 
     @POST(PAY_CHECK)
     suspend fun payCheck(
-        @Path("id") id: String
+        @Query("isTopic") isTopic: Boolean,
+        @Query("topicOrTestId") id: String
     ): Response<String>
 
     @POST(PAY_SEND)
     suspend fun paySend(
+        @Query("isTopic") isTopic: Boolean,
         @Query("phoneNumber") phone: String,
-        @Query("themeOrTestId") id: String
+        @Query("topicOrTestId") id: String
     ): Response<String>
-    //region payme
+    //region
 
     //
 

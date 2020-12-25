@@ -122,9 +122,9 @@ class TestViewModel(val repository: LessonRepository) : ViewModel() {
         }
     }
 
-    fun checkTopic(id: String) {
+    fun checkTopic(isTopic: Boolean, id: String) {
         viewModelScope.launch {
-            repository.checkTopic(id).onEach {
+            repository.checkTopic(isTopic, id).onEach {
                 checkPayState.value = SingleEvent(it)
             }.launchIn(viewModelScope)
         }

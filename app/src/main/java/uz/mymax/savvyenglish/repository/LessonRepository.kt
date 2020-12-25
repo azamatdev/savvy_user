@@ -202,17 +202,17 @@ class LessonRepository constructor(
     //endregion
 
     //region Payment
-    suspend fun checkTopic(themeId: String) = flow {
+    suspend fun checkTopic(isTopic: Boolean, id: String) = flow {
         emit(NetworkState.Loading)
-        emit(safeApiCall { api.payCheck(themeId) })
+        emit(safeApiCall { api.payCheck(isTopic, id) })
     }
 
-    suspend fun pay(isTheme: Boolean, id: String, phone: String) = flow {
+    suspend fun pay(isTopic: Boolean, id: String, phone: String) = flow {
         emit(NetworkState.Loading)
-        val createReceiptApi = safeApiCall { api.createReceipt(isTheme, id) }
+        val createReceiptApi = safeApiCall { api.createReceipt(isTopic, id) }
 
         if (createReceiptApi is NetworkState.Success) {
-            val sendToPhone = safeApiCall { api.paySend(phone, id) }
+            val sendToPhone = safeApiCall { api.paySend(isTopic, phone, id) }
             if (sendToPhone is NetworkState.Success) {
                 emit(sendToPhone)
             }
