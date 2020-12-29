@@ -13,8 +13,10 @@ data class ThemeTestResponse(
     val title: String = "",
     @Json(name = "isFree")
     val isFree: Boolean = false,
+    @Json(name = "isPaid")
+    val isPaid: Boolean = false,
     @Json(name = "price")
-    val price: Int = 0,
+    val price: Int? = 0,
     @Json(name = "testCount")
     val testCount: Int? = 0,
     @Json(name = "paymentId")

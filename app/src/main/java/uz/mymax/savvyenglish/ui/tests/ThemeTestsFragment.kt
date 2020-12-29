@@ -30,7 +30,7 @@ class ThemeTestsFragment : Fragment() {
     private val viewModel: TestViewModel by viewModel()
     private lateinit var adapter: ThemeTestAdapter
     private lateinit var bottomSheet: BottomSheetDialog
-
+    private var clickedId = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         adapter = ThemeTestAdapter()
@@ -53,9 +53,26 @@ class ThemeTestsFragment : Fragment() {
         connectObservers()
 
         adapter.itemClickListener = {
-            val action = ThemeTestsFragmentDirections.toTestSet()
-            action.testId = it.toString()
-            findNavController().navigate(action)
+            if (it.isFree || it.isPaid) {
+                val action = ThemeTestsFragmentDirections.toTestSet()
+                action.testId = it.id.toString()
+                findNavController().navigate(
+                    action
+                )
+            } else {
+//                viewModel.checkTopic(false, it.id.toString())
+//                clickedId = it.id.toString()
+                val fm = childFragmentManager
+                val testDialog =
+                    AddTestDialog.newInstance(DialogEvent.PayToTest(true, it.id.toString()))
+                testDialog.show(fm, "addTheme")
+                testDialog.addCLick = {
+                    showSnackbar("You can make the payment in Payme!")
+                    viewModel.setStateTheme(ThemeEvent.GetAllThemes)
+                }
+
+            }
+
         }
 
         adapter.onLongClickListener = { test ->
@@ -73,7 +90,7 @@ class ThemeTestsFragment : Fragment() {
                 updateTest.id = test.id
                 updateTest.title = test.title
                 updateTest.isFree = test.isFree
-                updateTest.price = test.price
+                updateTest.price = test.price ?: 0
                 updateTest.paymentId = test.paymentId
                 updateTest.themeId = args.themeId.toInt()
                 val orderDialogFragment =
@@ -131,6 +148,40 @@ class ThemeTestsFragment : Fragment() {
                     showSnackbar(resource.errorResponse.message)
                 }
             }
+        })
+
+        viewModel.checkPayState.observe(viewLifecycleOwner, Observer {
+            it.getContentIfNotHandled()?.let { resource ->
+                when (resource) {
+                    is NetworkState.Loading -> {
+                    }
+                    is NetworkState.Success -> {
+                        if (resource.data.contains("true")) {
+                            val action = ThemeTestsFragmentDirections.toTestSet()
+                            action.testId = clickedId
+                            findNavController().navigate(
+                                action
+                            )
+                        } else {
+                            val fm = childFragmentManager
+                            val testDialog =
+                                AddTestDialog.newInstance(DialogEvent.PayToTest(true, clickedId))
+                            testDialog.show(fm, "addTheme")
+                            testDialog.addCLick = {
+                                showSnackbar("You can make the payment in Payme!")
+                                viewModel.setStateTheme(ThemeEvent.GetAllThemes)
+                            }
+                        }
+                    }
+                    is NetworkState.Error -> {
+                        showSnackbar(resource.exception.message.toString())
+                    }
+                    is NetworkState.GenericError -> {
+                        showSnackbar(resource.errorResponse.message)
+                    }
+                }
+            }
+
         })
     }
 }

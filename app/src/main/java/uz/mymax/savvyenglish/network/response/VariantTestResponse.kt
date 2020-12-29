@@ -9,6 +9,8 @@ data class VariantTestResponse(
     val testCount: Int = 0,
     @Json(name = "isFree")
     var isFree: Boolean = false,
+    @Json(name = "isPaid")
+    var isPaid: Boolean = false,
     @Json(name = "price")
     var price: Int = 0,
     @Json(name = "bestResult")

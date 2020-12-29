@@ -36,7 +36,7 @@ class QuestionsAnswersFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         adapter = QuestionCheckAdapter()
-        var list = args.questions.toList() as ArrayList<QuestionResponse>
+        val list = args.questions.toMutableList() as ArrayList<QuestionResponse>
         adapter.updateList(list)
         testCheckRecycler.adapter = adapter
 

@@ -12,7 +12,7 @@ import uz.mymax.savvyenglish.utils.isAdmin
 
 class ThemeTestAdapter : RecyclerView.Adapter<ThemeTestAdapter.TestVH>() {
 
-    var itemClickListener: ((Int) -> Unit)? = null
+    var itemClickListener: ((ThemeTestResponse) -> Unit)? = null
     var onLongClickListener: ((ThemeTestResponse) -> Unit)? = null
     var themeList: ArrayList<ThemeTestResponse>? = null
 
@@ -32,7 +32,7 @@ class ThemeTestAdapter : RecyclerView.Adapter<ThemeTestAdapter.TestVH>() {
         holder.binding?.test = themeList!![position]
 
         holder.itemView.child.setOnClickListener {
-            itemClickListener?.invoke(themeList!![position].id)
+            itemClickListener?.invoke(themeList!![position])
         }
         holder.itemView.child.setOnLongClickListener {
             if (holder.itemView.context.isAdmin())

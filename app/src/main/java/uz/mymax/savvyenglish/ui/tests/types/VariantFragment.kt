@@ -50,15 +50,23 @@ class VariantFragment : Fragment() {
         variantRecycler.adapter = adapter
 
         adapter.itemClickListener = {
-            if (it.isFree) {
+            if (it.isFree || it.isPaid) {
                 val action = TestsFragmentDirections.toQeustionSet()
                 action.testId = it.id.toString()
                 findNavController().navigate(
                     action
                 )
             } else {
-                viewModel.checkTopic(false, it.id.toString())
-                clickedId = it.id.toString()
+                val fm = childFragmentManager
+                val testDialog =
+                    AddTestDialog.newInstance(DialogEvent.PayToTest(false, it.id.toString()))
+                testDialog.show(fm, "payToTopic")
+                testDialog.addCLick = {
+                    showSnackbar("You can make the payment now")
+                    viewModel.setStateTheme(ThemeEvent.GetAllThemes)
+                }
+//                viewModel.checkTopic(false, it.id.toString())
+//                clickedId = it.id.toString()
             }
 
         }
@@ -142,7 +150,7 @@ class VariantFragment : Fragment() {
                     is NetworkState.Loading -> {
                     }
                     is NetworkState.Success -> {
-                        if (resource.data.contains("false")) {
+                        if (resource.data.contains("true")) {
                             val action = TestsFragmentDirections.toQeustionSet()
                             action.testId = clickedId
                             findNavController().navigate(
@@ -154,6 +162,7 @@ class VariantFragment : Fragment() {
                                 AddTestDialog.newInstance(DialogEvent.PayToTest(false, clickedId))
                             testDialog.show(fm, "payToTopic")
                             testDialog.addCLick = {
+                                showSnackbar("You can make the payment now")
                                 viewModel.setStateTheme(ThemeEvent.GetAllThemes)
                             }
                         }

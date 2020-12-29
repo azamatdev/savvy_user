@@ -207,9 +207,9 @@ class LessonRepository constructor(
         emit(safeApiCall { api.payCheck(isTopic, id) })
     }
 
-    suspend fun pay(isTopic: Boolean, id: String, phone: String) = flow {
+    suspend fun pay(isTopic: Boolean, isTheme: Boolean, id: String, phone: String) = flow {
         emit(NetworkState.Loading)
-        val createReceiptApi = safeApiCall { api.createReceipt(isTopic, id) }
+        val createReceiptApi = safeApiCall { api.createReceipt(isTheme, id) }
 
         if (createReceiptApi is NetworkState.Success) {
             val sendToPhone = safeApiCall { api.paySend(isTopic, phone, id) }

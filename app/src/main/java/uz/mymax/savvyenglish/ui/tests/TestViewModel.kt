@@ -132,7 +132,7 @@ class TestViewModel(val repository: LessonRepository) : ViewModel() {
 
     fun payToTopic(isTheme: Boolean, id: String, phone: String) {
         viewModelScope.launch {
-            repository.pay(isTheme, id, phone).onEach {
+            repository.pay(false,isTheme, id, phone).onEach {
                 payTopicState.value = SingleEvent(it)
             }.launchIn(viewModelScope)
         }
